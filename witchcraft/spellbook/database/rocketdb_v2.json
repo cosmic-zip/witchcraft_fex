@@ -1,0 +1,3306 @@
+{
+    "index": [
+        {
+            "arguments": {
+                "command": {
+                    "description": "Any shell command string"
+                }
+            },
+            "command": "./spellbook/pkg/busybox/busybox @@command",
+            "description": "Exec a given command",
+            "extends": {},
+            "name": "bash",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                }
+            },
+            "command": "macchanger -r @@interface",
+            "description": "Change to a Random MAC Address",
+            "extends": {},
+            "name": "mac.spoof",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                }
+            },
+            "command": "macchanger -p @@interface",
+            "description": "Reset to the Original MAC Address",
+            "extends": {},
+            "name": "mac.reset",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                },
+                "mac": {
+                    "description": "Specify the MAC address to assign"
+                }
+            },
+            "command": "macchanger -m @@mac @@interface",
+            "description": "Change to a Random MAC Address",
+            "extends": {},
+            "name": "mac.define",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "sudo hciconfig hci0 up > /dev/null 2>&1 && sudo hciconfig hci0 > /dev/null 2>&1 && sudo rfkill unblock bluetooth > /dev/null 2>&1 && echo done",
+            "description": "Enables Bluetooth functionality by bringing up the hci0 interface, unblocking Bluetooth, and printing done.",
+            "extends": {},
+            "name": "blue.enable",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "rfkill list",
+            "description": "Lists Bluetooth devices and their status.",
+            "extends": {},
+            "name": "blue.list",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "count": {
+                    "description": "Setup a limit by packet count"
+                },
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                }
+            },
+            "command": "sudo tcpdump -i @@interface -c @@count -w ./outputs/capture_@@interface_$(date +'%d-%m-%y_%H_%M_%S').pcap",
+            "description": "Capture all packets on a specified network interface.",
+            "extends": {},
+            "name": "capture.all",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "count": {
+                    "description": "Setup a limit by packet count"
+                },
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                },
+                "ip": {
+                    "description": "Refers to an IPv4 or IPv6 address"
+                }
+            },
+            "command": "sudo tcpdump -i @@interface -c @@count host @@ip -w ./outputs/capture_@@interface_$(date +'%d-%m-%y_%H_%M_%S').pcap",
+            "description": "Capture all packets from/to a specified IP address on a specified network interface.",
+            "extends": {},
+            "name": "capture.all.from_ip",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "count": {
+                    "description": "Setup a limit by packet count"
+                },
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                }
+            },
+            "command": "sudo tcpdump -i @@interface -c @@count -c 1 -w ./outputs/capture_@@interface_$(date +'%d-%m-%y_%H_%M_%S').pcap",
+            "description": "Capture only one packet on a specified network interface.",
+            "extends": {},
+            "name": "capture.one",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "count": {
+                    "description": "Setup a limit by packet count"
+                },
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., wlan0"
+                },
+                "ip": {
+                    "description": "Refers to an IPv4 or IPv6 address"
+                }
+            },
+            "command": "sudo tcpdump -i @@interface -c @@count host @@ip -c 1 -w ./outputs/capture_@@interface_$(date +'%d-%m-%y_%H_%M_%S').pcap",
+            "description": "Capture only one packet from/to a specified IP address on a specified network interface.",
+            "extends": {},
+            "name": "capture.one.from_ip",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "hashcat -m 13400 -a 0 @@file @@wordlist",
+            "description": "Crack KeePass database encryption using Hashcat",
+            "extends": {},
+            "name": "crack.keepass",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "hashcat -m 14600 -a 0 @@file @@wordlist",
+            "description": "Crack LUKS1 disk image encryption using Hashcat",
+            "extends": {},
+            "name": "crack.luks1",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "hashcat -m 29600 -a 0 @@file @@wordlist",
+            "description": "Crack LUKS2 disk image encryption using Hashcat",
+            "extends": {},
+            "name": "crack.luks2",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "hcxpcapngtool -o hash.hc22000 @@file && hashcat -m 22000 -a 0 hash.hc22000 @@wordlist",
+            "description": "Crack WPA/WPA2 encryption in PCAP files using Hashcat",
+            "extends": {},
+            "name": "crack.pcap",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "hashcat -m 13600 -a 0 @@file @@wordlist",
+            "description": "Crack ZIP file encryption using Hashcat",
+            "extends": {},
+            "name": "crack.zip",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "device": {
+                    "description": "Virtual or physical device like a HDD, SSD, Virtual disk"
+                },
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "dc3dd if=@@device of=@@file bs=4M",
+            "description": "Create a disk dump from a specified input device to an output file.",
+            "extends": {},
+            "name": "disk.dump",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "folder": {
+                    "description": "Path to a folder"
+                },
+                "image": {
+                    "description": "Path to a disk image file location"
+                }
+            },
+            "command": "foremost -i @@image -o @@folder",
+            "description": "Carve files from a specified disk image using foremost.",
+            "extends": {},
+            "name": "disk.recover",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name"
+                },
+                "size": {
+                    "description": "Specify size (not previously defined - consider adding description)"
+                },
+                "times": {
+                    "description": "Number of execution repeats"
+                }
+            },
+            "command": "dos.longpw @@domain @@times @@size",
+            "description": "Send and X number of get requests without data",
+            "extends": {},
+            "name": "dos.longpw",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "url": {
+                    "description": "Target URL for the GET request"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X GET @@url; echo ''; sleep @@delay; done",
+            "description": "Performs multiple GET requests to a URL with a configurable delay between each request using a shell loop.",
+            "extends": {},
+            "name": "dos.get",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "password": {
+                    "description": "Password for authentication"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "url": {
+                    "description": "Target URL for the POST request"
+                },
+                "username": {
+                    "description": "Username for authentication"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X POST @@url -H 'Content-Type: application/json' -d '{\"username\":\"@@username\",\"password\":\"@@password\"}'; echo ''; sleep @@delay; done",
+            "description": "Sends multiple POST requests with JSON body containing username and password, with configurable delay between requests.",
+            "extends": {},
+            "name": "dos.post.json",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "token": {
+                    "description": "Bearer token for Authorization header"
+                },
+                "url": {
+                    "description": "Target URL for the request"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X GET @@url -H 'Authorization: Bearer @@token'; echo ''; sleep @@delay; done",
+            "description": "Performs multiple requests with Bearer token authentication header, with configurable delay between each request.",
+            "extends": {},
+            "name": "dos.header.bearer",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "session_token": {
+                    "description": "Session token for X-Session-Token header"
+                },
+                "url": {
+                    "description": "Target URL for the request"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X GET @@url -H 'X-Session-Token: @@session_token'; echo ''; sleep @@delay; done",
+            "description": "Performs multiple requests with X-Session-Token custom header, with configurable delay between each request.",
+            "extends": {},
+            "name": "dos.header.xsession",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "json_data": {
+                    "description": "JSON payload to send in the request body"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "token": {
+                    "description": "Bearer token for Authorization header"
+                },
+                "url": {
+                    "description": "Target URL for the POST request"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X POST @@url -H 'Authorization: Bearer @@token' -H 'Content-Type: application/json' -d '@@json_data'; echo ''; sleep @@delay; done",
+            "description": "Sends multiple POST requests with Bearer token and custom JSON payload, with configurable delay between requests.",
+            "extends": {},
+            "name": "dos.post.bearer.json",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "delay": {
+                    "description": "Delay in seconds between each request"
+                },
+                "requests": {
+                    "description": "Number of requests to make in the loop"
+                },
+                "session_token": {
+                    "description": "Session token for X-Session-Token header"
+                },
+                "url": {
+                    "description": "Target URL for the request"
+                },
+                "username": {
+                    "description": "Username for the request body"
+                }
+            },
+            "command": "for i in $(seq 1 @@requests); do curl -s -X POST @@url -H 'X-Session-Token: @@session_token' -H 'Content-Type: application/json' -d '{\"username\":\"@@username\"}'; echo ''; sleep @@delay; done",
+            "description": "Sends multiple POST requests with X-Session-Token header and username in JSON body, with configurable delay between requests.",
+            "extends": {},
+            "name": "dos.post.xsession.json",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                },
+                "secret": {
+                    "description": "An file (data) to be hidden"
+                }
+            },
+            "command": "steghide embed -cf @@file -ef @@secret",
+            "description": "Hides a file within a cover image or audio file using Steghide.",
+            "extends": {},
+            "name": "fhide.embed",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "steghide extract -sf @@file",
+            "description": "Extracts hidden data from a cover image or audio file using Steghide.",
+            "extends": {},
+            "name": "fhide.extract",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "steghide info @@file",
+            "description": "Displays information about a cover file, including any hidden data, using Steghide.",
+            "extends": {},
+            "name": "fhide.info",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "file @@file",
+            "description": "Utility used to determine the type of a file.",
+            "extends": {},
+            "name": "file",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "xxd -b @@file",
+            "description": "Switch to bits (binary digits) dump, rather than hex dump.",
+            "extends": {},
+            "name": "file.bin",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "lsof @@file",
+            "description": "lsof alias",
+            "extends": {},
+            "name": "file.by",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "exiftool -all= @@file",
+            "description": "Removes all metadata from an image to protect privacy",
+            "extends": {},
+            "name": "file.clean.meta",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "xxd -d @@file",
+            "description": "Takes a hexadecimal dump and converts it back into binary format.",
+            "extends": {},
+            "name": "file.dec",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "xxd -ps @@file",
+            "description": "Output in PostScript continuous hex dump style. Also known as plain hex dump style.",
+            "extends": {},
+            "name": "file.dump",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "xxd @@file",
+            "description": "creates  a hex dump of a given file or standard input.",
+            "extends": {},
+            "name": "file.hex",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "xxd -i @@file",
+            "description": "Create a C header file from a binary file. This header file contains a C array definition representing the binary data in hexadecimal format.",
+            "extends": {},
+            "name": "file.list",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "exiftool @@file",
+            "description": "Extracts and displays all metadata from an image file using exiftool.",
+            "extends": {},
+            "name": "file.meta",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "strings @@file",
+            "description": "Strings alias",
+            "extends": {},
+            "name": "file.lmao",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "port": {
+                    "description": "Network service port number"
+                }
+            },
+            "command": "iptables -A OUTPUT -p tcp --dport @@port: -j DROP && iptables -A OUTPUT -p udp --dport @@port: -j DROP && ip6tables -A OUTPUT -p tcp --dport @@port: -j DROP &&    ip6tables -A OUTPUT -p udp --dport @@port: -j DROP",
+            "description": "Drop all outcome port bigger than expecified port",
+            "extends": {},
+            "name": "firewall.drop.bigger",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "command": "iptables -A INPUT -p tcp -j DROP && iptables -A INPUT -p udp -j DROP && ip6tables -A INPUT -p tcp -j DROP && ip6tables -A INPUT -p udp -j DROP",
+            "description": "Drop all incomme connections",
+            "extends": {},
+            "name": "firewall.drop.in.all",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "command": "iptables -A OUTPUT -p tcp -j DROP && iptables -A OUTPUT -p udp -j DROP && ip6tables -A OUTPUT -p tcp -j DROP && ip6tables -A OUTPUT -p udp -j DROP",
+            "description": "Derop all outcome connections",
+            "extends": {},
+            "name": "firewall.drop.out.all",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "command": "ip6tables -F && iptables -F",
+            "description": "Remove all firewall rules non-resible",
+            "extends": {},
+            "name": "firewall.flush",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "address": {
+                    "description": "Refers to an IPv4 or IPv6v4 or IPv4 or IPv6v6 or domain name"
+                }
+            },
+            "command": "ftp @@address",
+            "description": "Connects to an FTP server at the specified address.",
+            "extends": {},
+            "name": "ftp.connect",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name"
+                },
+                "output": {
+                    "description": "Output file"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "dirb @@domain -w @@wordlist -o @@output",
+            "description": "scans a domain for directories with a specified wordlist, and saves the results to an output file.",
+            "extends": {},
+            "name": "map.dns.dirs",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name"
+                },
+                "output": {
+                    "description": "Output file"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "dnsenum --enum @@domain -t 15 --threads 4 -f @@wordlist -o @@output",
+            "description": "It scans a domain for subdomains using the specified wordlist and saves the results to an output file.",
+            "extends": {},
+            "name": "map.dns.subdomain",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "ss -tupran",
+            "description": "Scan local open connections",
+            "extends": {},
+            "name": "map.local",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "curl ip.me",
+            "description": "Show the current ip address",
+            "extends": {},
+            "name": "map.myip",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location: like /some/path/file.txt"
+                }
+            },
+            "command": "shred -u -z -n 7 @@file",
+            "description": "Securely overwrites and deletes a file seven times, then removes it from the filesystem to prevent data recovery.",
+            "extends": {},
+            "name": "nuke.file",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "arguments": {
+                "device": {
+                    "description": "Virtual or physical device like a HDD, SSD, Virtual disk"
+                }
+            },
+            "command": "shred -vzn 7 @@device",
+            "description": "Securely overwrites and deletes the contents of a device seven times",
+            "extends": {},
+            "name": "nuke.hd",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "command": "sudo find /var/log -type f -exec shred -u {} ;",
+            "description": "Securely overwrites and deletes the /var/logs",
+            "extends": {},
+            "name": "nuke.logs",
+            "type": "shell",
+            "category": "cleanup"
+        },
+        {
+            "arguments": {
+                "folder": {
+                    "description": "Path to a folder"
+                },
+                "ip": {
+                    "description": "Refers to an IPv4 or IPv6 address"
+                },
+                "port": {
+                    "description": "Network service port number"
+                }
+            },
+            "command": "mkdir out && scp -P @@port @@folder/* hostuser@@@ip:./out/",
+            "description": "Creates a directory named 'out' and copies files from a specified folder to a remote host via SCP.",
+            "extends": {},
+            "name": "scp.copy",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "address": {
+                    "description": "Refers to an IPv4 or IPv6 or domain name"
+                },
+                "share": {
+                    "description": "Refers to a shared resource like a folder, file, or printer"
+                }
+            },
+            "command": "smbclient \\@@address\\@@share",
+            "description": "Accesses a specific share on the specified address.",
+            "extends": {},
+            "name": "smbclient.access",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "address": {
+                    "description": "Refers to an IPv4 or IPv6 or domain name"
+                }
+            },
+            "command": "smbclient -L @@address",
+            "description": "Lists available shares on the specified address.",
+            "extends": {},
+            "name": "smbclient.list",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "find /var/log -type f -name '*.log' -exec tail -n 10000 {} ;",
+            "description": "Applogs typically refer to logs generated by specific applications or software. They contain information about the operation, performance, and errors of the application.",
+            "extends": {},
+            "name": "view.applogs",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/audit/audit.log",
+            "description": "auditlog: Audit messages, tracking system events for security auditing.",
+            "extends": {},
+            "name": "view.auditlog",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/auth.log",
+            "description": "authlog: Authentication-related messages.",
+            "extends": {},
+            "name": "view.authlog",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "lastb -n 10000",
+            "description": "btmp: Records failed login attempts.",
+            "extends": {},
+            "name": "view.btmp",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/kern.log",
+            "description": "kernlog: Kernel-related messages.",
+            "extends": {},
+            "name": "view.kernlog",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/lastlog",
+            "description": "lastlog: Records last login information for all users.",
+            "extends": {},
+            "name": "view.lastlog",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/messages",
+            "description": "messages: System messages, including kernel and service messages.",
+            "extends": {},
+            "name": "view.messages",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/secure",
+            "description": "secure: Security-related messages, including authentication and authorization events.",
+            "extends": {},
+            "name": "view.secure",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "tail -n 10000 /var/log/syslog",
+            "description": "syslog: General system messages.",
+            "extends": {},
+            "name": "view.syslog",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "command": "last -n 1000",
+            "description": "wtmp: Records all user logins and logouts.",
+            "extends": {},
+            "name": "view.wtmp",
+            "type": "shell",
+            "category": "forensics"
+        },
+        {
+            "arguments": {
+                "path": {
+                    "description": "Set the output path"
+                },
+                "rate": {
+                    "description": "Add a limit rate like: 0 (disabled) or 20 (bytes if no suffix is given) or 20K (~19.5 KiB/s) or 200M (Mib/s)"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                },
+                "wait": {
+                    "description": "Delay duration in seconds"
+                }
+            },
+            "command": "wget --recursive -U 'Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0' --page-requisites --html-extension --convert-links --restrict-file-names=windows --wait=@@wait --random-wait --tries=30 --no-clobber --limit-rate=@@rate --no-parent @@url -P @@path",
+            "description": "Downloads a full webpage or open directory recursively, including all necessary resources (images, CSS, JS) for offline viewing. It only downloads content at and below the specified URL, without mirroring the entire site. Supports polite scraping with adjustable wait times, optional rate limits, and retries while preserving existing files.",
+            "extends": {},
+            "name": "web.download",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name"
+                }
+            },
+            "command": "scanner.dns @@domain",
+            "description": "Perform DNS scanning",
+            "extends": {},
+            "name": "scanner.dns",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "ip": {
+                    "description": "Refers to an IPv4 or IPv6 address"
+                }
+            },
+            "command": "scanner.ip @@ip",
+            "description": "Perform IP scanning",
+            "extends": {},
+            "name": "scanner.ip",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "scripts": {
+                    "description": "Setup one of nmap default scripts",
+                    "options": [
+                        "auth",
+                        "broadcast",
+                        "brute",
+                        "default",
+                        "discovery",
+                        "dos",
+                        "exploit",
+                        "external",
+                        "fuzzer",
+                        "intrusive",
+                        "malware",
+                        "safe",
+                        "version",
+                        "vuln",
+                        "traveler"
+                    ]
+                },
+                "target": {
+                    "description": "Refers to an IPv4 or IPv6 or domain name"
+                }
+            },
+            "command": "scanner.nmapper @@target @@scripts",
+            "description": "Perform NMAP scanning",
+            "name": "scanner.nmapper",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "expression": {
+                    "description": "Search expression or keyword"
+                },
+                "verbosity": {
+                    "description": "Level of verbosity/detail"
+                }
+            },
+            "command": "scanner.keyword @@expression @@verbosity",
+            "description": "Perform social network scanning",
+            "extends": {},
+            "name": "scanner.keyword",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "attacks": {
+                    "description": "List of attacks"
+                },
+                "attacksoptions": {
+                    "description": "Attack options"
+                },
+                "lang": {
+                    "description": "Language code",
+                    "options": [
+                        "br",
+                        "en"
+                    ]
+                },
+                "noprint": {
+                    "description": "Flag to suppress printing"
+                },
+                "stack": {
+                    "description": "Stack information"
+                },
+                "systemtype": {
+                    "description": "Type of system"
+                },
+                "title": {
+                    "description": "Report title"
+                },
+                "vector": {
+                    "description": "Attack vector"
+                },
+                "vulns": {
+                    "description": "List of vulnerabilities"
+                },
+                "vulnsoptions": {
+                    "description": "Vulnerabilities options"
+                }
+            },
+            "command": "cosmic.report @@title @@lang @@vulnsoptions @@attacksoptions @@noprint @@systemtype @@vector @@stack @@vulns @@attacks",
+            "description": "Generate vulnerability reports",
+            "extends": {},
+            "name": "native.cosmic.report",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "authorization": {
+                    "description": "Authorization header or token"
+                },
+                "body": {
+                    "description": "Request body type",
+                    "options": [
+                        "none",
+                        "form-data",
+                        "x-www-urlencoded",
+                        "raw",
+                        "binary"
+                    ]
+                },
+                "bodydata": {
+                    "description": "Data to send in the body"
+                },
+                "method": {
+                    "description": "HTTP method",
+                    "options": [
+                        "get",
+                        "post",
+                        "put",
+                        "delete",
+                        "patch"
+                    ]
+                },
+                "protocol": {
+                    "description": "Communication protocol",
+                    "options": [
+                        "http",
+                        "https"
+                    ]
+                },
+                "saveoutput": {
+                    "description": "Flag to save the output"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "cosmic.requests @@url @@method @@protocol @@authorization @@body @@bodydata @@saveoutput",
+            "description": "Make HTTP requests",
+            "extends": {},
+            "name": "native.cosmic.requests",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "mode": {
+                    "description": "Browser mode"
+                },
+                "url": {
+                    "description": "Target URL"
+                },
+                "windowsize": {
+                    "description": "Window size dimensions"
+                }
+            },
+            "command": "cosmic.chrome @@url @@mode @@windowsize",
+            "description": "Chrome browser operations",
+            "extends": {},
+            "name": "native.cosmic.chrome",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "folder": {
+                    "description": "Path to a folder"
+                },
+                "host": {
+                    "description": "Host name or IPv4 or IPv6 address"
+                },
+                "port": {
+                    "description": "Network service port number"
+                },
+                "ztoken": {
+                    "description": "WitchcraftFEX WebUI token"
+                }
+            },
+            "command": "cosmic.server @@host @@port @@folder @@ztoken",
+            "description": "Simple web server for WitchcraftFEX webui operations",
+            "extends": {},
+            "name": "native.cosmic.server",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "disk_path": {
+                    "description": "Path for the VM disk image, e.g., /home/user/vm.qcow2"
+                },
+                "disk_size": {
+                    "description": "Size of the disk image, e.g., 20G"
+                }
+            },
+            "command": "qemu-img create -f qcow2 @@disk_path @@disk_size",
+            "description": "Create a QCOW2 disk image for the VM",
+            "extends": {},
+            "name": "vm.create_disk",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "cpu_cores": {
+                    "description": "Number of CPU cores to assign"
+                },
+                "disk_path": {
+                    "description": "Path for the VM disk image"
+                },
+                "iso_path": {
+                    "description": "Path to the installation ISO file"
+                },
+                "ram_size": {
+                    "description": "Amount of RAM for the VM, e.g., 4G"
+                },
+                "vm_name": {
+                    "description": "Name of the virtual machine"
+                }
+            },
+            "command": "qemu-system-x86_64 -drive file=@@disk_path,format=qcow2 -cdrom @@iso_path -m @@ram_size -smp @@cpu_cores -boot d -net nic -net user -enable-kvm -name @@vm_name",
+            "description": "Run the VM with specified disk, ISO, RAM, CPU cores, and basic network",
+            "extends": {},
+            "name": "vm.run",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "command": "docker stop $(docker ps -a -q)",
+            "description": "Shutdown all running Docker containers.",
+            "extends": {},
+            "name": "docker.stop.all",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "command": "docker rm $(docker ps -a -q)",
+            "description": "Remove all Docker containers.",
+            "extends": {},
+            "name": "docker.remove.all.containers",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "command": "docker rmi -f $(docker images -q)",
+            "description": "Force remove all Docker images.",
+            "extends": {},
+            "name": "docker.remove.all.images",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "command": "sudo docker system prune -a --volumes -f",
+            "description": "Removes all stopped containers, unused networks, dangling and unused images, build cache, and all volumes not used by at least one container, without asking for confirmation.",
+            "extends": {},
+            "name": "docker.reset",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "command": "curl -fsSL https://get.docker.com | sudo sh",
+            "description": "Run Docker's official installation script with root permissions.",
+            "extends": {},
+            "name": "docker.install.script",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "username": {
+                    "description": "Username to be added to the docker group"
+                }
+            },
+            "command": "sudo usermod -aG docker @@username",
+            "description": "Add a user to the Docker group to allow non-root Docker usage.",
+            "extends": {},
+            "name": "docker.user.addgroup",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "command": "newgrp docker",
+            "description": "Start a new shell with updated group permissions after adding to Docker group.",
+            "extends": {},
+            "name": "docker.newgrp.refresh",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "model": {
+                    "description": "Model path"
+                },
+                "port": {
+                    "description": "Port number to run the server on (e.g., 8080)"
+                }
+            },
+            "command": "./spellbook/pkg/llama/llama-server -m @@model --port @@port --jinja --repeat-penalty 1.15",
+            "description": "Run a LLaMA server using a fixed GGUF model and a custom port.",
+            "extends": {},
+            "name": "server.llama",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "path": {
+                    "description": "Path to file or directory to scan"
+                }
+            },
+            "command": "clamscan @@path",
+            "description": "Run ClamAV on-demand scanner to scan files or directories.",
+            "extends": {},
+            "name": "clamav.clamscan",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "arguments": {
+                "path": {
+                    "description": "Path to file or directory to scan"
+                }
+            },
+            "command": "clamdscan @@path",
+            "description": "Submit file or directory to clamd for scanning.",
+            "extends": {},
+            "name": "clamav.clamdscan",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "command": "freshclam",
+            "description": "Update the virus definitions using freshclam.",
+            "extends": {},
+            "name": "clamav.freshclam",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "Path to a .ndb or .ldb signature file"
+                }
+            },
+            "command": "sigtool --info @@file",
+            "description": "Print information about a signature file.",
+            "extends": {},
+            "name": "clamav.sigtool.info",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "Path to file for hex dump"
+                }
+            },
+            "command": "sigtool --hex-dump @@file",
+            "description": "Print hex dump of a file.",
+            "extends": {},
+            "name": "clamav.sigtool.hex",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "arguments": {
+                "archive": {
+                    "description": "Path to .cvd or .cld archive file"
+                }
+            },
+            "command": "sigtool --unpack @@archive",
+            "description": "Unpack a ClamAV database archive (.cvd or .cld).",
+            "extends": {},
+            "name": "clamav.sigtool.unpack",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "command": "clamconf",
+            "description": "Show the ClamAV configuration summary.",
+            "extends": {},
+            "name": "clamav.clamconf",
+            "type": "shell",
+            "category": "antivirus"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl @@url",
+            "description": "Send a simple HTTP GET request to a specified URL.",
+            "extends": {},
+            "name": "curl.get.simple",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "header": {
+                    "description": "Custom header in the format 'Key: Value'"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -H \"@@header\" @@url",
+            "description": "Send a GET request with a custom HTTP header.",
+            "extends": {},
+            "name": "curl.get.with_header",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "output_file": {
+                    "description": "Path to save the response body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -o @@output_file @@url",
+            "description": "Send a GET request and save the response to a file.",
+            "extends": {},
+            "name": "curl.get.to_file",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "body": {
+                    "description": "Raw data string to send as body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X POST -d \"@@body\" @@url",
+            "description": "Send a POST request with raw data body.",
+            "extends": {},
+            "name": "curl.post.raw",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "body": {
+                    "description": "Raw data string to send as body"
+                },
+                "content_type": {
+                    "description": "Content-Type header value, e.g. application/json"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X POST -H \"Content-Type: @@content_type\" -d \"@@body\" @@url",
+            "description": "Send a POST request with custom Content-Type header and body.",
+            "extends": {},
+            "name": "curl.post.content_type",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "file_path": {
+                    "description": "Path to file to send as request body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X POST --data-binary \"@@file_path\" @@url",
+            "description": "Send a POST request with a file as the body.",
+            "extends": {},
+            "name": "curl.post.file",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "field_key": {
+                    "description": "Form field name"
+                },
+                "field_value": {
+                    "description": "Form field value"
+                },
+                "file_field": {
+                    "description": "Form file field name"
+                },
+                "file_path": {
+                    "description": "Path to file to upload"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X POST -F \"@@field_key=@@field_value\" -F \"@@file_field=@@@file_path\" @@url",
+            "description": "Send a POST multipart/form-data request with field and file.",
+            "extends": {},
+            "name": "curl.post.multipart",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "body": {
+                    "description": "Raw data string to send as body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X PUT -d \"@@body\" @@url",
+            "description": "Send a PUT request with raw data body.",
+            "extends": {},
+            "name": "curl.put.raw",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X DELETE @@url",
+            "description": "Send a DELETE request to the specified URL.",
+            "extends": {},
+            "name": "curl.delete.simple",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "json": {
+                    "description": "JSON string to send as body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X PATCH -H \"Content-Type: application/json\" -d \"@@json\" @@url",
+            "description": "Send a PATCH request with JSON body.",
+            "extends": {},
+            "name": "curl.patch.json",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "password": {
+                    "description": "Basic auth password"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                },
+                "username": {
+                    "description": "Basic auth username"
+                }
+            },
+            "command": "curl -u @@username:@@password @@url",
+            "description": "Send a GET request with basic authentication.",
+            "extends": {},
+            "name": "curl.auth.basic",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "token": {
+                    "description": "Bearer token string"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -H \"Authorization: Bearer @@token\" @@url",
+            "description": "Send a GET request with Bearer token authorization.",
+            "extends": {},
+            "name": "curl.auth.bearer",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -I @@url",
+            "description": "Send a HEAD request to the specified URL.",
+            "extends": {},
+            "name": "curl.head.simple",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "bin": {
+                    "description": "The chromium or any chromium like browser binary name or path. eg: \"bin/chromium\" or \"chromium\""
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "@@bin --enable-unsafe-swiftshader --headless=new --disable-gpu --dump-dom @@url",
+            "description": "Send a HEAD request to the specified URL.",
+            "extends": {},
+            "name": "chrome.headless.html",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "bin": {
+                    "description": "The chromium or any chromium like browser binary name or path. eg: \"bin/chromium\" or \"chromium\""
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "@@bin --enable-unsafe-swiftshader --headless=new --disable-gpu --print-to-pdf @@url",
+            "description": "Send a HEAD request to the specified URL.",
+            "extends": {},
+            "name": "chrome.headless.pdf",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "bin": {
+                    "description": "The chromium or any chromium like browser binary name or path. eg: \"bin/chromium\" or \"chromium\""
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "@@bin --enable-unsafe-swiftshader --headless=new --disable-gpu --screenshot @@url",
+            "description": "Send a HEAD request to the specified URL.",
+            "extends": {},
+            "name": "chrome.headless.screenshot",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "expression": {
+                    "description": "The keyword or pattern to search for."
+                },
+                "verbosity": {
+                    "description": "Level of detail in the output (e.g., 0 = minimal, 1 = normal, 2 = verbose)."
+                }
+            },
+            "command": "scanner.keyword",
+            "description": "Searches for specified keywords in the target data.",
+            "extends": {},
+            "name": "wfex.scanner.keyword",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "The domain name or DNS record to query."
+                }
+            },
+            "command": "scanner.dns",
+            "description": "Performs DNS lookups or queries on the given domain.",
+            "extends": {},
+            "name": "wfex.scanner.dns",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "ip": {
+                    "description": "The IP address to scan or analyze."
+                }
+            },
+            "command": "scanner.ip",
+            "description": "Scans or resolves information about an IP address.",
+            "extends": {},
+            "name": "wfex.scanner.ip",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "script": {
+                    "description": "The nmap script(s) to execute during the scan."
+                },
+                "target": {
+                    "description": "The host or IP range to scan."
+                }
+            },
+            "command": "scanner.nmapper",
+            "description": "Runs nmap scans against a target host or network.",
+            "extends": {},
+            "name": "wfex.scanner.nmapper",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "folder": {
+                    "description": "The directory path where server data or logs are stored."
+                },
+                "full": {
+                    "description": "If set, enables full (verbose) server mode."
+                },
+                "host": {
+                    "description": "The hostname or IP address the server will bind to."
+                },
+                "model": {
+                    "description": "The model or configuration profile the server should use."
+                },
+                "port": {
+                    "description": "The TCP port on which the server will listen."
+                },
+                "ztoken": {
+                    "description": "A token used for authentication or authorization."
+                }
+            },
+            "command": "server",
+            "description": "Starts the main server with configurable options.",
+            "extends": {},
+            "name": "wfex.server",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "host": {
+                    "description": "The hostname or IP address to bind the Yuri server."
+                },
+                "model": {
+                    "description": "The model or configuration profile for the Yuri server."
+                },
+                "port": {
+                    "description": "The port number on which the Yuri server will listen."
+                }
+            },
+            "command": "server.yuri",
+            "description": "Launches the Yuri server variant with specific settings.",
+            "extends": {},
+            "name": "wfex.server.yuri",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {},
+            "command": "server.default",
+            "description": "Starts the server with default settings.",
+            "extends": {},
+            "name": "wfex.server.default",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {},
+            "command": "server.minimal",
+            "description": "Starts the server with minimal configuration.",
+            "extends": {},
+            "name": "wfex.server.minimal",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {},
+            "command": "build.web",
+            "description": "Builds the web application bundle.",
+            "extends": {},
+            "name": "wfex.build.web",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {
+                "date": {
+                    "description": "The date the report is generated or refers to."
+                },
+                "final_notes": {
+                    "description": "Any final notes or additional observations for the report."
+                },
+                "fixes": {
+                    "description": "Proposed or applied fixes for the vulnerabilities."
+                },
+                "lang": {
+                    "description": "The language in which the report should be generated."
+                },
+                "sginature": {
+                    "description": "The signature or identifier for the report."
+                },
+                "sys_type": {
+                    "description": "The type of system the report is associated with."
+                },
+                "target": {
+                    "description": "The target subject or entity of the report."
+                },
+                "tech_stack": {
+                    "description": "The technology stack involved in the report."
+                },
+                "title": {
+                    "description": "The title of the generated report."
+                },
+                "vectors": {
+                    "description": "Comma-separated list of OWASP attack vector IDs (e.g., '2' or '2,4'). Refer to gen.report.options for the full mapping."
+                },
+                "vulnerabilities": {
+                    "description": "Comma-separated list of OWASP vulnerability IDs (e.g., '1' or '1,3,5'). Refer to gen.report.options for the full mapping."
+                }
+            },
+            "command": "gen.report --title @@title --lang @@lang --sginature @@sginature --sys_type @@sys_type --target @@target --tech_stack @@tech_stack --date @@date --vulnerabilities @@vulnerabilities --vectors @@vectors --fixes @@fixes --final_notes @@final_notes",
+            "description": "Generates a report from the collected data.",
+            "extends": {},
+            "name": "wfex.gen.report",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {},
+            "command": "config.model",
+            "description": "Loads or updates the default configuration model.",
+            "extends": {},
+            "name": "wfex.config.model",
+            "type": "shell",
+            "category": "core"
+        },
+        {
+            "arguments": {},
+            "command": "ngrok http 8000 > /dev/null &",
+            "description": "Run ngrok in the background",
+            "extends": {},
+            "name": "ngrok.startup",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {},
+            "command": "$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')",
+            "description": "Run ngrok in the background",
+            "extends": {},
+            "name": "ngrok.public_url",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "json": {
+                    "description": "JSON string to send as body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X PUT -H 'Content-Type: application/json' -d '@@json' @@url",
+            "description": "Send a PUT request with JSON body.",
+            "extends": {},
+            "name": "curl.put.json",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "body": {
+                    "description": "Raw data string to send as body"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X DELETE -d '@@body' @@url",
+            "description": "Send a DELETE request with raw data body.",
+            "extends": {},
+            "name": "curl.delete.with_body",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "cookie": {
+                    "description": "Cookie string in format 'name=value'"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -b '@@cookie' @@url",
+            "description": "Send a request with a specific cookie.",
+            "extends": {},
+            "name": "curl.request.cookie",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -L @@url",
+            "description": "Send a request following redirects (flag -L).",
+            "extends": {},
+            "name": "curl.request.follow_redirect",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "timeout": {
+                    "description": "Maximum time in seconds for the connection"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl --connect-timeout @@timeout @@url",
+            "description": "Send a request with connection timeout defined.",
+            "extends": {},
+            "name": "curl.request.timeout",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "headers_file": {
+                    "description": "File path to save the response headers"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -D @@headers_file @@url",
+            "description": "Send a request and save the response headers to a file.",
+            "extends": {},
+            "name": "curl.request.save_headers",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "method": {
+                    "description": "Custom HTTP method (e.g., OPTIONS, TRACE)"
+                },
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -X @@method @@url",
+            "description": "Send a request with a custom HTTP method.",
+            "extends": {},
+            "name": "curl.request.custom_method",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                },
+                "user_agent": {
+                    "description": "User-Agent header string"
+                }
+            },
+            "command": "curl -H 'User-Agent: @@user_agent' @@url",
+            "description": "Send a request with a custom User-Agent header.",
+            "extends": {},
+            "name": "curl.request.user_agent",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -k @@url",
+            "description": "Send a request ignoring SSL certificate verification.",
+            "extends": {},
+            "name": "curl.request.insecure",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target complete URL path with http/https"
+                }
+            },
+            "command": "curl -i @@url",
+            "description": "Send a request and include response headers in the output.",
+            "extends": {},
+            "name": "curl.request.include_headers",
+            "type": "shell",
+            "category": "web"
+        },
+        {
+            "arguments": {
+                "host": {
+                    "description": "Host name or IPv4 or IPv6 address to ping"
+                }
+            },
+            "command": "ping -c 4 @@host",
+            "description": "Send ICMP packets to test connectivity with a host.",
+            "extends": {},
+            "name": "net.ping",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "host": {
+                    "description": "Host name or IPv4 or IPv6 address"
+                }
+            },
+            "command": "traceroute @@host",
+            "description": "Trace the route packets take to a destination.",
+            "extends": {},
+            "name": "net.traceroute",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name to query"
+                }
+            },
+            "command": "nslookup @@domain",
+            "description": "Query DNS records for a domain.",
+            "extends": {},
+            "name": "net.nslookup",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "domain": {
+                    "description": "Domain name to query"
+                },
+                "record_type": {
+                    "description": "DNS record type (A, AAAA, MX, NS, TXT, etc.)"
+                }
+            },
+            "command": "dig @@domain @@record_type",
+            "description": "Perform a detailed DNS query, specifying record type.",
+            "extends": {},
+            "name": "net.dig",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "target": {
+                    "description": "Domain name or IP address for WHOIS lookup"
+                }
+            },
+            "command": "whois @@target",
+            "description": "Get WHOIS registration information for a domain or IP.",
+            "extends": {},
+            "name": "net.whois",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "arp -a",
+            "description": "Show the local ARP table.",
+            "extends": {},
+            "name": "net.arp",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "command": "route -n",
+            "description": "Show the IP routing table.",
+            "extends": {},
+            "name": "net.route",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., eth0"
+                }
+            },
+            "command": "ifconfig @@interface",
+            "description": "Show configuration of a network interface.",
+            "extends": {},
+            "name": "net.ifconfig",
+            "type": "shell",
+            "category": "network"
+        },
+        {
+            "arguments": {
+                "port": {
+                    "description": "Network service port number"
+                },
+                "protocol": {
+                    "description": "Protocol type",
+                    "options": [
+                        "tcp",
+                        "udp"
+                    ]
+                }
+            },
+            "command": "iptables -A INPUT -p @@protocol --dport @@port -j ACCEPT",
+            "description": "Allow incoming traffic on a specific port.",
+            "extends": {},
+            "name": "firewall.allow.port",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "ip": {
+                    "description": "IP address to block"
+                }
+            },
+            "command": "iptables -A INPUT -s @@ip -j DROP && ip6tables -A INPUT -s @@ip -j DROP",
+            "description": "Block all traffic from a specific IP.",
+            "extends": {},
+            "name": "firewall.deny.ip",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "interface": {
+                    "description": "Physical or virtual network device, e.g., eth0"
+                }
+            },
+            "command": "iptables -A INPUT -i @@interface -j ACCEPT && iptables -A OUTPUT -o @@interface -j ACCEPT",
+            "description": "Allow all traffic on a specific network interface.",
+            "extends": {},
+            "name": "firewall.allow.interface",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location to save the rules"
+                }
+            },
+            "command": "iptables-save > @@file",
+            "description": "Persist current firewall rules to a file.",
+            "extends": {},
+            "name": "firewall.save",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "File location containing saved rules"
+                }
+            },
+            "command": "iptables-restore < @@file",
+            "description": "Restore firewall rules from a file.",
+            "extends": {},
+            "name": "firewall.restore",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "command": "iptables -L -v -n && ip6tables -L -v -n",
+            "description": "List all current firewall rules with details.",
+            "extends": {},
+            "name": "firewall.list.rules",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "end_port": {
+                    "description": "End of port range"
+                },
+                "protocol": {
+                    "description": "Protocol type",
+                    "options": [
+                        "tcp",
+                        "udp"
+                    ]
+                },
+                "start_port": {
+                    "description": "Start of port range"
+                }
+            },
+            "command": "iptables -A INPUT -p @@protocol --dport @@start_port:@@end_port -j DROP",
+            "description": "Drop traffic on a range of ports.",
+            "extends": {},
+            "name": "firewall.drop.port.range",
+            "type": "shell",
+            "category": "firewall"
+        },
+        {
+            "arguments": {
+                "target": {
+                    "description": "Target IP or hostname"
+                },
+                "username": {
+                    "description": "Username for SSH login"
+                },
+                "wordlist": {
+                    "description": "Path to password wordlist file"
+                }
+            },
+            "command": "hydra -l @@username -P @@wordlist ssh://@@target",
+            "description": "Brute force SSH credentials using a wordlist.",
+            "extends": {},
+            "name": "hydra.ssh",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "hash_file": {
+                    "description": "File containing hashes to crack"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "john --wordlist=@@wordlist @@hash_file",
+            "description": "Crack hashes offline using John the Ripper.",
+            "extends": {},
+            "name": "john.crack",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target URL with parameters"
+                }
+            },
+            "command": "sqlmap -u '@@url' --batch",
+            "description": "Automated SQL injection test on a target URL.",
+            "extends": {},
+            "name": "sqlmap.scan",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target URL including http/https"
+                }
+            },
+            "command": "nikto -h @@url",
+            "description": "Vulnerability scanner for web servers.",
+            "extends": {},
+            "name": "nikto.scan",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "template": {
+                    "description": "Nuclei template or template directory path"
+                },
+                "url": {
+                    "description": "Target URL for scanning"
+                }
+            },
+            "command": "nuclei -u @@url -t @@template",
+            "description": "Execute Nuclei templates to detect vulnerabilities.",
+            "extends": {},
+            "name": "nuclei.scan",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "module": {
+                    "description": "Metasploit module name (e.g., exploit/multi/handler)"
+                },
+                "target": {
+                    "description": "Target IP address"
+                }
+            },
+            "command": "msfconsole -q -x 'use @@module; set RHOSTS @@target; run'",
+            "description": "Execute a Metasploit module against a target.",
+            "extends": {},
+            "name": "metasploit.module",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target WordPress site URL"
+                }
+            },
+            "command": "wpscan --url @@url",
+            "description": "Vulnerability scanner for WordPress sites.",
+            "extends": {},
+            "name": "wpscan.scan",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "url": {
+                    "description": "Target URL for directory discovery"
+                },
+                "wordlist": {
+                    "description": "Path to wordlist file"
+                }
+            },
+            "command": "gobuster dir -u @@url -w @@wordlist",
+            "description": "Discover directories/files using brute force with Gobuster.",
+            "extends": {},
+            "name": "gobuster.dir",
+            "type": "shell",
+            "category": "security"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "Path to docker-compose.yml file"
+                }
+            },
+            "command": "docker-compose -f @@file up -d",
+            "description": "Start services defined in a docker-compose file.",
+            "extends": {},
+            "name": "docker.compose.up",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "file": {
+                    "description": "Path to docker-compose.yml file"
+                }
+            },
+            "command": "docker-compose -f @@file down",
+            "description": "Stop and remove services defined in docker-compose.",
+            "extends": {},
+            "name": "docker.compose.down",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "container": {
+                    "description": "Container name or ID"
+                }
+            },
+            "command": "docker logs @@container",
+            "description": "Get logs from a running container.",
+            "extends": {},
+            "name": "docker.logs",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "command_to_run": {
+                    "description": "Command to execute inside the container"
+                },
+                "container": {
+                    "description": "Container name or ID"
+                }
+            },
+            "command": "docker exec @@container @@command_to_run",
+            "description": "Execute a command inside a running container.",
+            "extends": {},
+            "name": "docker.exec",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "driver": {
+                    "description": "Network driver type",
+                    "options": [
+                        "bridge",
+                        "host",
+                        "overlay",
+                        "macvlan"
+                    ]
+                },
+                "name": {
+                    "description": "Network name"
+                }
+            },
+            "command": "docker network create --driver @@driver @@name",
+            "description": "Create a custom Docker network.",
+            "extends": {},
+            "name": "docker.network.create",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "name": {
+                    "description": "Volume name"
+                }
+            },
+            "command": "docker volume create @@name",
+            "description": "Create a Docker volume.",
+            "extends": {},
+            "name": "docker.volume.create",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "path": {
+                    "description": "Path to Dockerfile directory"
+                },
+                "tag": {
+                    "description": "Image tag/name"
+                }
+            },
+            "command": "docker build -t @@tag @@path",
+            "description": "Build a Docker image from a Dockerfile.",
+            "extends": {},
+            "name": "docker.build",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "image": {
+                    "description": "Image name to run"
+                },
+                "name": {
+                    "description": "Container name"
+                },
+                "port": {
+                    "description": "Port mapping (e.g., 8080:80)"
+                }
+            },
+            "command": "docker run -d --name @@name -p @@port @@image",
+            "description": "Run a container with custom parameters.",
+            "extends": {},
+            "name": "docker.run",
+            "type": "shell",
+            "category": "containers"
+        },
+        {
+            "arguments": {
+                "service": {
+                    "description": "Service name"
+                }
+            },
+            "command": "sudo systemctl start @@service",
+            "description": "Start a systemd service.",
+            "extends": {},
+            "name": "systemctl.start",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "service": {
+                    "description": "Service name"
+                }
+            },
+            "command": "sudo systemctl stop @@service",
+            "description": "Stop a systemd service.",
+            "extends": {},
+            "name": "systemctl.stop",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "service": {
+                    "description": "Service name"
+                }
+            },
+            "command": "sudo systemctl enable @@service",
+            "description": "Enable a service to start on boot.",
+            "extends": {},
+            "name": "systemctl.enable",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "service": {
+                    "description": "Service name"
+                }
+            },
+            "command": "systemctl status @@service",
+            "description": "Show the status of a service.",
+            "extends": {},
+            "name": "systemctl.status",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "command_to_schedule": {
+                    "description": "Command to schedule"
+                },
+                "cron_expression": {
+                    "description": "Cron expression (e.g., */5 * * * *)"
+                }
+            },
+            "command": "(crontab -l 2>/dev/null; echo '@@cron_expression @@command_to_schedule') | crontab -",
+            "description": "Add a new scheduled task to crontab.",
+            "extends": {},
+            "name": "cron.add",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "command": "crontab -l",
+            "description": "List scheduled tasks for the current user.",
+            "extends": {},
+            "name": "cron.list",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "command": "df -h",
+            "description": "Show disk space usage (df).",
+            "extends": {},
+            "name": "disk.usage",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "path": {
+                    "description": "Directory path to analyze"
+                }
+            },
+            "command": "du -sh @@path",
+            "description": "Show space occupied by a directory (du).",
+            "extends": {},
+            "name": "disk.du",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "command": "ps aux",
+            "description": "List running processes.",
+            "extends": {},
+            "name": "process.list",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "pid": {
+                    "description": "Process ID to kill"
+                }
+            },
+            "command": "kill @@pid",
+            "description": "Terminate a process by PID.",
+            "extends": {},
+            "name": "process.kill",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "command": "free -h",
+            "description": "Display used and available RAM memory.",
+            "extends": {},
+            "name": "memory.usage",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "service": {
+                    "description": "Service name to restart"
+                }
+            },
+            "command": "sudo systemctl restart @@service",
+            "description": "Restart a service via systemctl.",
+            "extends": {},
+            "name": "service.restart",
+            "type": "shell",
+            "category": "system"
+        },
+        {
+            "arguments": {
+                "database": {
+                    "description": "Database name"
+                },
+                "host": {
+                    "description": "Database host"
+                },
+                "password": {
+                    "description": "Database password"
+                },
+                "query": {
+                    "description": "SQL query to execute"
+                },
+                "user": {
+                    "description": "Database user"
+                }
+            },
+            "command": "mysql -h @@host -u @@user -p'@@password' @@database -e '@@query'",
+            "description": "Execute a SQL query on a MySQL database.",
+            "extends": {},
+            "name": "mysql.query",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "database": {
+                    "description": "Database name"
+                },
+                "host": {
+                    "description": "Database host"
+                },
+                "output": {
+                    "description": "Output file path"
+                },
+                "password": {
+                    "description": "Database password"
+                },
+                "user": {
+                    "description": "Database user"
+                }
+            },
+            "command": "mysqldump -h @@host -u @@user -p'@@password' @@database > @@output",
+            "description": "Export a MySQL database to a file.",
+            "extends": {},
+            "name": "mysql.dump",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "database": {
+                    "description": "Database name"
+                },
+                "host": {
+                    "description": "Database host"
+                },
+                "query": {
+                    "description": "SQL query to execute"
+                },
+                "user": {
+                    "description": "Database user"
+                }
+            },
+            "command": "psql -h @@host -U @@user -d @@database -c '@@query'",
+            "description": "Execute a SQL query on PostgreSQL.",
+            "extends": {},
+            "name": "psql.query",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "database": {
+                    "description": "Database name"
+                },
+                "host": {
+                    "description": "Database host"
+                },
+                "output": {
+                    "description": "Output file path"
+                },
+                "user": {
+                    "description": "Database user"
+                }
+            },
+            "command": "pg_dump -h @@host -U @@user @@database > @@output",
+            "description": "Export a PostgreSQL database to a file.",
+            "extends": {},
+            "name": "psql.dump",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "command_to_run": {
+                    "description": "MongoDB command to execute"
+                },
+                "connection": {
+                    "description": "MongoDB connection string"
+                }
+            },
+            "command": "mongosh '@@connection' --eval '@@command_to_run'",
+            "description": "Execute a command on MongoDB via mongosh.",
+            "extends": {},
+            "name": "mongosh.query",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "command_to_run": {
+                    "description": "Redis command to execute"
+                },
+                "host": {
+                    "description": "Redis host"
+                },
+                "port": {
+                    "description": "Redis port"
+                }
+            },
+            "command": "redis-cli -h @@host -p @@port @@command_to_run",
+            "description": "Execute a Redis command via redis-cli.",
+            "extends": {},
+            "name": "redis.cli",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "database_file": {
+                    "description": "Path to SQLite database file"
+                },
+                "query": {
+                    "description": "SQL query to execute"
+                }
+            },
+            "command": "sqlite3 @@database_file '@@query'",
+            "description": "Execute a query on a SQLite database.",
+            "extends": {},
+            "name": "sqlite.query",
+            "type": "shell",
+            "category": "database"
+        },
+        {
+            "arguments": {
+                "json": {
+                    "description": "Output stats as raw JSON (true/false)",
+                    "options": [
+                        "true",
+                        "false"
+                    ]
+                }
+            },
+            "command": "system.stats @@json",
+            "description": "System hardware, processes, network, container and VM monitor",
+            "extends": {},
+            "name": "system.stats",
+            "category": "system",
+            "type": "shell"
+        },
+        {
+            "name": "ffuf.dir",
+            "category": "security",
+            "type": "shell",
+            "description": "Fast web directory and file discovery using ffuf",
+            "command": "ffuf -u '@@url/FUZZ' -w '@@wordlist' -e '@@extensions' -c -v",
+            "extends": {},
+            "arguments": {
+                "url": {
+                    "description": "Target base URL (e.g. http://example.com)"
+                },
+                "wordlist": {
+                    "description": "Path to directory wordlist",
+                    "options": [
+                        "/usr/share/wordlists/dirb/common.txt",
+                        "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",
+                        "/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt"
+                    ]
+                },
+                "extensions": {
+                    "description": "Comma-separated extensions to fuzz (e.g. .php,.html,.txt)",
+                    "options": [
+                        ".php,.html,.txt,.json",
+                        ".asp,.aspx,.jsp",
+                        ".js,.env,.config"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "ffuf.params",
+            "category": "security",
+            "type": "shell",
+            "description": "Discover hidden GET/POST parameters using ffuf",
+            "command": "ffuf -u '@@url?FUZZ=test' -w '@@wordlist' -c -v -mc @@match_codes",
+            "extends": {},
+            "arguments": {
+                "url": {
+                    "description": "Target URL endpoint (e.g. http://example.com/index.php)"
+                },
+                "wordlist": {
+                    "description": "Path to parameter wordlist",
+                    "options": [
+                        "/usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt",
+                        "/usr/share/seclists/Discovery/Web-Content/common-api-endpoints-mazen160.txt"
+                    ]
+                },
+                "match_codes": {
+                    "description": "HTTP status codes to match (e.g. 200,301,302,403)",
+                    "options": [
+                        "200,301,302",
+                        "200",
+                        "all"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "wafw00f.detect",
+            "category": "security",
+            "type": "shell",
+            "description": "Detect and fingerprint Web Application Firewalls (WAF)",
+            "command": "wafw00f @@target_url -a",
+            "extends": {},
+            "arguments": {
+                "target_url": {
+                    "description": "Target website URL (e.g. https://target.com)"
+                }
+            }
+        },
+        {
+            "name": "sslscan.audit",
+            "category": "security",
+            "type": "shell",
+            "description": "Audit SSL/TLS ciphers, certificates, and vulnerabilities",
+            "command": "sslscan --show-ciphers --no-failed @@target_host:@@port",
+            "extends": {},
+            "arguments": {
+                "target_host": {
+                    "description": "Target hostname or IP address"
+                },
+                "port": {
+                    "description": "Target SSL/TLS port (e.g. 443, 8443)",
+                    "options": [
+                        "443",
+                        "8443",
+                        "465",
+                        "993",
+                        "995"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "katana.crawl",
+            "category": "security",
+            "type": "shell",
+            "description": "Next-generation web crawler with headless JS rendering support",
+            "command": "katana -u @@target_url -d @@depth -jc -kf -c @@concurrency",
+            "extends": {},
+            "arguments": {
+                "target_url": {
+                    "description": "Root target URL to crawl"
+                },
+                "depth": {
+                    "description": "Maximum crawl depth",
+                    "options": [
+                        "3",
+                        "2",
+                        "5",
+                        "1"
+                    ]
+                },
+                "concurrency": {
+                    "description": "Number of concurrent crawl workers",
+                    "options": [
+                        "10",
+                        "20",
+                        "5"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "arjun.scan",
+            "category": "security",
+            "type": "shell",
+            "description": "Automated HTTP query parameter discovery using Arjun",
+            "command": "arjun -u @@target_url -m @@method -t @@threads",
+            "extends": {},
+            "arguments": {
+                "target_url": {
+                    "description": "Target URL to discover parameters for"
+                },
+                "method": {
+                    "description": "HTTP method to test",
+                    "options": [
+                        "GET",
+                        "POST",
+                        "JSON",
+                        "XML"
+                    ]
+                },
+                "threads": {
+                    "description": "Number of parallel threads",
+                    "options": [
+                        "10",
+                        "5",
+                        "20"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "jwt.crack",
+            "category": "security",
+            "type": "shell",
+            "description": "Crack JWT HMAC-SHA secret key using jwt-tool and wordlist",
+            "command": "jwt-tool @@token -C -d @@wordlist",
+            "extends": {},
+            "arguments": {
+                "token": {
+                    "description": "JSON Web Token string (eyJ...)"
+                },
+                "wordlist": {
+                    "description": "Path to passwords/secrets wordlist",
+                    "options": [
+                        "/usr/share/wordlists/rockyou.txt",
+                        "/usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "nmap.syn_scan",
+            "category": "security",
+            "type": "shell",
+            "description": "Full TCP SYN stealth scan with service and OS detection",
+            "command": "nmap -sS -sV -O -p @@ports -T4 @@target",
+            "extends": {},
+            "arguments": {
+                "target": {
+                    "description": "Target IP, range or hostname"
+                },
+                "ports": {
+                    "description": "Port specification (e.g. 1-1000, 80,443, -)",
+                    "options": [
+                        "1-1000",
+                        "-",
+                        "80,443,8080,8443",
+                        "21,22,23,25,80,443,445,3389"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "nmap.vuln_scripts",
+            "category": "security",
+            "type": "shell",
+            "description": "Scan target for known CVEs using Nmap NSE vulnerability scripts",
+            "command": "nmap -sV --script vuln -p @@ports -T4 @@target",
+            "extends": {},
+            "arguments": {
+                "target": {
+                    "description": "Target IP or hostname"
+                },
+                "ports": {
+                    "description": "Ports to test for vulnerabilities",
+                    "options": [
+                        "1-1000",
+                        "80,443,445,3389,8080",
+                        "-"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "rustscan.fast",
+            "category": "security",
+            "type": "shell",
+            "description": "Ultra-fast port scanner with automatic pipe to Nmap services",
+            "command": "rustscan -a @@target_ip --range @@ports -b @@batch_size -- -sV -sC",
+            "extends": {},
+            "arguments": {
+                "target_ip": {
+                    "description": "Target IP address or domain"
+                },
+                "ports": {
+                    "description": "Port range to scan",
+                    "options": [
+                        "1-65535",
+                        "1-10000",
+                        "1-1000"
+                    ]
+                },
+                "batch_size": {
+                    "description": "Number of parallel sockets",
+                    "options": [
+                        "4500",
+                        "2000",
+                        "1000"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "sublist3r.enum",
+            "category": "security",
+            "type": "shell",
+            "description": "Enumerate subdomains using search engines and OSINT sources",
+            "command": "sublist3r -d @@domain -t @@threads -v",
+            "extends": {},
+            "arguments": {
+                "domain": {
+                    "description": "Root domain to enumerate (e.g. example.com)"
+                },
+                "threads": {
+                    "description": "Number of search threads",
+                    "options": [
+                        "10",
+                        "20",
+                        "30"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "dnsrecon.axfr",
+            "category": "network",
+            "type": "shell",
+            "description": "Attempt DNS Zone Transfer (AXFR) and record enumeration",
+            "command": "dnsrecon -d @@domain -t axfr",
+            "extends": {},
+            "arguments": {
+                "domain": {
+                    "description": "Target domain name (e.g. example.com)"
+                }
+            }
+        },
+        {
+            "name": "whatweb.fingerprint",
+            "category": "web",
+            "type": "shell",
+            "description": "Fingerprint web technologies, CMS, frameworks, and server versions",
+            "command": "whatweb -a 3 -v @@target_url",
+            "extends": {},
+            "arguments": {
+                "target_url": {
+                    "description": "Target website URL (e.g. http://example.com)"
+                }
+            }
+        },
+        {
+            "name": "crackmapexec.smb",
+            "category": "security",
+            "type": "shell",
+            "description": "Enumerate SMB shares, sessions and validate credentials across subnet",
+            "command": "crackmapexec smb @@subnet -u @@user -p @@password --shares",
+            "extends": {},
+            "arguments": {
+                "subnet": {
+                    "description": "Target IP, range or subnet CIDR (e.g. 192.168.1.0/24)"
+                },
+                "user": {
+                    "description": "Username to test (or Administrator)",
+                    "options": [
+                        "Administrator",
+                        "guest",
+                        ""
+                    ]
+                },
+                "password": {
+                    "description": "Password or hash to authenticate",
+                    "options": [
+                        "",
+                        "Password123!",
+                        "admin"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "enum4linux.scan",
+            "category": "security",
+            "type": "shell",
+            "description": "Enumerate Windows/Samba users, groups, password policy, and shares",
+            "command": "enum4linux-ng -A @@target_ip",
+            "extends": {},
+            "arguments": {
+                "target_ip": {
+                    "description": "Target Windows or Samba host IP address"
+                }
+            }
+        },
+        {
+            "name": "smbmap.shares",
+            "category": "security",
+            "type": "shell",
+            "description": "Map read/write permissions on SMB shares for target host",
+            "command": "smbmap -H @@host -u @@user -p @@password",
+            "extends": {},
+            "arguments": {
+                "host": {
+                    "description": "Target SMB host IP or hostname"
+                },
+                "user": {
+                    "description": "SMB Username",
+                    "options": [
+                        "guest",
+                        "Administrator",
+                        "anonymous"
+                    ]
+                },
+                "password": {
+                    "description": "SMB Password",
+                    "options": [
+                        "",
+                        "Password123!"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "impacket.secretsdump",
+            "category": "security",
+            "type": "shell",
+            "description": "Dump SAM/LSA hashes and Active Directory NTDS.dit credentials",
+            "command": "impacket-secretsdump '@@domain/@@user:@@password@@@target_ip' -just-dc-ntlm",
+            "extends": {},
+            "arguments": {
+                "target_ip": {
+                    "description": "Domain Controller or Target IP"
+                },
+                "domain": {
+                    "description": "Active Directory Domain name (e.g. CORP.LOCAL)"
+                },
+                "user": {
+                    "description": "Domain Administrator username"
+                },
+                "password": {
+                    "description": "Password or NTLM hash (aad3b4...:hash)"
+                }
+            }
+        },
+        {
+            "name": "kerbrute.userenum",
+            "category": "security",
+            "type": "shell",
+            "description": "Fast Active Directory username enumeration via Kerberos pre-auth",
+            "command": "kerbrute userenum --dc @@dc_ip -d @@domain @@userlist",
+            "extends": {},
+            "arguments": {
+                "dc_ip": {
+                    "description": "Domain Controller IP address"
+                },
+                "domain": {
+                    "description": "Domain FQDN (e.g. target.local)"
+                },
+                "userlist": {
+                    "description": "Path to username wordlist",
+                    "options": [
+                        "/usr/share/seclists/Usernames/xato-net-10-million-usernames.txt",
+                        "/usr/share/seclists/Usernames/top-usernames-shortlist.txt"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "netcat.listener",
+            "category": "security",
+            "type": "shell",
+            "description": "Open a Netcat reverse shell TCP listener on specified port",
+            "command": "nc -lvnp @@port",
+            "extends": {},
+            "arguments": {
+                "port": {
+                    "description": "Local port to listen on for incoming shells",
+                    "options": [
+                        "4444",
+                        "9001",
+                        "1337",
+                        "8080",
+                        "443"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "socat.tty_listener",
+            "category": "security",
+            "type": "shell",
+            "description": "Start a fully interactive TTY reverse shell handler with Socat",
+            "command": "socat file:/dev/pts/5,raw,echo=0 tcp-listen:@@port",
+            "extends": {},
+            "arguments": {
+                "port": {
+                    "description": "Port to listen on for interactive TTY connection",
+                    "options": [
+                        "4444",
+                        "9001",
+                        "1337"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chisel.server",
+            "category": "security",
+            "type": "shell",
+            "description": "Start a Chisel reverse HTTP/HTTPS tunnel server",
+            "command": "chisel server -p @@listen_port --reverse -v",
+            "extends": {},
+            "arguments": {
+                "listen_port": {
+                    "description": "Port for Chisel server to listen on",
+                    "options": [
+                        "8000",
+                        "8080",
+                        "443",
+                        "9000"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chisel.client",
+            "category": "security",
+            "type": "shell",
+            "description": "Connect Chisel client and create reverse SOCKS5 proxy tunnel",
+            "command": "chisel client @@server_ip:@@server_port R:@@remote_port:socks",
+            "extends": {},
+            "arguments": {
+                "server_ip": {
+                    "description": "Chisel server remote IP address"
+                },
+                "server_port": {
+                    "description": "Chisel server port",
+                    "options": [
+                        "8000",
+                        "8080",
+                        "443"
+                    ]
+                },
+                "remote_port": {
+                    "description": "Port to bind SOCKS5 proxy on server side",
+                    "options": [
+                        "1080",
+                        "9050",
+                        "10800"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "binwalk.extract",
+            "category": "forensics",
+            "type": "shell",
+            "description": "Scan and recursively extract embedded firmware and compressed files",
+            "command": "binwalk -e -M @@file_path --directory=@@output_dir",
+            "extends": {},
+            "arguments": {
+                "file_path": {
+                    "description": "Path to binary, firmware or image file"
+                },
+                "output_dir": {
+                    "description": "Directory to extract files into",
+                    "options": [
+                        "/tmp/extracted",
+                        "./out_binwalk"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "foremost.carve",
+            "category": "forensics",
+            "type": "shell",
+            "description": "Carve and recover lost files based on file headers and data structures",
+            "command": "foremost -i @@image_file -o @@output_dir -v",
+            "extends": {},
+            "arguments": {
+                "image_file": {
+                    "description": "Path to raw disk image or memory dump file"
+                },
+                "output_dir": {
+                    "description": "Destination directory for carved files",
+                    "options": [
+                        "/tmp/foremost_out",
+                        "./recovered_files"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "yara.scan_dir",
+            "category": "forensics",
+            "type": "shell",
+            "description": "Recursively scan directories for malware signatures using YARA rules",
+            "command": "yara -r @@rules_file @@target_dir",
+            "extends": {},
+            "arguments": {
+                "rules_file": {
+                    "description": "Path to .yar / .yara signature rules file"
+                },
+                "target_dir": {
+                    "description": "Directory or file path to scan",
+                    "options": [
+                        "/",
+                        "/tmp",
+                        "/home",
+                        "/var/www"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "tshark.extract_http",
+            "category": "forensics",
+            "type": "shell",
+            "description": "Extract all HTTP requests, URIs and hosts from PCAP network capture",
+            "command": "tshark -r @@pcap_file -Y 'http.request' -T fields -e ip.src -e ip.dst -e http.host -e http.request.uri",
+            "extends": {},
+            "arguments": {
+                "pcap_file": {
+                    "description": "Path to .pcap or .pcapng capture file"
+                }
+            }
+        },
+        {
+            "name": "volatility.pslist",
+            "category": "forensics",
+            "type": "shell",
+            "description": "List active and hidden processes from memory dump using Volatility 3",
+            "command": "vol -f @@memory_dump windows.pslist",
+            "extends": {},
+            "arguments": {
+                "memory_dump": {
+                    "description": "Path to memory dump file (.raw, .vmem, .dmp)"
+                }
+            }
+        },
+        {
+            "name": "arpspoof.poison",
+            "category": "security",
+            "type": "shell",
+            "description": "Perform ARP cache poisoning to intercept traffic between target and gateway",
+            "command": "arpspoof -i @@interface -t @@target_ip -r @@gateway_ip",
+            "extends": {},
+            "arguments": {
+                "interface": {
+                    "description": "Network interface (e.g. eth0, wlan0)",
+                    "options": [
+                        "eth0",
+                        "wlan0",
+                        "eno1",
+                        "enp0s3"
+                    ]
+                },
+                "target_ip": {
+                    "description": "Victim host IP address"
+                },
+                "gateway_ip": {
+                    "description": "Router / Default Gateway IP address"
+                }
+            }
+        },
+        {
+            "name": "bettercap.mitm",
+            "category": "security",
+            "type": "shell",
+            "description": "Launch Bettercap MITM session with active network probing and ARP spoof",
+            "command": "bettercap -iface @@interface -eval 'net.probe on; set arp.spoof.targets @@target_ip; arp.spoof on'",
+            "extends": {},
+            "arguments": {
+                "interface": {
+                    "description": "Network interface to bind to",
+                    "options": [
+                        "eth0",
+                        "wlan0",
+                        "eno1"
+                    ]
+                },
+                "target_ip": {
+                    "description": "Target IP address or comma-separated list of targets"
+                }
+            }
+        },
+        {
+            "name": "aircrack.deauth",
+            "category": "security",
+            "type": "shell",
+            "description": "Send 802.11 deauthentication packets to capture WPA handshakes",
+            "command": "aireplay-ng --deauth @@packets -a @@bssid -c @@client_mac @@interface",
+            "extends": {},
+            "arguments": {
+                "interface": {
+                    "description": "Wireless interface in monitor mode (e.g. wlan0mon)",
+                    "options": [
+                        "wlan0mon",
+                        "wlan1mon",
+                        "mon0"
+                    ]
+                },
+                "bssid": {
+                    "description": "Access Point MAC address (BSSID)"
+                },
+                "client_mac": {
+                    "description": "Target client MAC address (or FF:FF:FF:FF:FF:FF for broadcast)",
+                    "options": [
+                        "FF:FF:FF:FF:FF:FF"
+                    ]
+                },
+                "packets": {
+                    "description": "Number of deauth packets to transmit",
+                    "options": [
+                        "10",
+                        "5",
+                        "20",
+                        "50"
+                    ]
+                }
+            }
+        }
+    ]
+}

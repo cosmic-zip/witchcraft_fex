@@ -1,0 +1,147 @@
+{
+  "index": [
+    {
+      "name": "blood moon",
+      "package": "blood_moon",
+      "desciprtion": "Lightweight Ransomware emulator for demo purposes.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "busybox",
+      "package": "busybox",
+      "desciprtion": "Single binary providing common UNIX utilities in a minimal form.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "GPLv2"
+    },
+    {
+      "name": "config",
+      "package": "config",
+      "desciprtion": "Configuration management and environment handling tool.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "enigmata",
+      "package": "enigmata",
+      "desciprtion": "Toolkit for encryption, obfuscation, and secure data handling.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "llama",
+      "package": "llama",
+      "desciprtion": "Machine learning and inference runtime component.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "TBD"
+    },
+    {
+      "name": "maidzero",
+      "package": "maidzero",
+      "desciprtion": "Automation and cleanup tool for system maintenance tasks.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],  
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "nettraveler",
+      "package": "nettraveler",
+      "desciprtion": "Universal purple team toolkit.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "server",
+      "package": "server",
+      "desciprtion": "Lightweight server binary for handling requests and responses.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "simple ctf",
+      "package": "simple_ctf",
+      "desciprtion": "Capture-the-flag style security challenge framework.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "update hosts",
+      "package": "update_hosts",
+      "desciprtion": "Utility to modify and manage system hosts file entries.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "binary",
+      "source": "",
+      "licence": "APGLv3"
+    },
+    {
+      "name": "Linux App Manager eXtended (LAMX)",
+      "package": "lamx",
+      "desciprtion": " LAMX is a powerful, interactive Bash script that helps you manage Linux applications and system tools from a single, unified menu. It supports all major package managers (APT, Pacman, DNF, DEB, RPM, Snap, Flatpak), firmware updates, NVIDIA drivers, and power profiles.",
+      "version": "0.0.1",
+      "platforms": [
+        "linux_amd64",
+        "linux_x86"
+      ],
+      "format": "bash script",
+      "source": "https://github.com/saitamasahil/Linux-App-Manager-eXtended",
+      "licence": "ND"
+    }
+  ]
+}
