@@ -40,9 +40,9 @@ class TestMetalcore(unittest.TestCase):
         self.assertEqual(cm.exception.code, 128)
 
     def test_net_exec_echo(self):
-        result = net_exec("echo 'hello nettraveler'")
+        result = net_exec("echo 'hello witchcraft'")
         self.assertEqual(result["status"], 0)
-        self.assertEqual(result["stdout"], "hello nettraveler")
+        self.assertEqual(result["stdout"], "hello witchcraft")
         self.assertEqual(result["stderr"], "")
 
     def test_is_number(self):

@@ -11,12 +11,12 @@ import os
 import unittest
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-NETTRAVELER_PY = os.path.join(PROJECT_ROOT, "main.py")
+MAIN_PY = os.path.join(PROJECT_ROOT, "main.py")
 
 class TestToolchain(unittest.TestCase):
 
     def test_version_command(self):
-        cmd = [sys.executable, NETTRAVELER_PY, "version"]
+        cmd = [sys.executable, MAIN_PY, "version"]
         result = subprocess.run(
             cmd,
             stdout=subprocess.PIPE,
@@ -35,7 +35,7 @@ class TestToolchain(unittest.TestCase):
         ]
         for args, expected in test_cases:
             with self.subTest(args=args):
-                cmd = [sys.executable, NETTRAVELER_PY] + args
+                cmd = [sys.executable, MAIN_PY] + args
                 result = subprocess.run(
                     cmd,
                     stdout=subprocess.PIPE,
@@ -51,7 +51,7 @@ class TestToolchain(unittest.TestCase):
 
     def test_wfex_with_invalid_argument(self):
         random_arg = "invalid_subcommand_test_12345"
-        cmd = [sys.executable, NETTRAVELER_PY, random_arg]
+        cmd = [sys.executable, MAIN_PY, random_arg]
         result = subprocess.run(
             cmd,
             stdout=subprocess.PIPE,

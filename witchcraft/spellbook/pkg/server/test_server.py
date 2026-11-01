@@ -30,7 +30,7 @@ from server import (
     build_command_from_json,
     filter_alpha,
     create_server,
-    NettravelerRequestHandler
+    WitchcraftRequestHandler
 )
 
 

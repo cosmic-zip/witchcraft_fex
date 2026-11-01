@@ -178,7 +178,7 @@ def build_command_from_json(data: Dict[str, Any]) -> list:
 # Request Handler
 # ----------------------------------------------------------------------
 
-class NettravelerRequestHandler(BaseHTTPRequestHandler):
+class WitchcraftRequestHandler(BaseHTTPRequestHandler):
     """Robust HTTP Request Handler supporting Static Files, Auth, and Command Execution."""
 
     server_folder: str = DEFAULT_FOLDER
@@ -429,8 +429,8 @@ class NettravelerRequestHandler(BaseHTTPRequestHandler):
             return
 
         # Run command via main.py
-        nettraveler_script = os.path.join(self.project_root, "main.py")
-        exec_args = [sys.executable, nettraveler_script] + cmdline + ["--output_mode_html"]
+        main_script = os.path.join(self.project_root, "main.py")
+        exec_args = [sys.executable, main_script] + cmdline + ["--output_mode_html"]
 
         if self.logger:
             self.logger.info(f"Executing: {' '.join(cmdline)} (by {user})")
@@ -530,7 +530,7 @@ def create_server(
     username: str = DEFAULT_USER,
     password: str = DEFAULT_PASS,
     project_root: str = "."
-) -> Tuple[ThreadedHTTPServer, NettravelerRequestHandler]:
+) -> Tuple[ThreadedHTTPServer, WitchcraftRequestHandler]:
     """Create and configure a threaded WitchcraftFEX HTTP Server."""
 
     # Set up logger
@@ -542,7 +542,7 @@ def create_server(
         logger.addHandler(handler)
 
     # Configure handler class
-    handler_class = NettravelerRequestHandler
+    handler_class = WitchcraftRequestHandler
     handler_class.server_folder = os.path.abspath(folder)
     handler_class.ztoken = ztoken
     handler_class.auth_manager = AuthManager(username=username, password=password)

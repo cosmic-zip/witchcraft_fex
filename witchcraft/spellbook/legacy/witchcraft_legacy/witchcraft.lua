@@ -8,7 +8,7 @@ if hasModule then
 end
 
 
-VERSION = "NetTraveler BETA2025.666 by COSMIC ZIP 11-APR-2025"
+VERSION = "Witchcraft BETA2025.666 by COSMIC ZIP 11-APR-2025"
 NT_DATAROOT = "data/"
 ENABLE_COLORS = "color" -- none color html
 ENABLE_LOGGER = false
@@ -20,7 +20,7 @@ HEADLESS_BROWSER_BIN = "chromium"
 
 BANNER = [[
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                                NetTraveler BETA2025.222 by COSMIC ZIP 11-APR-2025
+                                Witchcraft BETA2025.222 by COSMIC ZIP 11-APR-2025
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
  
                 ███╗   ██╗███████╗████████╗████████╗██████╗  █████╗ ██╗   ██╗███████╗██╗     ███████╗██████╗ 
@@ -35,7 +35,7 @@ BANNER = [[
 CORES                            What it does
  
 BINDS                            A series os shell script that runs common tasks
-NATIVE                           Exec a nettraveler native function
+NATIVE                           Exec a witchcraft native function
 SCHEDULER                        Exec a binary in a scheduler with periodic or delay setup 
 ARBITRARY                        Run a arbitrary command if a bind, native function or scheduler arn't found
  

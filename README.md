@@ -62,13 +62,13 @@ WitchcraftFEX does not rely on third-party libraries. It uses only code develope
 
 ## Environment Variables
 
-* `NT_DATAROOT` - Sets the full path location for the spellbook directory (e.g., `/opt/nettraveler/spellbook`)
+* `NT_DATAROOT` - Sets the full path location for the spellbook directory (e.g., `/opt/witchcraft/spellbook`)
 
 ## Installation
 
 ### Snapstore
 
-[![Get it from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/nettraveler)
+[![Get it from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/witchcraftfex)
 
 ### Distribution Packages
 
@@ -85,14 +85,14 @@ WitchcraftFEX comes in two variants:
 
 | Version | Size | Description |
 |---------|------|-------------|
-| `nettraveler_full.tar.gz` | 200 MB | Lightweight version without LLM models |
-| `nettraveler_devel.tar.gz` | 5.8 GB | Development version including Deepseek llama 8b model |
+| `witchcraft_full.tar.gz` | 200 MB | Lightweight version without LLM models |
+| `witchcraft_devel.tar.gz` | 5.8 GB | Development version including Deepseek llama 8b model |
 
 **Recommendation**: Use the full version for complete functionality.
 
 ## Configuration
 
-In main.py, you can add a script to run every time nettraveler runs. It allows for more advanced configuration. Custom scripts will run every time, before every command.
+In main.py, you can add a script to run every time Witchcraft runs. It allows for more advanced configuration. Custom scripts will run every time, before every command.
 
 ```python 
 net_shell_router(FN_REGISTRY, "spellbook/pkg/common/hello.sh")
@@ -101,7 +101,7 @@ net_shell_router(FN_REGISTRY, "spellbook/pkg/common/hello.sh")
 ## How to use:
 
 ```console
-  nettraveler [submodule] --arg1 value --arg2 option --arg3 123
+  main.py [submodule] --arg1 value --arg2 option --arg3 123
 ```
 
 Whenever executing any function in WitchcraftFEX, you always start by defining which submodule to use, followed by arguments written with `--`. The argument names are not standardized anymore, but they meaning can be found in the rocketdb.json
@@ -124,7 +124,7 @@ Adds **ANSI terminal colors** using UNIX escape codes. Suitable for **interactiv
 Example:
 
 ```bash
-./nettraveler version
+./main.py version
 ```
 
 ### none
@@ -134,7 +134,7 @@ Outputs **plain UTF-8 text**, no colors or formatting. Ideal for **scripts**, **
 Example:
 
 ```bash
-./nettraveler version --output_mode_none
+./main.py version --output_mode_none
 ```
 
 ### html
@@ -144,13 +144,13 @@ Generates **HTML-formatted output** using inline `<span>` and `style`. Used for 
 Example:
 
 ```bash
-./nettraveler version --output_mode_html
+./main.py version --output_mode_html
 ```
 
 ## Read the Manual!
 
 ```console
-./nettraveler manual
+./main.py manual
 ```
 
 # FLAGS SCLF
@@ -297,7 +297,7 @@ To define predefined options:
 Now, `@@option` tells the parser that `foo` and `bar` are valid predefined options for the `option` argument. Execution would look like this:
 
 ```console
-nettraveler scanner.myapp --address 172.16.123.123 --option foo
+main.py scanner.myapp --address 172.16.123.123 --option foo
 ```
 
 ## How external aliases and binds work
@@ -328,15 +328,15 @@ The first example shows a simple alias that does not require any arguments. The 
 Execution examples:
 
 ```console
-nettraveler map.local
-nettraveler ftp.connect --address 172.16.123.123
+main.py map.local
+main.py ftp.connect --address 172.16.123.123
 ```
 
 ## WebUI
 
 The **WebUI** is a simple **SPA** (Single Page Application) built from scratch using **HTMX**. The preference for **HTMX** instead of **React** or any other library is due to its simplicity, and the fact that you don't need to install anything besides **coreutils** and some CLI tools like **nmap**. In the near future, you may find a folder inside `data` called `mod/webui`; any file placed in this folder will be included inside the final **SPA**.
 
-While creating this framework, sometimes there was a need to fill a form, but directly in the terminal it felt limiting. So the idea came: why not just use an **HTML** form and an **API**? From that thought, and after three attempts, this **WebUI** was created. It's portable, simple, extensible, and more: it is generated using `nettraveler build.web`, making it easy to maintain and upgrade through the **extensions system**.
+While creating this framework, sometimes there was a need to fill a form, but directly in the terminal it felt limiting. So the idea came: why not just use an **HTML** form and an **API**? From that thought, and after three attempts, this **WebUI** was created. It's portable, simple, extensible, and more: it is generated using `main.py build.web`, making it easy to maintain and upgrade through the **extensions system**.
 
 The WebUI must run on the same IP address and port as the server. For example, if the WebUI is configured for 127.0.0.1:5500, the server must also use this address—otherwise, requests will fail. Additionally, the WebUI and server must share the same token. This token is not for authentication but acts as an owner identifier. Be aware that all communication happens in plain text, so use this setup only in secure environments.
 
@@ -394,7 +394,7 @@ This server addresses multiple concerns: it is **portable**, **statically linked
 To serve the WebUI using the server, run:
 
 ```console
-nettraveler server --host 127.0.0.1 --port 5500 --folder webui/
+main.py server --host 127.0.0.1 --port 5500 --folder webui/
 ```
 
 The server will create a log file named `evil_server.log` containing all **POST requests**. If the IP address you provide matches the value set in the `NT_GEN_HOST` global variable within the WebUI, the server will operate as intended and serve the page normally. However, if a different IP or port is configured, the page will still be served, but **command requests will be blocked by default**.
@@ -402,7 +402,7 @@ The server will create a log file named `evil_server.log` containing all **POST 
 To serve a static or malicious page manually, use the following command:
 
 ```console
-nettraveler server --host 127.0.0.1 --port 5500 --folder data/evilpages/default
+main.py server --host 127.0.0.1 --port 5500 --folder data/evilpages/default
 ```
 
 Let me know if you want the NT_GEN_HOST behavior hardened or fallback logic implemented.
@@ -413,17 +413,17 @@ It's the default LLaMA with some tweaks and using an uncensored AI model. To ser
 
 Default model
 ```console
-nettraveler server.default
+main.py server.default
 ```
 
 No AI assitant
 ```console
-nettraveler server.minimal
+main.py server.minimal
 ```
 
 Default server with the default AI assistant with a custom model
 ```console
-nettraveler server.yuri --host 127.0.0.1 --port 5500 --model path/to/model
+main.py server.yuri --host 127.0.0.1 --port 5500 --model path/to/model
 ```
 
 

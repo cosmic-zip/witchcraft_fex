@@ -1,6 +1,6 @@
 {
     "name": "WitchcraftFEX",
-    "package": "nettraveler",
+    "package": "witchcraft",
     "desciprtion": "WitchcraftFEX is an offensive security toolkit that aggregates tools, serializes functions, and provides a standardized interaction interface for various tasks including Wi-Fi hacking, web scanning, vulnerability scanning, OSINT, forensics, backup management, SQL injection, backdoor and ransomware management, custom malware building, reverse shells, RCE agents, generation of reports (RBR), and playbooks (RBP) based on rules.",
     "version": "0.0.1",
     "platforms": [

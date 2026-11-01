@@ -4,4 +4,4 @@ nuitka --onefile \
        --lto=yes \
        --remove-output \
        main.py \
-       && mv nettraveler.bin nettraveler
+       && mv main.bin witchcraftfex

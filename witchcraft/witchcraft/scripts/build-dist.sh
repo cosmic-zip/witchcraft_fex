@@ -6,20 +6,20 @@ nuitka --onefile \
        --lto=yes \
        --remove-output \
        main.py \
-       && mv nettraveler.bin nettraveler
+       && mv main.bin witchcraftfex
 
 echo "[x] Setup dist"
 mkdir dist temp
 mv spellbook/models/ temp/
 mv spellbook/ dist/
-mv nettraveler dist/
-tar -czvf nettraveler_lite.tar.gz dist/
+mv witchcraftfex dist/
+tar -czvf witchcraft_lite.tar.gz dist/
 mv temp/models/ dist/spellbook/
-tar -czvf nettraveler_full.tar.gz dist/
+tar -czvf witchcraft_full.tar.gz dist/
 
 echo "[x] Cleanup"
 mv dist/spellbook/ ./
 rm -r temp/
-mv nettraveler_lite.tar.gz dist/
-mv nettraveler_full.tar.gz dist/
-mv dist/nettraveler ./
+mv witchcraft_lite.tar.gz dist/
+mv witchcraft_full.tar.gz dist/
+mv dist/witchcraftfex ./

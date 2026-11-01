@@ -359,11 +359,11 @@ Toda a inteligência e os comandos reconhecidos pela plataforma estão mapeados 
 }
 ```
 
-O atributo `name` estabelece o identificador universal da rotina, empregado pelo despachante em chamadas como `nettraveler <name>`. O campo `command` armazena a super-string de execução, utilizando o prefixo `@@` para delimitar os pontos dinâmicos de substituição de variáveis. O parâmetro `category` determina o agrupamento temático da funcionalidade entre as categorias canônicas do sistema (`network`, `web`, `security`, `forensics`, `system`, `core`, `containers`, `firewall`, `database`, `antivirus`, `cleanup`). O bloco `arguments` especifica a lista de parâmetros aceitos, enquanto a seção `options` lista valores pré-configurados, permitindo que a interface WebUI instancie automaticamente caixas de seleção `<select>` e a CLI valide escolhas no manual do operador.
+O atributo `name` estabelece o identificador universal da rotina, empregado pelo despachante em chamadas como `main.py <name>`. O campo `command` armazena a super-string de execução, utilizando o prefixo `@@` para delimitar os pontos dinâmicos de substituição de variáveis. O parâmetro `category` determina o agrupamento temático da funcionalidade entre as categorias canônicas do sistema (`network`, `web`, `security`, `forensics`, `system`, `core`, `containers`, `firewall`, `database`, `antivirus`, `cleanup`). O bloco `arguments` especifica a lista de parâmetros aceitos, enquanto a seção `options` lista valores pré-configurados, permitindo que a interface WebUI instancie automaticamente caixas de seleção `<select>` e a CLI valide escolhas no manual do operador.
 
 ### 6.2. Motor CLI Procedural: Compilação de Super-Strings e SCLF
 
-O núcleo do mecanismo de linha de comando encontra-se implementado em [metalcore/core.py](file:///home/cosmic/workspace/nettraveler/WitchcraftFEX/nettraveler/metalcore/core.py), atuando como um despachante dinâmico e flexível:
+O núcleo do mecanismo de linha de comando encontra-se implementado em [metalcore/core.py](file:///home/cosmic/workspace/witchcraft-mono/witchcraft/metalcore/core.py), atuando como um despachante dinâmico e flexível:
 
 ```
 [CLI User Input] ──> net_shell_router()
@@ -388,7 +388,7 @@ O sistema adapta sua emissão de dados de acordo com o contexto operacional. O m
 
 ### 6.3. Motor WebUI Procedural: SPA Reativa com HTMX
 
-O compilador web do framework, localizado em [interface/web/generator.py](file:///home/cosmic/workspace/nettraveler/WitchcraftFEX/nettraveler/interface/web/generator.py), é acionado pelo comando `nettraveler build.web`:
+O compilador web do framework, localizado em [interface/web/generator.py](file:///home/cosmic/workspace/witchcraft-mono/witchcraft/interface/web/generator.py), é acionado pelo comando `main.py build.web`:
 
 ```mermaid
 flowchart TD
@@ -428,19 +428,19 @@ As instruções abaixo permitem conferir a integridade da suíte, verificar a ve
 
 ```bash
 # Exibir o banner Cypherpunk e verificar integridade operacional
-nettraveler
+main.py
 
 # Exibir a versão corrente da plataforma
-nettraveler version
+main.py version
 
 # Acessar a documentação integral derivada do catálogo RocketDB
-nettraveler manual
+main.py manual
 
 # Executar comando emitindo texto limpo para encadeamento em pipes
-nettraveler map.local --output_mode_none > active_sockets.txt
+main.py map.local --output_mode_none > active_sockets.txt
 
 # Reconstruir proceduralmente a SPA WebUI a partir do RocketDB
-nettraveler build.web > spellbook/webui/index.html
+main.py build.web > spellbook/webui/index.html
 ```
 
 ### 7.2. Operações Ofensivas & Reconhecimento
@@ -449,16 +449,16 @@ O arsenal ofensivo opera através de comandos concisos para varreduras perimetra
 
 ```bash
 # Executar varredura furtiva de portas via Nmap com perfil padrão
-nettraveler scan.nmapper --target 192.168.1.100 --scripts default
+main.py scan.nmapper --target 192.168.1.100 --scripts default
 
 # Realizar fuzzing em aplicação Web utilizando dicionário nativo do spellbook
-nettraveler ffuf.fuzz --url http://alvo.local/FUZZ --wordlist spellbook/wordlists/common.txt
+main.py ffuf.fuzz --url http://alvo.local/FUZZ --wordlist spellbook/wordlists/common.txt
 
 # Automatizar diagnóstico e extração via Injeção SQL
-nettraveler sqlmap.scan --url "http://alvo.local/item.php?id=1"
+main.py sqlmap.scan --url "http://alvo.local/item.php?id=1"
 
 # Estabelecer túnel reverso cifrado para progressão lateral na rede
-nettraveler chisel.client --server 10.10.14.5:8000 --tunnel R:socks
+main.py chisel.client --server 10.10.14.5:8000 --tunnel R:socks
 ```
 
 ### 7.3. Operações Defensivas, Forense & Anti-Forense
@@ -467,19 +467,19 @@ As rotinas de resposta e análise forense viabilizam a inspeção de memória, r
 
 ```bash
 # Identificar processos ocultos em dump de memória RAM via Volatility 3
-nettraveler volatility.pslist --memory_dump /cases/evidence_01.raw
+main.py volatility.pslist --memory_dump /cases/evidence_01.raw
 
 # Recuperar arquivos deletados em imagem física de armazenamento
-nettraveler foremost.carve --image_file /cases/disk.dd --output_dir /cases/recovered/
+main.py foremost.carve --image_file /cases/disk.dd --output_dir /cases/recovered/
 
 # Varrer assinaturas de webshells em diretório Web com regras YARA
-nettraveler yara.scan_dir --rules_file spellbook/fuzzing/yara/webshells.yar --target_dir /var/www/html
+main.py yara.scan_dir --rules_file spellbook/fuzzing/yara/webshells.yar --target_dir /var/www/html
 
 # Higienizar completamente metadados de arquivos sensíveis
-nettraveler file.clean.meta --file relatorio_confidencial.pdf
+main.py file.clean.meta --file relatorio_confidencial.pdf
 
 # Realizar descarte seguro e irreversível com dez passos de sobrescrita
-nettraveler clean.shred --target_file /tmp/malicious_payload.bin
+main.py clean.shred --target_file /tmp/malicious_payload.bin
 ```
 
 ### 7.4. Servidor WebUI & Assistente de IA Local
@@ -488,10 +488,10 @@ A camada de interface gráfica e o modelo local de inteligência artificial pode
 
 ```bash
 # Inicializar a interface gráfica reativa na porta padrão 5500
-nettraveler server --host 127.0.0.1 --port 5500 --folder spellbook/webui/
+main.py server --host 127.0.0.1 --port 5500 --folder spellbook/webui/
 
 # Carregar o servidor com o assistente local Yuri IA em inferência offline
-nettraveler server.yuri --host 127.0.0.1 --port 5500 --model spellbook/models/deepseek-8b-q4.gguf
+main.py server.yuri --host 127.0.0.1 --port 5500 --model spellbook/models/deepseek-8b-q4.gguf
 ```
 
 ---

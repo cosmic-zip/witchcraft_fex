@@ -10,7 +10,7 @@ Abaixo está a descrição e a responsabilidade de cada diretório presente na r
 
 ### 📁 `.github/`
 Configurações de CI/CD e automação do GitHub:
-- Contém os fluxos de trabalho (workflows) do GitHub Actions (como [`witchcraft.yml`](file:///home/cosmic/workspace/nettraveler/witchcraft-mono/.github/workflows/witchcraft.yml)), responsáveis pela instalação de dependências, compilação de binários e execução automática de testes.
+- Contém os fluxos de trabalho (workflows) do GitHub Actions (como [`witchcraft.yml`](file:///home/cosmic/workspace/witchcraft-mono/.github/workflows/witchcraft.yml)), responsáveis pela instalação de dependências, compilação de binários e execução automática de testes.
 
 ---
 
