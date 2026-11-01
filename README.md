@@ -14,16 +14,32 @@
 
 ---
 
-# What it does?
+# What it's about?
 
-WITCHCRAFT Are much more than a simple alias, it's a init system that can works with busybox, a shell and automation's and automation's engine for hacking, osint, forensics, etc.
+WitchcraftFEX Are much more than a simple hacking script, it's a almost complete cyber security system that can works with busybox, a shell and automation's and automation's engine for pentesting, osint, forensics, etc. All based in a modular system. It is fully compatible with GNU/Linux, BSD, Android (with Termux) and Windows
 
 ![banner](docs/images/dig.png)
 
+# A versatile toolkit for cybersecurity unified
 
-**** - A versatile toolkit for cybersecurity.
-
+![banner](docs/images/WitchcraftFEX.png)
 ---
+
+WitchcraftFEX or just WFEX is a modular system with build and hacking tools for cypherpunks. The objective is to centralize all my work (that is correlated to cyber security) and expose it in a standardized way to the user. I have several repos for that, but this is the ONLY one that matters.
+
+This repo contains the tools it self but also all build scripts and configurations files for setup a development system for cyphers, if you want to build something and chill, this repo is for you.
+
+What about the contents? Well exists a `monorepo.md` you should read it to understand the structure of the project. But in a nutshell:
+
+- `manifest` is for documents, like manifest from punks and cyphers
+- `witchcraft` is the main toolkit for offensive and defensive ops, it's the magnos opus of the project, everything relevant to ops and security is here (or should be)
+- `xcript` is a independent programming lang in rust (i know, i know) that i created to 
+- `zodiac-os` is the opsec OS, lightweight and "customizable", it's not a full capable OS, the objective is to run on cyberdecks and help me (you) to understand OS and Linux in deeph.
+ 
+
+> This repo included hand made and IA assited code, somethings like the rocket_db is almost 100% IA created (with some tweaks). I don't mind code IA code that I can explain.
+
+> 2026, cosmic-zip
 
 ## WitchcraftFEX
 
