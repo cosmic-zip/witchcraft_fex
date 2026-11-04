@@ -63,23 +63,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     restart: unless-stopped
 
-  wiki:
-    image: nginx:alpine
-    container_name: witchcraftfex_wiki
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "20m"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 128M
-    ports:
-      - "${WIKI_PORT:-4001}:80"
-    volumes:
-      - ./docs/wiki:/usr/share/nginx/html:ro
 
 volumes:
   portainer_data:
