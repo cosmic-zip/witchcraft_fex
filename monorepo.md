@@ -49,7 +49,7 @@ Linguagem de script independente desenvolvida em Rust:
 
 ---
 
-### 📁 `zodiac-os/`
+### 📁 `bloodmoon-os/`
 Sistema operacional customizado minimalista voltado para operações e segurança:
 - **`configs/`**: Arquivos de configuração de compilação do kernel e do sistema (ex.: `nt_defconfig` para Buildroot).
 - **`desktop/`**: Configurações de ambiente gráfico, scripts de inicialização de interface e perfil de usuário.
