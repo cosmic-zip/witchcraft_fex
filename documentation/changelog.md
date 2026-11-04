@@ -4,7 +4,7 @@ Date: Sat Nov 1 09:31:17 AM -03 2026
 
     Update of witchcraft to version 1.0.0-devel
     Nettraveller has been fully merged into witchcraft
-    The zodiac-os has been fully merged into witchcraft
+    The bloodmoon-os has been fully merged into witchcraft
     The xcript has been fully merged into witchcraft
     All projects are now in a single repository
     All projects have been updated to use the same version

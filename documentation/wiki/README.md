@@ -14,6 +14,7 @@ O **WitchcraftFEX** é uma plataforma modular de operações cibernéticas, auto
 ## 📚 Seções da Wiki
 
 - **[Apresentação & Grimório Cypherpunk](cypherpunk_presentation.md)**: Apresentação completa com os 8 módulos temáticos, arquitetura, Purple Team loop, modelo de autodefesa em 5 camadas e cheat-sheets operacionais.
+- **[Engenharia de Linux Embarcado com Buildroot](embedded_linux_buildroot_mastery.md)**: Guia completo de arquitetura, compilação eficiente, ccache, dissecação de menus, runtimes (Python/Rust), linkers, inclusão de binários externos e todos os filesystems.
 - **[Repositório & Código Fonte](https://cosmic-zip.github.io/)**: Wiki externa e guia canônico do Netrunner.
 
 ---

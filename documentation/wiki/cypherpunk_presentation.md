@@ -58,7 +58,7 @@
 
 ### 1.1. As Raízes do Movimento Cypherpunk
 
-O movimento Cypherpunk floresceu no final dos anos 1980 e ganhou formalização canônica na década de 1990 pelas mãos de Eric Hughes, Timothy C. May e John Gilmore através do emblemático *Cypherpunk Manifesto*. O documento estabeleceu um compromisso inegociável entre a matemática pura e os direitos civis na alvorada do ciberespaço.
+O movimento Cypherpunk floresceu no final dos anos 1980 na década de 1990 pelas mãos de Eric Hughes, Timothy C. May e John Gilmore através do emblemático *Cypherpunk Manifesto*. O documento estabeleceu um compromisso inegociável entre a matemática pura e os direitos civis na alvorada do ciberespaço.
 
 > *"Privacidade é necessária para uma sociedade aberta na era eletrônica... Nós, os Cypherpunks, somos dedicados a construir sistemas anônimos. Defendemos nossa privacidade com criptografia, com sistemas de encaminhamento de correio anônimo, com assinaturas digitais e dinheiro eletrônico."*
 
