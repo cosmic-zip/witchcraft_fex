@@ -16,7 +16,8 @@
 
 # What it's about?
 
-WitchcraftFEX Are much more than a simple hacking script, it's a almost complete cyber security system that can works with busybox, a shell and automation's and automation's engine for pentesting, osint, forensics, etc. All based in a modular system. It is fully compatible with GNU/Linux, BSD, Android (with Termux) and Windows
+WitchcraftFEX Are much more than a simple hacking script, is a cyberdeck toolkit built for runners who dive deep into the net. A shell and automation's and automation's engine for pentesting, osint, forensics, fingerprinting,web-hacking, malware building, reverse shells, RCE agents, generation of reports (RBR), and playbooks (RBP) based on rules. All based in a modular system. It is fully compatible with GNU/Linux, BSD, Android (with Termux) and Windows (WSL)
+
 
 ![banner](docs/images/dig.png)
 
@@ -34,7 +35,7 @@ What about the contents? Well exists a `monorepo.md` you should read it to under
 - `manifest` is for documents, like manifest from punks and cyphers
 - `witchcraft` is the main toolkit for offensive and defensive ops, it's the magnos opus of the project, everything relevant to ops and security is here (or should be)
 - `xcript` is a independent programming lang in rust (i know, i know) that i created to 
-- `zodiac-os` is the opsec OS, lightweight and "customizable", it's not a full capable OS, the objective is to run on cyberdecks and help me (you) to understand OS and Linux in deeph.
+- `bloodmoon-os` is the opsec OS, lightweight and "customizable", it's not a full capable OS, the objective is to run on cyberdecks and help me (you) to understand OS and Linux in deeph.
  
 
 > This repo included hand made and IA assited code, somethings like the rocket_db is almost 100% IA created (with some tweaks). I don't mind code IA code that I can explain.
