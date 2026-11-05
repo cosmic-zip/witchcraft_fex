@@ -6,42 +6,27 @@ def llama_api_server(host: str, port: int, model: str) -> int:
     if model != "" and None:
         buffer = model 
 
-    command = f"{NT_DATAROOT}pkg/llama/llama-server --port {port} -m {buffer} --ctx-size 3000 --batch_size 8 --repeat_last_n 64 --repeat_penalty 1.1"
-    net_logger("llama server is loading the model and may take a while, update the web ui!", color="green", style="bold", newline=True)
+    command = f"{NT_DATAROOT}pkg/llama/llama-server --port {port} -m {buffer} --jinja --ctx-size 3000 --batch_size 8 --repeat_last_n 64 --repeat_penalty 1.1"
+    net_logger("Harpia (llama server) is loading the model and may take a while, update the web ui!", color="green", style="bold", newline=True)
 
     buffer = net_exec(command)
 
     if buffer is None:
-        net_logger("llama server failed to start", color="yellow", style="bold", newline=True)
+        net_logger("Harpia server failed to start", color="yellow", style="bold", newline=True)
         net_logger(str(buffer), color="white", style="normal", newline=True)
 
     return 0
 
 def server(host: str, port: str, folder: str, ztoken: str, full: str, model: str) -> int:
 
-    spider = r"""
-               (
-                )
-               (
-        /\\ .-***-.  /\\
-       //\\/  ,,,  \//\\      _   _      _   _                       _           _______   __
-       |/\| ,;;;;;, |/\|     | \ | |    | | | |                     | |         |  ___\ \ / /
-       //\\\;-***-;///\\     |  \| | ___| |_| |_ _ __ __ ___   _____| | ___ _ __| |__  \ V / 
-      //  \/   .   \/  \\    | . ` |/ _ \ __| __| '__/ _` \ \ / / _ \ |/ _ \ '__|  __| /   \ 
-     (| ,-_| \ | / |_-, |)   | |\  |  __/ |_| |_| | | (_| |\ V /  __/ |  __/ |  | |___/ /^\ \
-       //`__\.-.-./__`\\     \_| \_/\___|\__|\__|_|  \__,_| \_/ \___|_|\___|_|  \____/\/   \/
-      // /.-(() ())-.\ \\    
-     (\ |)   '---'   (| /)        WitchcraftFEX - The offensive security toolkit.
-      ` (|           |) `
-        \)           (/
-    """
+    spider = SPIDER
 
     try:
         if full == "yes":
             if not model:
                 net_logger(f"[ERROR] :: Not model given, model is: {model}", "red", "bold")
                 exit(1)
-            os.system(f"./main.py server.yuri --host {host} --port 5599 --model {model} &")
+            os.system(f"./main.py server.harpia --host {host} --port 5599 --model {model} &")
 
         eyeliner("WitchcraftFEX webui server is running!")
         net_logger(spider, "magenta", "bold", False)
@@ -60,8 +45,8 @@ def server(host: str, port: str, folder: str, ztoken: str, full: str, model: str
         
         # Cleanup: kill any background processes
         if full == "yes":
-            net_logger("Stopping Yuri server...", "white", "normal", True)
-            os.system("pkill -f 'main.py server.yuri'")
+            net_logger("Stopping Harpia server...", "white", "normal", True)
+            os.system("pkill -f 'main.py server.harpia'")
         
         return 0
 

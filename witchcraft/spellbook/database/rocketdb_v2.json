@@ -11,7 +11,8 @@
             "extends": {},
             "name": "bash",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "busybox"
         },
         {
             "arguments": {
@@ -24,7 +25,8 @@
             "extends": {},
             "name": "mac.spoof",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "macchanger"
         },
         {
             "arguments": {
@@ -37,7 +39,8 @@
             "extends": {},
             "name": "mac.reset",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "macchanger"
         },
         {
             "arguments": {
@@ -53,7 +56,8 @@
             "extends": {},
             "name": "mac.define",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "macchanger"
         },
         {
             "command": "sudo hciconfig hci0 up > /dev/null 2>&1 && sudo hciconfig hci0 > /dev/null 2>&1 && sudo rfkill unblock bluetooth > /dev/null 2>&1 && echo done",
@@ -61,7 +65,8 @@
             "extends": {},
             "name": "blue.enable",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "hciconfig"
         },
         {
             "command": "rfkill list",
@@ -69,7 +74,8 @@
             "extends": {},
             "name": "blue.list",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "rfkill"
         },
         {
             "arguments": {
@@ -85,7 +91,8 @@
             "extends": {},
             "name": "capture.all",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "tcpdump"
         },
         {
             "arguments": {
@@ -104,7 +111,8 @@
             "extends": {},
             "name": "capture.all.from_ip",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "tcpdump"
         },
         {
             "arguments": {
@@ -120,7 +128,8 @@
             "extends": {},
             "name": "capture.one",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "tcpdump"
         },
         {
             "arguments": {
@@ -139,7 +148,8 @@
             "extends": {},
             "name": "capture.one.from_ip",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "tcpdump"
         },
         {
             "arguments": {
@@ -155,7 +165,8 @@
             "extends": {},
             "name": "crack.keepass",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hashcat"
         },
         {
             "arguments": {
@@ -171,7 +182,8 @@
             "extends": {},
             "name": "crack.luks1",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hashcat"
         },
         {
             "arguments": {
@@ -187,7 +199,8 @@
             "extends": {},
             "name": "crack.luks2",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hashcat"
         },
         {
             "arguments": {
@@ -203,7 +216,8 @@
             "extends": {},
             "name": "crack.pcap",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hcxpcapngtool"
         },
         {
             "arguments": {
@@ -219,7 +233,8 @@
             "extends": {},
             "name": "crack.zip",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hashcat"
         },
         {
             "arguments": {
@@ -235,7 +250,8 @@
             "extends": {},
             "name": "disk.dump",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "dc3dd"
         },
         {
             "arguments": {
@@ -251,7 +267,8 @@
             "extends": {},
             "name": "disk.recover",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "foremost"
         },
         {
             "arguments": {
@@ -270,7 +287,8 @@
             "extends": {},
             "name": "dos.longpw",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -289,7 +307,8 @@
             "extends": {},
             "name": "dos.get",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -314,7 +333,8 @@
             "extends": {},
             "name": "dos.post.json",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -336,7 +356,8 @@
             "extends": {},
             "name": "dos.header.bearer",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -358,7 +379,8 @@
             "extends": {},
             "name": "dos.header.xsession",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -383,7 +405,8 @@
             "extends": {},
             "name": "dos.post.bearer.json",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -408,7 +431,8 @@
             "extends": {},
             "name": "dos.post.xsession.json",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -424,7 +448,8 @@
             "extends": {},
             "name": "fhide.embed",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "steghide"
         },
         {
             "arguments": {
@@ -437,7 +462,8 @@
             "extends": {},
             "name": "fhide.extract",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "steghide"
         },
         {
             "arguments": {
@@ -450,7 +476,8 @@
             "extends": {},
             "name": "fhide.info",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "steghide"
         },
         {
             "arguments": {
@@ -463,7 +490,8 @@
             "extends": {},
             "name": "file",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "file"
         },
         {
             "arguments": {
@@ -476,7 +504,8 @@
             "extends": {},
             "name": "file.bin",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "xxd"
         },
         {
             "arguments": {
@@ -489,7 +518,8 @@
             "extends": {},
             "name": "file.by",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "lsof"
         },
         {
             "arguments": {
@@ -502,7 +532,8 @@
             "extends": {},
             "name": "file.clean.meta",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "exiftool"
         },
         {
             "arguments": {
@@ -515,7 +546,8 @@
             "extends": {},
             "name": "file.dec",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "xxd"
         },
         {
             "arguments": {
@@ -528,7 +560,8 @@
             "extends": {},
             "name": "file.dump",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "xxd"
         },
         {
             "arguments": {
@@ -541,7 +574,8 @@
             "extends": {},
             "name": "file.hex",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "xxd"
         },
         {
             "arguments": {
@@ -554,7 +588,8 @@
             "extends": {},
             "name": "file.list",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "xxd"
         },
         {
             "arguments": {
@@ -567,7 +602,8 @@
             "extends": {},
             "name": "file.meta",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "exiftool"
         },
         {
             "arguments": {
@@ -580,7 +616,8 @@
             "extends": {},
             "name": "file.lmao",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "strings"
         },
         {
             "arguments": {
@@ -593,7 +630,8 @@
             "extends": {},
             "name": "firewall.drop.bigger",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "command": "iptables -A INPUT -p tcp -j DROP && iptables -A INPUT -p udp -j DROP && ip6tables -A INPUT -p tcp -j DROP && ip6tables -A INPUT -p udp -j DROP",
@@ -601,7 +639,8 @@
             "extends": {},
             "name": "firewall.drop.in.all",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "command": "iptables -A OUTPUT -p tcp -j DROP && iptables -A OUTPUT -p udp -j DROP && ip6tables -A OUTPUT -p tcp -j DROP && ip6tables -A OUTPUT -p udp -j DROP",
@@ -609,7 +648,8 @@
             "extends": {},
             "name": "firewall.drop.out.all",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "command": "ip6tables -F && iptables -F",
@@ -617,7 +657,8 @@
             "extends": {},
             "name": "firewall.flush",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "ip6tables"
         },
         {
             "arguments": {
@@ -630,7 +671,8 @@
             "extends": {},
             "name": "ftp.connect",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "ftp"
         },
         {
             "arguments": {
@@ -649,7 +691,8 @@
             "extends": {},
             "name": "map.dns.dirs",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "dirb"
         },
         {
             "arguments": {
@@ -668,7 +711,8 @@
             "extends": {},
             "name": "map.dns.subdomain",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "dnsenum"
         },
         {
             "command": "ss -tupran",
@@ -676,7 +720,8 @@
             "extends": {},
             "name": "map.local",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "ss"
         },
         {
             "command": "curl ip.me",
@@ -684,7 +729,8 @@
             "extends": {},
             "name": "map.myip",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -697,7 +743,8 @@
             "extends": {},
             "name": "nuke.file",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "shred"
         },
         {
             "arguments": {
@@ -710,7 +757,8 @@
             "extends": {},
             "name": "nuke.hd",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "shred"
         },
         {
             "command": "sudo find /var/log -type f -exec shred -u {} ;",
@@ -718,7 +766,8 @@
             "extends": {},
             "name": "nuke.logs",
             "type": "shell",
-            "category": "cleanup"
+            "category": "cleanup",
+            "cmd_backend": "find"
         },
         {
             "arguments": {
@@ -737,7 +786,8 @@
             "extends": {},
             "name": "scp.copy",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "scp"
         },
         {
             "arguments": {
@@ -753,7 +803,8 @@
             "extends": {},
             "name": "smbclient.access",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "smbclient"
         },
         {
             "arguments": {
@@ -766,7 +817,8 @@
             "extends": {},
             "name": "smbclient.list",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "smbclient"
         },
         {
             "command": "find /var/log -type f -name '*.log' -exec tail -n 10000 {} ;",
@@ -774,7 +826,8 @@
             "extends": {},
             "name": "view.applogs",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "find"
         },
         {
             "command": "tail -n 10000 /var/log/audit/audit.log",
@@ -782,7 +835,8 @@
             "extends": {},
             "name": "view.auditlog",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "tail -n 10000 /var/log/auth.log",
@@ -790,7 +844,8 @@
             "extends": {},
             "name": "view.authlog",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "lastb -n 10000",
@@ -798,7 +853,8 @@
             "extends": {},
             "name": "view.btmp",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "lastb"
         },
         {
             "command": "tail -n 10000 /var/log/kern.log",
@@ -806,7 +862,8 @@
             "extends": {},
             "name": "view.kernlog",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "tail -n 10000 /var/log/lastlog",
@@ -814,7 +871,8 @@
             "extends": {},
             "name": "view.lastlog",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "tail -n 10000 /var/log/messages",
@@ -822,7 +880,8 @@
             "extends": {},
             "name": "view.messages",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "tail -n 10000 /var/log/secure",
@@ -830,7 +889,8 @@
             "extends": {},
             "name": "view.secure",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "tail -n 10000 /var/log/syslog",
@@ -838,7 +898,8 @@
             "extends": {},
             "name": "view.syslog",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "tail"
         },
         {
             "command": "last -n 1000",
@@ -846,7 +907,8 @@
             "extends": {},
             "name": "view.wtmp",
             "type": "shell",
-            "category": "forensics"
+            "category": "forensics",
+            "cmd_backend": "last"
         },
         {
             "arguments": {
@@ -868,7 +930,8 @@
             "extends": {},
             "name": "web.download",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "wget"
         },
         {
             "arguments": {
@@ -881,7 +944,8 @@
             "extends": {},
             "name": "scanner.dns",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -894,7 +958,8 @@
             "extends": {},
             "name": "scanner.ip",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -925,7 +990,8 @@
             "command": "scanner.nmapper @@target @@scripts",
             "description": "Perform NMAP scanning",
             "name": "scanner.nmapper",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -941,7 +1007,8 @@
             "extends": {},
             "name": "scanner.keyword",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -985,7 +1052,8 @@
             "extends": {},
             "name": "native.cosmic.report",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1034,7 +1102,8 @@
             "extends": {},
             "name": "native.cosmic.requests",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1053,7 +1122,8 @@
             "extends": {},
             "name": "native.cosmic.chrome",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1075,7 +1145,8 @@
             "extends": {},
             "name": "native.cosmic.server",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1091,7 +1162,8 @@
             "extends": {},
             "name": "vm.create_disk",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "qemu-img"
         },
         {
             "arguments": {
@@ -1116,7 +1188,8 @@
             "extends": {},
             "name": "vm.run",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "qemu-system-x86_64"
         },
         {
             "command": "docker stop $(docker ps -a -q)",
@@ -1124,7 +1197,8 @@
             "extends": {},
             "name": "docker.stop.all",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "command": "docker rm $(docker ps -a -q)",
@@ -1132,7 +1206,8 @@
             "extends": {},
             "name": "docker.remove.all.containers",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "command": "docker rmi -f $(docker images -q)",
@@ -1140,7 +1215,8 @@
             "extends": {},
             "name": "docker.remove.all.images",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "command": "sudo docker system prune -a --volumes -f",
@@ -1148,7 +1224,8 @@
             "extends": {},
             "name": "docker.reset",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "command": "curl -fsSL https://get.docker.com | sudo sh",
@@ -1156,7 +1233,8 @@
             "extends": {},
             "name": "docker.install.script",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1169,7 +1247,8 @@
             "extends": {},
             "name": "docker.user.addgroup",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "usermod"
         },
         {
             "command": "newgrp docker",
@@ -1177,7 +1256,8 @@
             "extends": {},
             "name": "docker.newgrp.refresh",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "newgrp"
         },
         {
             "arguments": {
@@ -1193,7 +1273,8 @@
             "extends": {},
             "name": "server.llama",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "llama-server"
         },
         {
             "arguments": {
@@ -1206,7 +1287,8 @@
             "extends": {},
             "name": "clamav.clamscan",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "clamscan"
         },
         {
             "arguments": {
@@ -1219,7 +1301,8 @@
             "extends": {},
             "name": "clamav.clamdscan",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "clamdscan"
         },
         {
             "command": "freshclam",
@@ -1227,7 +1310,8 @@
             "extends": {},
             "name": "clamav.freshclam",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "freshclam"
         },
         {
             "arguments": {
@@ -1240,7 +1324,8 @@
             "extends": {},
             "name": "clamav.sigtool.info",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "sigtool"
         },
         {
             "arguments": {
@@ -1253,7 +1338,8 @@
             "extends": {},
             "name": "clamav.sigtool.hex",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "sigtool"
         },
         {
             "arguments": {
@@ -1266,7 +1352,8 @@
             "extends": {},
             "name": "clamav.sigtool.unpack",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "sigtool"
         },
         {
             "command": "clamconf",
@@ -1274,7 +1361,8 @@
             "extends": {},
             "name": "clamav.clamconf",
             "type": "shell",
-            "category": "antivirus"
+            "category": "antivirus",
+            "cmd_backend": "clamconf"
         },
         {
             "arguments": {
@@ -1287,7 +1375,8 @@
             "extends": {},
             "name": "curl.get.simple",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1303,7 +1392,8 @@
             "extends": {},
             "name": "curl.get.with_header",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1319,7 +1409,8 @@
             "extends": {},
             "name": "curl.get.to_file",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1335,7 +1426,8 @@
             "extends": {},
             "name": "curl.post.raw",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1354,7 +1446,8 @@
             "extends": {},
             "name": "curl.post.content_type",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1370,7 +1463,8 @@
             "extends": {},
             "name": "curl.post.file",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1395,7 +1489,8 @@
             "extends": {},
             "name": "curl.post.multipart",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1411,7 +1506,8 @@
             "extends": {},
             "name": "curl.put.raw",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1424,7 +1520,8 @@
             "extends": {},
             "name": "curl.delete.simple",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1440,7 +1537,8 @@
             "extends": {},
             "name": "curl.patch.json",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1459,7 +1557,8 @@
             "extends": {},
             "name": "curl.auth.basic",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1475,7 +1574,8 @@
             "extends": {},
             "name": "curl.auth.bearer",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1488,7 +1588,8 @@
             "extends": {},
             "name": "curl.head.simple",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1504,7 +1605,8 @@
             "extends": {},
             "name": "chrome.headless.html",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "chromium"
         },
         {
             "arguments": {
@@ -1520,7 +1622,8 @@
             "extends": {},
             "name": "chrome.headless.pdf",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "chromium"
         },
         {
             "arguments": {
@@ -1536,7 +1639,8 @@
             "extends": {},
             "name": "chrome.headless.screenshot",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "chromium"
         },
         {
             "arguments": {
@@ -1552,7 +1656,8 @@
             "extends": {},
             "name": "wfex.scanner.keyword",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1565,7 +1670,8 @@
             "extends": {},
             "name": "wfex.scanner.dns",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1578,7 +1684,8 @@
             "extends": {},
             "name": "wfex.scanner.ip",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1594,7 +1701,8 @@
             "extends": {},
             "name": "wfex.scanner.nmapper",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1622,7 +1730,8 @@
             "extends": {},
             "name": "wfex.server",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1630,18 +1739,19 @@
                     "description": "The hostname or IP address to bind the Yuri server."
                 },
                 "model": {
-                    "description": "The model or configuration profile for the Yuri server."
+                    "description": "The model or configuration profile for the Harpia server."
                 },
                 "port": {
-                    "description": "The port number on which the Yuri server will listen."
+                    "description": "The port number on which the Harpia server will listen."
                 }
             },
-            "command": "server.yuri",
-            "description": "Launches the Yuri server variant with specific settings.",
+            "command": "server.harpia",
+            "description": "Launches the Harpia AI server variant with specific settings.",
             "extends": {},
-            "name": "wfex.server.yuri",
+            "name": "wfex.server.harpia",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {},
@@ -1650,7 +1760,8 @@
             "extends": {},
             "name": "wfex.server.default",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {},
@@ -1659,7 +1770,8 @@
             "extends": {},
             "name": "wfex.server.minimal",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {},
@@ -1668,7 +1780,8 @@
             "extends": {},
             "name": "wfex.build.web",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {
@@ -1711,7 +1824,8 @@
             "extends": {},
             "name": "wfex.gen.report",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {},
@@ -1720,7 +1834,8 @@
             "extends": {},
             "name": "wfex.config.model",
             "type": "shell",
-            "category": "core"
+            "category": "core",
+            "cmd_backend": "witchcraft"
         },
         {
             "arguments": {},
@@ -1729,7 +1844,8 @@
             "extends": {},
             "name": "ngrok.startup",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "ngrok"
         },
         {
             "arguments": {},
@@ -1738,7 +1854,8 @@
             "extends": {},
             "name": "ngrok.public_url",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1754,7 +1871,8 @@
             "extends": {},
             "name": "curl.put.json",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1770,7 +1888,8 @@
             "extends": {},
             "name": "curl.delete.with_body",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1786,7 +1905,8 @@
             "extends": {},
             "name": "curl.request.cookie",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1799,7 +1919,8 @@
             "extends": {},
             "name": "curl.request.follow_redirect",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1815,7 +1936,8 @@
             "extends": {},
             "name": "curl.request.timeout",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1831,7 +1953,8 @@
             "extends": {},
             "name": "curl.request.save_headers",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1847,7 +1970,8 @@
             "extends": {},
             "name": "curl.request.custom_method",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1863,7 +1987,8 @@
             "extends": {},
             "name": "curl.request.user_agent",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1876,7 +2001,8 @@
             "extends": {},
             "name": "curl.request.insecure",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1889,7 +2015,8 @@
             "extends": {},
             "name": "curl.request.include_headers",
             "type": "shell",
-            "category": "web"
+            "category": "web",
+            "cmd_backend": "curl"
         },
         {
             "arguments": {
@@ -1902,7 +2029,8 @@
             "extends": {},
             "name": "net.ping",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "ping"
         },
         {
             "arguments": {
@@ -1915,7 +2043,8 @@
             "extends": {},
             "name": "net.traceroute",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "traceroute"
         },
         {
             "arguments": {
@@ -1928,7 +2057,8 @@
             "extends": {},
             "name": "net.nslookup",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "nslookup"
         },
         {
             "arguments": {
@@ -1944,7 +2074,8 @@
             "extends": {},
             "name": "net.dig",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "dig"
         },
         {
             "arguments": {
@@ -1957,7 +2088,8 @@
             "extends": {},
             "name": "net.whois",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "whois"
         },
         {
             "command": "arp -a",
@@ -1965,7 +2097,8 @@
             "extends": {},
             "name": "net.arp",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "arp"
         },
         {
             "command": "route -n",
@@ -1973,7 +2106,8 @@
             "extends": {},
             "name": "net.route",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "route"
         },
         {
             "arguments": {
@@ -1986,7 +2120,8 @@
             "extends": {},
             "name": "net.ifconfig",
             "type": "shell",
-            "category": "network"
+            "category": "network",
+            "cmd_backend": "ifconfig"
         },
         {
             "arguments": {
@@ -2006,7 +2141,8 @@
             "extends": {},
             "name": "firewall.allow.port",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "arguments": {
@@ -2019,7 +2155,8 @@
             "extends": {},
             "name": "firewall.deny.ip",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "arguments": {
@@ -2032,7 +2169,8 @@
             "extends": {},
             "name": "firewall.allow.interface",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "arguments": {
@@ -2045,7 +2183,8 @@
             "extends": {},
             "name": "firewall.save",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables-save"
         },
         {
             "arguments": {
@@ -2058,7 +2197,8 @@
             "extends": {},
             "name": "firewall.restore",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables-restore"
         },
         {
             "command": "iptables -L -v -n && ip6tables -L -v -n",
@@ -2066,7 +2206,8 @@
             "extends": {},
             "name": "firewall.list.rules",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "arguments": {
@@ -2089,7 +2230,8 @@
             "extends": {},
             "name": "firewall.drop.port.range",
             "type": "shell",
-            "category": "firewall"
+            "category": "firewall",
+            "cmd_backend": "iptables"
         },
         {
             "arguments": {
@@ -2108,7 +2250,8 @@
             "extends": {},
             "name": "hydra.ssh",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "hydra"
         },
         {
             "arguments": {
@@ -2124,7 +2267,8 @@
             "extends": {},
             "name": "john.crack",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "john"
         },
         {
             "arguments": {
@@ -2137,7 +2281,8 @@
             "extends": {},
             "name": "sqlmap.scan",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "sqlmap"
         },
         {
             "arguments": {
@@ -2150,7 +2295,8 @@
             "extends": {},
             "name": "nikto.scan",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "nikto"
         },
         {
             "arguments": {
@@ -2166,7 +2312,8 @@
             "extends": {},
             "name": "nuclei.scan",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "nuclei"
         },
         {
             "arguments": {
@@ -2182,7 +2329,8 @@
             "extends": {},
             "name": "metasploit.module",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "msfconsole"
         },
         {
             "arguments": {
@@ -2195,7 +2343,8 @@
             "extends": {},
             "name": "wpscan.scan",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "wpscan"
         },
         {
             "arguments": {
@@ -2211,7 +2360,8 @@
             "extends": {},
             "name": "gobuster.dir",
             "type": "shell",
-            "category": "security"
+            "category": "security",
+            "cmd_backend": "gobuster"
         },
         {
             "arguments": {
@@ -2224,7 +2374,8 @@
             "extends": {},
             "name": "docker.compose.up",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker-compose"
         },
         {
             "arguments": {
@@ -2237,7 +2388,8 @@
             "extends": {},
             "name": "docker.compose.down",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker-compose"
         },
         {
             "arguments": {
@@ -2250,7 +2402,8 @@
             "extends": {},
             "name": "docker.logs",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2266,7 +2419,8 @@
             "extends": {},
             "name": "docker.exec",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2288,7 +2442,8 @@
             "extends": {},
             "name": "docker.network.create",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2301,7 +2456,8 @@
             "extends": {},
             "name": "docker.volume.create",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2317,7 +2473,8 @@
             "extends": {},
             "name": "docker.build",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2336,7 +2493,8 @@
             "extends": {},
             "name": "docker.run",
             "type": "shell",
-            "category": "containers"
+            "category": "containers",
+            "cmd_backend": "docker"
         },
         {
             "arguments": {
@@ -2349,7 +2507,8 @@
             "extends": {},
             "name": "systemctl.start",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "systemctl"
         },
         {
             "arguments": {
@@ -2362,7 +2521,8 @@
             "extends": {},
             "name": "systemctl.stop",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "systemctl"
         },
         {
             "arguments": {
@@ -2375,7 +2535,8 @@
             "extends": {},
             "name": "systemctl.enable",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "systemctl"
         },
         {
             "arguments": {
@@ -2388,7 +2549,8 @@
             "extends": {},
             "name": "systemctl.status",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "systemctl"
         },
         {
             "arguments": {
@@ -2404,7 +2566,8 @@
             "extends": {},
             "name": "cron.add",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "crontab"
         },
         {
             "command": "crontab -l",
@@ -2412,7 +2575,8 @@
             "extends": {},
             "name": "cron.list",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "crontab"
         },
         {
             "command": "df -h",
@@ -2420,7 +2584,8 @@
             "extends": {},
             "name": "disk.usage",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "df"
         },
         {
             "arguments": {
@@ -2433,7 +2598,8 @@
             "extends": {},
             "name": "disk.du",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "du"
         },
         {
             "command": "ps aux",
@@ -2441,7 +2607,8 @@
             "extends": {},
             "name": "process.list",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "ps"
         },
         {
             "arguments": {
@@ -2454,7 +2621,8 @@
             "extends": {},
             "name": "process.kill",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "kill"
         },
         {
             "command": "free -h",
@@ -2462,7 +2630,8 @@
             "extends": {},
             "name": "memory.usage",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "free"
         },
         {
             "arguments": {
@@ -2475,7 +2644,8 @@
             "extends": {},
             "name": "service.restart",
             "type": "shell",
-            "category": "system"
+            "category": "system",
+            "cmd_backend": "systemctl"
         },
         {
             "arguments": {
@@ -2500,7 +2670,8 @@
             "extends": {},
             "name": "mysql.query",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "mysql"
         },
         {
             "arguments": {
@@ -2525,7 +2696,8 @@
             "extends": {},
             "name": "mysql.dump",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "mysqldump"
         },
         {
             "arguments": {
@@ -2547,7 +2719,8 @@
             "extends": {},
             "name": "psql.query",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "psql"
         },
         {
             "arguments": {
@@ -2569,7 +2742,8 @@
             "extends": {},
             "name": "psql.dump",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "pg_dump"
         },
         {
             "arguments": {
@@ -2585,7 +2759,8 @@
             "extends": {},
             "name": "mongosh.query",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "mongosh"
         },
         {
             "arguments": {
@@ -2604,7 +2779,8 @@
             "extends": {},
             "name": "redis.cli",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "redis-cli"
         },
         {
             "arguments": {
@@ -2620,7 +2796,8 @@
             "extends": {},
             "name": "sqlite.query",
             "type": "shell",
-            "category": "database"
+            "category": "database",
+            "cmd_backend": "sqlite3"
         },
         {
             "arguments": {
@@ -2637,7 +2814,8 @@
             "extends": {},
             "name": "system.stats",
             "category": "system",
-            "type": "shell"
+            "type": "shell",
+            "cmd_backend": "witchcraft"
         },
         {
             "name": "ffuf.dir",
@@ -2666,7 +2844,8 @@
                         ".js,.env,.config"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "ffuf"
         },
         {
             "name": "ffuf.params",
@@ -2694,7 +2873,8 @@
                         "all"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "ffuf"
         },
         {
             "name": "wafw00f.detect",
@@ -2707,7 +2887,8 @@
                 "target_url": {
                     "description": "Target website URL (e.g. https://target.com)"
                 }
-            }
+            },
+            "cmd_backend": "wafw00f"
         },
         {
             "name": "sslscan.audit",
@@ -2730,7 +2911,8 @@
                         "995"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "sslscan"
         },
         {
             "name": "katana.crawl",
@@ -2760,7 +2942,8 @@
                         "5"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "katana"
         },
         {
             "name": "arjun.scan",
@@ -2790,7 +2973,8 @@
                         "20"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "arjun"
         },
         {
             "name": "jwt.crack",
@@ -2810,7 +2994,8 @@
                         "/usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "jwt-tool"
         },
         {
             "name": "nmap.syn_scan",
@@ -2832,7 +3017,8 @@
                         "21,22,23,25,80,443,445,3389"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "nmap"
         },
         {
             "name": "nmap.vuln_scripts",
@@ -2853,7 +3039,8 @@
                         "-"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "nmap"
         },
         {
             "name": "rustscan.fast",
@@ -2882,7 +3069,8 @@
                         "1000"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "rustscan"
         },
         {
             "name": "sublist3r.enum",
@@ -2903,7 +3091,8 @@
                         "30"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "sublist3r"
         },
         {
             "name": "dnsrecon.axfr",
@@ -2916,7 +3105,8 @@
                 "domain": {
                     "description": "Target domain name (e.g. example.com)"
                 }
-            }
+            },
+            "cmd_backend": "dnsrecon"
         },
         {
             "name": "whatweb.fingerprint",
@@ -2929,7 +3119,8 @@
                 "target_url": {
                     "description": "Target website URL (e.g. http://example.com)"
                 }
-            }
+            },
+            "cmd_backend": "whatweb"
         },
         {
             "name": "crackmapexec.smb",
@@ -2958,7 +3149,8 @@
                         "admin"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "crackmapexec"
         },
         {
             "name": "enum4linux.scan",
@@ -2971,7 +3163,8 @@
                 "target_ip": {
                     "description": "Target Windows or Samba host IP address"
                 }
-            }
+            },
+            "cmd_backend": "enum4linux-ng"
         },
         {
             "name": "smbmap.shares",
@@ -2999,7 +3192,8 @@
                         "Password123!"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "smbmap"
         },
         {
             "name": "impacket.secretsdump",
@@ -3021,7 +3215,8 @@
                 "password": {
                     "description": "Password or NTLM hash (aad3b4...:hash)"
                 }
-            }
+            },
+            "cmd_backend": "impacket-secretsdump"
         },
         {
             "name": "kerbrute.userenum",
@@ -3044,7 +3239,8 @@
                         "/usr/share/seclists/Usernames/top-usernames-shortlist.txt"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "kerbrute"
         },
         {
             "name": "netcat.listener",
@@ -3064,7 +3260,8 @@
                         "443"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "nc"
         },
         {
             "name": "socat.tty_listener",
@@ -3082,7 +3279,8 @@
                         "1337"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "socat"
         },
         {
             "name": "chisel.server",
@@ -3101,7 +3299,8 @@
                         "9000"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "chisel"
         },
         {
             "name": "chisel.client",
@@ -3130,7 +3329,8 @@
                         "10800"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "chisel"
         },
         {
             "name": "binwalk.extract",
@@ -3150,7 +3350,8 @@
                         "./out_binwalk"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "binwalk"
         },
         {
             "name": "foremost.carve",
@@ -3170,7 +3371,8 @@
                         "./recovered_files"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "foremost"
         },
         {
             "name": "yara.scan_dir",
@@ -3192,7 +3394,8 @@
                         "/var/www"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "yara"
         },
         {
             "name": "tshark.extract_http",
@@ -3205,7 +3408,8 @@
                 "pcap_file": {
                     "description": "Path to .pcap or .pcapng capture file"
                 }
-            }
+            },
+            "cmd_backend": "tshark"
         },
         {
             "name": "volatility.pslist",
@@ -3218,7 +3422,8 @@
                 "memory_dump": {
                     "description": "Path to memory dump file (.raw, .vmem, .dmp)"
                 }
-            }
+            },
+            "cmd_backend": "vol"
         },
         {
             "name": "arpspoof.poison",
@@ -3243,7 +3448,8 @@
                 "gateway_ip": {
                     "description": "Router / Default Gateway IP address"
                 }
-            }
+            },
+            "cmd_backend": "arpspoof"
         },
         {
             "name": "bettercap.mitm",
@@ -3264,7 +3470,8 @@
                 "target_ip": {
                     "description": "Target IP address or comma-separated list of targets"
                 }
-            }
+            },
+            "cmd_backend": "bettercap"
         },
         {
             "name": "aircrack.deauth",
@@ -3300,7 +3507,8 @@
                         "50"
                     ]
                 }
-            }
+            },
+            "cmd_backend": "aireplay-ng"
         }
     ]
 }

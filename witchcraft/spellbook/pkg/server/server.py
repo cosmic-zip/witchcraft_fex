@@ -301,11 +301,23 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
                 self.send_json(500, {"error": f"Failed to get stats: {str(e)}"})
             return
 
+        # API: Harpia MCP Tools List
+        if path == "/api/harpia/tools":
+            try:
+                if self.project_root not in sys.path:
+                    sys.path.insert(0, self.project_root)
+                from witchcraft.interface.mcp.mcp_server import WitchcraftMCPServer
+                mcp = WitchcraftMCPServer()
+                self.send_json(200, {"tools": mcp.get_tools()})
+            except Exception as e:
+                self.send_json(500, {"error": f"Failed to list MCP tools: {str(e)}"})
+            return
+
         # Static file serving
         self.serve_file(path)
 
     def do_POST(self):
-        """Handle POST requests (Login, Logout, Exec)."""
+        """Handle POST requests (Login, Logout, Exec, Harpia Chat)."""
         parsed_url = urllib.parse.urlparse(self.path)
         path = parsed_url.path
 
@@ -325,6 +337,11 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
         # Route: Logout (/api/logout or /logout)
         if path in ("/api/logout", "/logout"):
             self.handle_logout()
+            return
+
+        # Route: Harpia AI + MCP Chat (/api/harpia/chat)
+        if path == "/api/harpia/chat":
+            self.handle_harpia_chat(body)
             return
 
         # Route: Command Execution (/api/exec or root /)
@@ -393,6 +410,37 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             "status": "success",
             "message": "Logged out successfully"
         }, headers={"Set-Cookie": clear_cookie})
+
+    def handle_harpia_chat(self, body: str):
+        """Handle Harpia AI chat and MCP tool execution requests."""
+        try:
+            data = json.loads(body) if body else {}
+        except Exception:
+            self.send_json(400, {"error": "Invalid JSON payload"})
+            return
+
+        body_ztoken = data.get("ztoken")
+        is_auth, _ = self.is_authenticated(body_token=body_ztoken)
+        if not is_auth:
+            self.send_json(401, {"error": "Unauthorized: valid session or ztoken required"})
+            return
+
+        prompt = str(data.get("prompt", "")).strip()
+        history = data.get("history") or []
+        direct_tool = data.get("tool")
+
+        if not prompt and not direct_tool:
+            self.send_json(400, {"error": "Prompt or tool is required"})
+            return
+
+        try:
+            if self.project_root not in sys.path:
+                sys.path.insert(0, self.project_root)
+            from witchcraft.interface.ai.harpia_agent import harpia_chat
+            result = harpia_chat(prompt=prompt, history=history, direct_tool=direct_tool)
+            self.send_json(200, result)
+        except Exception as e:
+            self.send_json(500, {"error": f"Harpia execution failed: {str(e)}"})
 
     def handle_exec(self, body: str):
         """Execute WitchcraftFEX command with authentication check."""

@@ -308,20 +308,29 @@ EMBEDDED SERVER
 
     Let me know if you want the NT_GEN_HOST behavior hardened or fallback logic implemented.
 
-ARTIFICIAL INTELLIGENCE ASSISTANT
+HARPIA AI, MCP SERVER, CLI & XCRIPT ENGINE
 
-    It's the default LLaMA with some tweaks and using an uncensored AI model. To serve the WebUI with the AI
-    assistant, you need at least 12GB of RAM. Default server with the default AI assistant, you must have a model
-    saved (or a syslink) in spellbook/models. Any model Q_4, Q_6 with final K or M should work.
+    Harpia is the unified AI, MCP (Model Context Protocol), interactive CLI, and Web Chat subsystem located inside
+    witchcraft/interface/ (ai, cli, mcp, web). It connects a local llama-server instance with all 208+ rocketdb_v2.json
+    binds (each mapped with its underlying cmd_backend), system telemetry, and the static Rust Xcript engine.
 
-    Default model
+    Default WebUI + Harpia LLM server (full mode)
         main.py server.default
 
-    No AI assistant
+    Minimal WebUI server (no local GGUF model loaded in RAM)
         main.py server.minimal
 
-    Default server with the default AI assistant with a custom model
-        main.py server.yuri --host 127.0.0.1 --port 5500 --model path/to/model
+    Start Harpia LLM server standalone
+        main.py server.harpia --host 127.0.0.1 --port 5599 --model path/to/model.gguf
+
+    Start Harpia MCP Server (JSON-RPC 2.0 over stdio)
+        main.py harpia.mcp
+
+    Start Harpia Interactive CLI
+        main.py harpia.cli
+
+    Single-shot Harpia query
+        main.py harpia.ask --prompt "Run a recon check"
 
 PLAYBOOKS AND REPORTS
 
