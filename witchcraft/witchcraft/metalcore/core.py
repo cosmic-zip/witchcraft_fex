@@ -270,37 +270,62 @@ def search_arg(args: list, keyword: str, enforce_keyword=True):
     sys.exit(128)
 
 
-def dynamic_manual(args_v, man_page=False):
-    database = read_db()
-    bind_name = search_arg(args_v, "page", False)
+def dynamic_manual(args_v):
 
-    if man_page:
+    def render_bind(database):
+        for bind in database:
+            net_logger(f"name: {bind.get("name")}", "cyan", "bold")
+            net_logger(f"description: {bind.get("description")}", "cyan", "normal")
+            net_logger(f"type: {bind.get("type")}", "cyan", "normal")
+            if bind.get("extends") != {}:
+                net_logger(f"extends: {bind.get("extends")}", "cyan", "normal")
+
+            arguments = bind.get("arguments")
+            if arguments is not None:
+                for arg in arguments:
+                    net_logger(
+                        f"\t--{arg}\t\t{bind.get('arguments').get(arg).get('description')}",
+                        "magenta",
+                        "normal",
+                    )
+                    argument_options = bind.get("arguments").get(arg).get("options")
+                    if argument_options != None:
+                        net_logger("\t\targuments:\n")
+                        for opt in argument_options:
+                            net_logger(f"\t\t{opt}")
+            print("\n")
+        sys.exit(0)
+
+
+    database = read_db()
+    option = search_arg(args_v, "option", False)
+
+    if option == "manual":
         with open(f"{NT_DATAROOT}/manual/manual.txt") as file:
             net_logger(file.read(), "cyan", "bold", True)
             sys.exit(0)
 
-    for bind in database:
-        net_logger(f"name: {bind.get("name")}", "cyan", "bold")
-        net_logger(f"description: {bind.get("description")}", "cyan", "normal")
-        net_logger(f"type: {bind.get("type")}", "cyan", "normal")
-        if bind.get("extends") != {}:
-            net_logger(f"extends: {bind.get("extends")}", "cyan", "normal")
+    if  option == "category":
+        categories = []
+        for bind in database:
+            cat = bind.get("category")
+            if not cat in categories:
+                categories.append(cat)
 
-        arguments = bind.get("arguments")
-        if arguments is not None:
-            for arg in arguments:
-                net_logger(
-                    f"\t--{arg}\t\t{bind.get('arguments').get(arg).get('description')}",
-                    "magenta",
-                    "normal",
-                )
-                argument_options = bind.get("arguments").get(arg).get("options")
-                if argument_options != None:
-                    net_logger("\t\targuments:\n")
-                    for opt in argument_options:
-                        net_logger(f"\t\t{opt}")
-        print("\n")
+        net_logger(categories, "cyan", "bold", True)
+        sys.exit(0)
 
+    if  option == "all":
+        render_bind(database=database)
+
+    if option:
+        result = {"index": []}
+        for bind in database:
+            if bind.get("name") == option or bind.get("category") == option:
+                result["index"].append(bind)
+
+        render_bind(result["index"])
+    
 def net_parser(args_v: list):
     if len(args_v) == 0:
         return None
@@ -487,10 +512,6 @@ def net_shell_router(fn_registry = {}, script_path = None):
 
     if name == "help":
         dynamic_manual(args_v)
-        sys.exit(0)
-
-    if name == "manual":
-        dynamic_manual(args_v, True)
         sys.exit(0)
 
     if fn_registry != {}:
