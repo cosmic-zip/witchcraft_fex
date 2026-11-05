@@ -19,12 +19,12 @@ NT_ENABLE_ARBITRARY_SHELL = os.getenv("NT_ENABLE_ARBITRARY_SHELL", "True") == "T
 NT_SESSION = os.getenv("NT_SESSION", "default")
 NT_COSMIC_SIGKEY = os.getenv("NT_COSMIC_SIGKEY", "b7a5f1f46944d5cc438646c547e20b177257608b5dfff41d7c5f063a6ea092fe")
 NT_GEN_HOST = os.getenv("NT_GEN_HOST", "http://localhost:5500")
-NT_GEN_TITLE = os.getenv("NT_GEN_TITLE", "⛩️ NettravalerEX")
+NT_GEN_TITLE = os.getenv("NT_GEN_TITLE", "WitchcraftFEX")
 NT_HEADLESS_BROWSER_BIN = os.getenv("NT_HEADLESS_BROWSER_BIN", "chromium")
 
 BANNER = r"""
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                                   WitchcraftFEX v0.1.0 by COSMIC ZIP 01-OCT-2025
+                                   WitchcraftFEX v1.0.0 by COSMIC ZIP Nov 05 2026
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
      
                                              ,----------------,              ,---------,
