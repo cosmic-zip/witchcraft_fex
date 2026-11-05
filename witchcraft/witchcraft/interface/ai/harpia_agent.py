@@ -7,15 +7,16 @@ import urllib.request
 from witchcraft.metalcore.core import SPIDER, net_logger, search_arg
 from witchcraft.interface.mcp.mcp_server import WitchcraftMCPServer
 
-HARPIA_LLM_URL = os.getenv("NT_HARPIA_URL", "http://127.0.0.1:5599/v1/chat/completions")
+HARPIA_LLM_URL = os.getenv("NT_HARPIA_URL", "http://localhost:5599/v1/chat/completions")
 
 HARPIA_SYSTEM_PROMPT = (
-    "You are Harpia, the autonomous cybersecurity and OPSEC AI agent embedded in WitchcraftFEX. "
-    "You have direct access to WitchcraftFEX MCP tools (network scanners, forensics, firewall, "
-    "system telemetry, and the Xcript static scripting engine).\n"
-    "When you need to execute a tool or bind to answer the user, emit a tool call block in the exact format:\n"
+    "You are Harpia, the autonomous cybersecurity and OPSEC AI agent embedded in WitchcraftFEX.\n"
+    "CRITICAL RULES:\n"
+    "1. NEVER invent, fake, simulate, or hallucinate command execution, scan results, or terminal output.\n"
+    "2. If the user asks for a scan, inspection, or action and the required argument (like a domain, IP, or file) is missing, DO NOT pretend you executed it. Immediately ask the user for the missing argument.\n"
+    "3. When you have the required parameters to run a tool, you MUST emit a tool call block in the exact format:\n"
     "<tool_call>{\"name\": \"<tool_name>\", \"arguments\": {<key>: <value>}}</tool_call>\n"
-    "After receiving the tool output, provide a concise, technical response."
+    "4. Only discuss or summarize data after you have received the real tool output from the system."
 )
 
 
@@ -79,15 +80,27 @@ def _call_llama_completion(messages: list, tools: list = None, llm_url: str = No
 
 
 def _extract_inline_tool_call(text: str) -> dict | None:
-    match = re.search(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", text, re.DOTALL)
-    if not match:
-        return None
-    try:
-        obj = json.loads(match.group(1))
-        if isinstance(obj, dict) and "name" in obj:
-            return obj
-    except Exception:
-        return None
+    patterns = [
+        r"<tool_call>\s*(\{.*?\})\s*(?:</tool_call>|$)",
+        r"<SCRATCHPAD>\s*(\{.*?\})\s*(?:</SCRATCHPAD>|$)",
+        r"<scratchpad>\s*(\{.*?\})\s*(?:</scratchpad>|$)",
+        r"```(?:json)?\s*(\{\s*\"(?:name|tool)\"\s*:\s*\".*?\".*?\})\s*```",
+        r"(\{\s*\"(?:name|tool)\"\s*:\s*\"[a-zA-Z0-9_.-]+\"\s*,\s*\"arguments\"\s*:\s*\{.*?\}\s*\})"
+    ]
+    for pat in patterns:
+        match = re.search(pat, text, re.DOTALL)
+        if match:
+            try:
+                obj = json.loads(match.group(1))
+                if isinstance(obj, dict):
+                    name = obj.get("name") or obj.get("tool")
+                    if name:
+                        return {
+                            "name": name,
+                            "arguments": obj.get("arguments") or obj.get("args") or {}
+                        }
+            except Exception:
+                continue
     return None
 
 
@@ -233,11 +246,21 @@ def harpia_chat(
                         "isError": res.get("isError", False),
                     }
                 )
+                # Sanitize output passed back to LLM context to prevent Bad Request (due to special tokens or HTML)
+                summary_text = out_text
+                try:
+                    parsed_json = json.loads(out_text)
+                    if isinstance(parsed_json, dict) and "stdout" in parsed_json:
+                        raw_stdout = parsed_json["stdout"]
+                        summary_text = re.sub(r"<[^>]+>", "", raw_stdout)
+                except Exception:
+                    pass
+
                 messages.append({"role": "assistant", "content": content or f"Calling {c_name}"})
                 messages.append(
                     {
                         "role": "user",
-                        "content": f"[MCP Tool '{c_name}' Result]:\n{out_text}\n\nSummarize the result for the user.",
+                        "content": f"[Tool Result for '{c_name}']:\n{summary_text[:1200]}\n\nSummarize the result cleanly for the operator.",
                     }
                 )
 
@@ -258,7 +281,7 @@ def harpia_chat(
             "status": "offline",
             "reply": (
                 f"[Harpia LLM Offline] Could not reach local llama-server at {llm_url or HARPIA_LLM_URL} ({exc.reason}).\n"
-                "Start it with: ./main.py server.harpia --host 127.0.0.1 --port 5599 --model spellbook/models/model.gguf\n"
+                "Start it with: ./main.py server.harpia --host localhost --port 5599 --model spellbook/models/model.gguf\n"
                 "Tip: You can still run MCP tools directly in this chat using `/mcp <tool_name> {\"arg\": \"val\"}` or `/xcript <code>`!"
             ),
             "tool_calls": executed_tools,
