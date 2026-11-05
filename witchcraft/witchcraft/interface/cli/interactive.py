@@ -5,7 +5,7 @@ from witchcraft.interface.ai.harpia_agent import harpia_chat
 def harpia_cli_wrapper(args_v=None):
     """Interactive CLI chat session for Harpia AI + MCP tools."""
     net_logger(SPIDER, "magenta", "bold", False)
-    net_logger("🦅 Harpia Interactive CLI (MCP + Xcript + Local LLM)", "cyan", "bold", False)
+    net_logger("Harpia Interactive CLI (MCP + Xcript + Local LLM)", "cyan", "bold", False)
     net_logger("Commands: /mcp <tool> <json>, /xcript <code>, /clear, exit", "white", "normal", True)
 
     history = []
