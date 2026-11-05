@@ -344,6 +344,11 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             self.handle_harpia_chat(body)
             return
 
+        # Route: MCP JSON-RPC Server Endpoint (/api/mcp or /mcp)
+        if path in ("/api/mcp", "/mcp"):
+            self.handle_mcp_jsonrpc(body)
+            return
+
         # Route: Command Execution (/api/exec or root /)
         if path in ("/api/exec", "/"):
             self.handle_exec(body)
@@ -410,6 +415,53 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             "status": "success",
             "message": "Logged out successfully"
         }, headers={"Set-Cookie": clear_cookie})
+
+    def handle_mcp_jsonrpc(self, body: str):
+        """Handle Model Context Protocol (MCP) JSON-RPC 2.0 requests over HTTP."""
+        try:
+            msg = json.loads(body) if body else {}
+        except Exception:
+            self.send_json(400, {
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {"code": -32700, "message": "Parse error: Invalid JSON"}
+            })
+            return
+
+        # Check authentication (session cookie or ztoken in params/query/body)
+        body_ztoken = None
+        if isinstance(msg, dict):
+            params = msg.get("params")
+            if isinstance(params, dict):
+                body_ztoken = params.get("ztoken")
+            elif msg.get("ztoken"):
+                body_ztoken = msg.get("ztoken")
+
+        is_auth, _ = self.is_authenticated(body_token=body_ztoken)
+        if not is_auth:
+            self.send_json(401, {
+                "jsonrpc": "2.0",
+                "id": msg.get("id") if isinstance(msg, dict) else None,
+                "error": {"code": -32000, "message": "Unauthorized: valid session or ztoken required"}
+            })
+            return
+
+        try:
+            if self.project_root not in sys.path:
+                sys.path.insert(0, self.project_root)
+            from witchcraft.interface.mcp.mcp_server import WitchcraftMCPServer
+            mcp = WitchcraftMCPServer()
+            resp = mcp.handle_request(msg)
+            if resp is not None:
+                self.send_json(200, resp)
+            else:
+                self.send_json(204, {})
+        except Exception as e:
+            self.send_json(500, {
+                "jsonrpc": "2.0",
+                "id": msg.get("id") if isinstance(msg, dict) else None,
+                "error": {"code": -32603, "message": f"Internal MCP error: {str(e)}"}
+            })
 
     def handle_harpia_chat(self, body: str):
         """Handle Harpia AI chat and MCP tool execution requests."""
