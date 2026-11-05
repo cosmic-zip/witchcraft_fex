@@ -7,13 +7,13 @@ harpia_section = """
 <section class="content-sec" id="harpia_ai">
     <header class="sec-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);">🦅 Harpia AI — MCP Agent</span>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);">Harpia AI - MCP Agent</span>
             <span id="harpia-status-badge" style="background: rgba(0, 200, 80, 0.2); border: 1px solid rgb(0, 200, 80); color: #5f5; font-size: 11px; padding: 2px 8px; border-radius: 12px;">● MCP READY</span>
         </div>
         <div style="display: flex; gap: 8px;">
-            <button type="button" class="btn-downloader" onclick="switchHarpiaView('chat')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">💬 Agent Chat</button>
-            <button type="button" class="btn-downloader" onclick="switchHarpiaView('llama')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">🦙 Raw Llama UI</button>
-            <button type="button" class="btn-downloader" onclick="clearHarpiaChat()" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">🗑️ Clear</button>
+            <button type="button" class="btn-downloader" onclick="switchHarpiaView('chat')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Agent Chat</button>
+            <button type="button" class="btn-downloader" onclick="switchHarpiaView('llama')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Llama UI</button>
+            <button type="button" class="btn-downloader" onclick="clearHarpiaChat()" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Clear</button>
         </div>
     </header>
 
@@ -21,7 +21,7 @@ harpia_section = """
     <div id="harpia-chat-view" style="display: flex; flex-direction: column; height: 72vh; background: #000000a8; border: 1px solid var(--ancient); border-radius: 8px; overflow: hidden;">
         <div id="harpia-messages" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; font-family: monospace; font-size: 13px;">
             <div style="background: #111111cc; border-left: 3px solid var(--ancient); padding: 10px 12px; border-radius: 4px;">
-                <strong style="color: var(--ancient);">🦅 Harpia:</strong>
+                <strong style="color: var(--ancient);">Harpia:</strong>
                 <div style="margin-top: 4px; line-height: 1.5;">
                     Harpia MCP Agent online. Ask me to run scans, inspect system stats, or execute Xcript automation.<br>
                     <span style="opacity: 0.75; font-size: 11px;">Shortcuts: <code>/mcp witchcraft_search_binds {"cmd_backend":"nmap"}</code> | <code>/xcript declare x = "hello"; echo x</code></span>
@@ -43,14 +43,14 @@ harpia_section = """
                 class="form-text-submit"
                 style="width: auto; padding: 0 20px; margin: 0; cursor: pointer;"
             >
-                Send 🦅
+                Send
             </button>
         </form>
     </div>
 
     <!-- Raw Llama-Server Iframe View (Toggleable) -->
     <div id="harpia-llama-view" style="display: none;">
-        <iframe src="http://localhost:5599" class="outputer outputer-xl" frameborder="0"></iframe>
+        <iframe src="http://127.0.0.1:5599" class="outputer outputer-xl" frameborder="0"></iframe>
     </div>
 
     <script>
@@ -88,19 +88,35 @@ harpia_section = """
 
             let toolsHtml = '';
             if (Array.isArray(toolCalls) && toolCalls.length > 0) {
-                toolsHtml = toolCalls.map(tc => `
-                    <div style="margin: 6px 0; padding: 8px; background: #050505; border: 1px solid #333; border-radius: 4px; font-size: 12px;">
-                        <div style="color: cyan; font-weight: bold; margin-bottom: 4px;">
-                            ⚙️ MCP Tool: ${escapeHarpiaHtml(tc.name)} <span style="opacity:0.7;">${escapeHarpiaHtml(JSON.stringify(tc.arguments || {}))}</span>
+                toolsHtml = toolCalls.map(tc => {
+                    let displayContent = tc.output;
+                    let isHtml = false;
+                    try {
+                        const parsed = JSON.parse(tc.output);
+                        if (parsed && typeof parsed.stdout === 'string') {
+                            displayContent = parsed.stdout;
+                            isHtml = displayContent.includes('<span') || displayContent.includes('<div') || displayContent.includes('<p');
+                        }
+                    } catch (e) {}
+
+                    const renderedBody = isHtml
+                        ? `<div style="margin: 0; color: #ddd; max-height: 400px; overflow-y: auto; font-family: monospace; white-space: pre-wrap; word-break: break-word;">${displayContent}</div>`
+                        : `<pre style="margin: 0; white-space: pre-wrap; word-break: break-word; color: #ddd; max-height: 400px; overflow-y: auto;">${escapeHarpiaHtml(displayContent)}</pre>`;
+
+                    return `
+                        <div style="margin: 8px 0; padding: 10px; background: #050505; border: 1px solid var(--ancient, #444); border-radius: 4px; font-size: 12px;">
+                            <div style="color: cyan; font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #222; padding-bottom: 4px;">
+                                MCP Tool: ${escapeHarpiaHtml(tc.name)} <span style="opacity:0.7; font-weight: normal;">${escapeHarpiaHtml(JSON.stringify(tc.arguments || {}))}</span>
+                            </div>
+                            ${renderedBody}
                         </div>
-                        <pre style="margin: 0; white-space: pre-wrap; word-break: break-word; color: #ddd; max-height: 220px; overflow-y: auto;">${escapeHarpiaHtml(tc.output)}</pre>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             const title = isUser
-                ? '<strong style="color: cyan;">👤 Operator:</strong>'
-                : '<strong style="color: var(--ancient);">🦅 Harpia:</strong>';
+                ? '<strong style="color: cyan;">Operator:</strong>'
+                : '<strong style="color: var(--ancient);">Harpia:</strong>';
 
             wrapper.innerHTML = `
                 ${title}

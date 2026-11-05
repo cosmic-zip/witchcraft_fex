@@ -49,7 +49,7 @@ base_html = """
                         }
                     ">X</button>
                 </div>
-                <iframe src="http://localhost:5599" frameborder="0" class="outputer chat-iframe"></iframe>
+                <iframe src="http://127.0.0.1:5599" frameborder="0" class="outputer chat-iframe"></iframe>
             </div>
         </main>
     </body>
