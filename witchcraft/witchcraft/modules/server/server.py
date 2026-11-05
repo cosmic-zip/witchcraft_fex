@@ -2,11 +2,11 @@ import os
 from witchcraft.metalcore.core import *
 
 def llama_api_server(host: str, port: int, model: str) -> int:
-    buffer = f"{NT_DATAROOT}models/model.gguf"
-    if model != "" and None:
-        buffer = model 
+    default_model = f"{NT_DATAROOT}models/model.gguf"
+    if model == "":
+        model = default_model
 
-    command = f"{NT_DATAROOT}pkg/llama/llama-server --port {port} -m {buffer} --jinja --ctx-size 3000 --batch_size 8 --repeat_last_n 64 --repeat_penalty 1.1"
+    command = f"{NT_DATAROOT}pkg/llama/llama-server --host {host} --port {port} -m {model} --jinja --ctx-size 3000 --batch-size 8 --repeat-last-n 64 --repeat-penalty 1.1"
     net_logger("Harpia (llama server) is loading the model and may take a while, update the web ui!", color="green", style="bold", newline=True)
 
     buffer = net_exec(command)
@@ -14,6 +14,13 @@ def llama_api_server(host: str, port: int, model: str) -> int:
     if buffer is None:
         net_logger("Harpia server failed to start", color="yellow", style="bold", newline=True)
         net_logger(str(buffer), color="white", style="normal", newline=True)
+    if buffer.get("status", 0) != 0:
+        net_logger(f"Harpia server failed to start (exit code {buffer.get('status')})", color="yellow", style="bold", newline=True)
+        if buffer.get("stderr"):
+            net_logger(buffer["stderr"], color="red", style="bold", newline=True)
+        if buffer.get("stdout"):
+            net_logger(buffer["stdout"], color="white", style="normal", newline=True)
+        return buffer.get("status", 1)
 
     return 0
 
@@ -25,19 +32,23 @@ def server(host: str, port: str, folder: str, ztoken: str, full: str, model: str
         if full == "yes":
             if not model:
                 net_logger(f"[ERROR] :: Not model given, model is: {model}", "red", "bold")
-                exit(1)
+                exit(1)            
             os.system(f"./main.py server.harpia --host {host} --port 5599 --model {model} &")
 
         eyeliner("WitchcraftFEX webui server is running!")
         net_logger(spider, "magenta", "bold", False)
         net_logger(f"Running web server :: http://{host}:{port}", "green", "bold", True)
+        net_logger(f"Running MCP server :: http://{host}:{port}/api/mcp", "green", "bold", True)
         net_logger("Press Ctrl+C to stop the server", "white", "normal", True)
         
         command = f"python3 {NT_DATAROOT}pkg/server/server.py {host} {port} {folder} {ztoken}"
         buffer = net_exec(command)
-        net_logger(buffer["stdout"], "white", "normal", True)
+        if buffer.get("stderr"):
+            net_logger(buffer["stderr"], "red", "bold", True)
+        if buffer.get("stdout"):
+            net_logger(buffer["stdout"], "white", "normal", True)
         
-        return 0
+        return buffer.get("status", 0)
         
     except KeyboardInterrupt:
         print("\n")
@@ -58,7 +69,7 @@ def server_llama_wrapper(args_v):
 
 def server_default_wrapper(args_v):
     ztoken = NT_COSMIC_SIGKEY
-    model = f"{NT_DATAROOT}/models/model.gguf"
+    model = f"{NT_DATAROOT}models/model.gguf"
     return server("localhost", "5500", f"{NT_DATAROOT}webui", ztoken, "yes", model)
 
 def server_minimal_wrapper(args_v):
