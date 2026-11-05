@@ -254,7 +254,7 @@ class WitchcraftMCPServer:
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
         main_py = os.path.join(project_root, "main.py")
 
-        cli_args = [sys.executable, main_py, bind_name, "--output_mode_none"]
+        cli_args = [sys.executable, main_py, bind_name, "--output_mode_html"]
         for k, v in arguments.items():
             cli_args.extend([f"--{k}", str(v)])
 
