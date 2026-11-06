@@ -1,0 +1,84 @@
+---
+config:
+  theme: neo-dark
+---
+flowchart TD
+    %% External & CLI Tools
+    subgraph OS_CLI["Security & OS CLI Binaries"]
+        direction LR
+        A1["nmap / rustscan"]
+        A2["ffuf / katana / arjun"]
+        A3["nuclei / sqlmap / nikto"]
+        A4["crackmapexec / impacket"]
+        A5["hashcat / john / jwt-tool"]
+        A6["bettercap / aircrack-ng"]
+        A7["volatility / yara / binwalk"]
+        A8["chisel / socat / nc"]
+        A9["curl / docker / virsh"]
+    end
+
+    %% Custom Packages in Spellbook
+    subgraph CustomPKG["Custom Spellbook Packages (pkg/)"]
+        direction LR
+        B1["<b>pkg/server (Python)</b><br>Multi-threaded HTTP Server<br>Auth, HMAC Sessions, REST/HTMX"]
+        B2["<b>pkg/llama</b><br>Yuri AI Engine<br>Local LLM Inference"]
+        B3["<b>pkg/frontend</b><br>Modern SPA Assets<br>HTML / Vanilla CSS / JS"]
+    end
+
+    subgraph DataGenesis["Data & Catalog Engine"]
+        D["<b>rocketdb_v2.json</b><br>208+ Categorized Commands<br><i>network, web, security, forensics,<br>system, core, containers, firewall,<br>database, antivirus, cleanup</i>"]
+    end
+
+    %% Core Engine
+    subgraph CoreEngine["<b>WitchcraftFEX Core Engine (metalcore & modules)</b>"]
+        direction TB
+        E1["<b>metalcore/core.py</b><br>Command Dispatcher, Argument Enforcer,<br>ANSI/ASCII Logger, Output Mode Parser"]
+        E2["<b>modules/system/nt_stats.py</b><br>Telemetry: CPU, RAM, GPU, Containers,<br>Libvirt VMs, Active Processes (HTOP), Net"]
+        E3["<b>modules/scanner & osint</b><br>DNS, IP scoring, Netcrawler, Keywords"]
+        E4["<b>modules/genreport</b><br>Report & Documentation Engine"]
+    end
+
+    %% User Interfaces
+    subgraph Interfaces["Standardized User Interfaces"]
+        direction LR
+        F["<b>CLI Terminal</b><br>ANSI Colors, ASCII Gauges,<br>JSON & Shell Pipelines"]
+        G["<b>WebUI SPA (HTMX)</b><br>Collapsible Category Sidebar<br>Home Real-Time Monitor Dashboard<br>Handbook, Haki & Yuri AI Extensions"]
+    end
+
+    %% Capabilities
+    subgraph Capabilities["Unified Cybersecurity Capabilities"]
+        direction TB
+        H1["Web Application Security & Fuzzing (ffuf, katana, arjun, sqlmap)"]
+        H2["Active Directory & Windows Pentest (crackmapexec, impacket, kerbrute)"]
+        H3["Reconnaissance, OSINT & Port Scanning (nmap, rustscan, sublist3r)"]
+        H4["Wireless Auditing & MITM Attacks (bettercap, aircrack-ng, arpspoof)"]
+        H5["DFIR, Memory & Malware Forensics (volatility, yara, binwalk, foremost)"]
+        H6["Pivoting, Reverse Shells & SOCKS5 Tunnels (chisel, socat, netcat)"]
+        H7["Cryptography & Password Cracking (hashcat, john, jwt-tool)"]
+        H8["Real-Time System & Hardware Telemetry (nt_stats monitor)"]
+        H9["Container & Virtualization Management (docker, libvirt/kvm)"]
+        H10["Report Generation & Threat Playbooks (RBR / RBP)"]
+    end
+
+    %% Relationships
+    OS_CLI --> D
+    CustomPKG --> D
+    D --> CoreEngine
+    CoreEngine <--> F
+    CoreEngine <--> G
+    CoreEngine --> Capabilities
+
+    %% Styling Classes
+    classDef external fill:#1a1a2e,stroke:#4a4e69,color:#e0e1dd,stroke-width:1px;
+    classDef pkg fill:#16213e,stroke:#0f3460,color:#e94560,stroke-width:1px;
+    classDef genesis fill:#2c003e,stroke:#c607fb,color:#ffffff,stroke-width:2px;
+    classDef core fill:#0b3c5d,stroke:#328cc1,color:#ffffff,stroke-width:2px;
+    classDef interface fill:#003322,stroke:#00c850,color:#ffffff,stroke-width:2px;
+    classDef capability fill:#111111,stroke:#c607fb,color:#aliceblue,stroke-width:1px;
+
+    class A1,A2,A3,A4,A5,A6,A7,A8,A9 external;
+    class B1,B2,B3 pkg;
+    class D genesis;
+    class E1,E2,E3,E4 core;
+    class F,G interface;
+    class H1,H2,H3,H4,H5,H6,H7,H8,H9,H10 capability;

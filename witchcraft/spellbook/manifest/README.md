@@ -1,0 +1,1 @@
+Essa pasta  e dedicada para documentos não tecnicos relacionados ao tema cypherpunk

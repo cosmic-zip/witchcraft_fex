@@ -1,0 +1,69 @@
+services:
+  witchcraftfex_main:
+    build: .
+    container_name: witchcraftfex_server
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    ports:
+      - '5500:5500'
+      - '5599:5599'
+
+  witchcraftfex_portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - '9443:9443'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    env_file:
+      - .env
+
+  witchcraftfex_prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.listen-address=:9000'
+    volumes:
+      - ./spellbook/provider/prometheus.yml:/etc/prometheus/prometheus.yml
+    env_file:
+      - .env
+
+  witchcraftfex_grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./spellbook/provider/grafana/provisioning:/etc/grafana/provisioning
+      - ./spellbook/provider/config/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - witchcraftfex_prometheus
+    env_file:
+      - .env
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+
+  witchcraftfex_cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - '18080:8080'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
+
+volumes:
+  portainer_data:
+  grafana_data:
