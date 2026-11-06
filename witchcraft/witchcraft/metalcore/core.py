@@ -272,6 +272,9 @@ def search_arg(args: list, keyword: str, enforce_keyword=True):
 
 def dynamic_manual(args_v):
 
+    eyeliner("HELP PAGE", "green")
+    net_logger("Use help --option [pattern] with one of: \n\tcategory: list all available categories \n\tmanual: for the man page \n\tall: to see all function \n\tpattern: bind name or use category name, ex: docker.stop.all or firewall", "green", "bold", True)
+
     def render_bind(database):
         for bind in database:
             net_logger(f"name: {bind.get("name")}", "cyan", "bold")
@@ -305,14 +308,17 @@ def dynamic_manual(args_v):
             net_logger(file.read(), "cyan", "bold", True)
             sys.exit(0)
 
-    if  option == "category":
+    if  option == "category" or option == None:
+        net_logger("Available categories", "white", "bold")
         categories = []
         for bind in database:
             cat = bind.get("category")
             if not cat in categories:
                 categories.append(cat)
 
-        net_logger(categories, "cyan", "bold", True)
+        for x in categories:
+            net_logger(f"\t{x}", "cyan", "bold")
+        net_logger("\n")
         sys.exit(0)
 
     if  option == "all":
