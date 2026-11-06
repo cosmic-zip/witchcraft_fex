@@ -1,6 +1,6 @@
-![banner](docs/images/banner-snapstore.png)
+![banner](documentation/images/banner-snapstore.png)
 
-![banner](docs/images/lineBar.png)
+![banner](documentation/images/lineBar.png)
 
 [![witchcraft-cybersecurity](https://snapcraft.io/witchcraft-cybersecurity/badge.svg)](https://snapcraft.io/witchcraft-cybersecurity)
 ![witchcraft](https://img.shields.io/github/actions/workflow/status/cosmic-zip/witchcraft/witchcraft.yml)
@@ -19,11 +19,11 @@
 WitchcraftFEX Are much more than a simple hacking script, is a cyberdeck toolkit built for runners who dive deep into the net. A shell and automation's and automation's engine for pentesting, osint, forensics, fingerprinting,web-hacking, malware building, reverse shells, RCE agents, generation of reports (RBR), and playbooks (RBP) based on rules. All based in a modular system. It is fully compatible with GNU/Linux, BSD, Android (with Termux) and Windows (WSL)
 
 
-![banner](docs/images/dig.png)
+![banner](documentation/images/dig.png)
 
 # A versatile toolkit for cybersecurity unified
 
-![banner](docs/images/WitchcraftFEX.png)
+![banner](documentation/images/WitchcraftFEX.png)
 ---
 
 WitchcraftFEX or just WFEX is a modular system with build and hacking tools for cypherpunks. The objective is to centralize all my work (that is correlated to cyber security) and expose it in a standardized way to the user. I have several repos for that, but this is the ONLY one that matters.
@@ -262,7 +262,7 @@ FN_REGISTRY = {
 }
 ```
 
-As you can see, the term `native.` indicates to the parser that it is a function, not an external software call. Arguments such as `address` and `option` are marked with `@@`, meaning they are magic_docs arguments.
+As you can see, the term `native.` indicates to the parser that it is a function, not an external software call. Arguments such as `address` and `option` are marked with `@@`, meaning they are magic_documentation arguments.
 
 To define predefined options:
 
