@@ -1,0 +1,105 @@
+20 	    TCP 	FTP Data Transfer
+21 	    TCP 	FTP Command Control
+22 	    TCP 	SSH Remote Login Protocol
+23 	    TCP 	Telnet Remote Login Protocol
+25 	    TCP 	Simple Mail Transfer Protocol (SMTP)
+53 	    TCP/UDP 	Domain Name System (DNS)
+67 	    UDP 	DHCP Server
+68 	    UDP 	DHCP Client
+69 	    UDP 	TFTP (Trivial File Transfer Protocol)
+80 	    TCP 	HTTP (Hypertext Transfer Protocol)
+88 	    TCP/UDP 	Kerberos
+110 	TCP 	POP3 (Post Office Protocol v3)
+119 	TCP 	NNTP (Network News Transfer Protocol)
+123 	UDP 	NTP (Network Time Protocol)
+135 	TCP 	RPC (Remote Procedure Call)
+137 	UDP 	NetBIOS Name Service
+138 	UDP 	NetBIOS Datagram Service
+139 	TCP 	NetBIOS Session Service
+143 	TCP 	IMAP (Internet Message Access Protocol)
+161 	UDP 	SNMP (Simple Network Management Protocol)
+162 	UDP 	SNMP Trap
+179 	TCP 	BGP (Border Gateway Protocol)
+194 	TCP 	IRC (Internet Relay Chat)
+389 	TCP/UDP 	LDAP (Lightweight Directory Access Protocol)
+443 	TCP 	HTTPS (HTTP over SSL/TLS)
+445 	TCP 	Microsoft-DS (Active Directory, Windows shares)
+465 	TCP 	SMTP over SSL/TLS
+500 	UDP 	ISAKMP (Internet Security Association and Key Management Protocol)
+514 	UDP 	Syslog
+515 	TCP 	LPD (Line Printer Daemon)
+520 	UDP 	RIP (Routing Information Protocol)
+548 	TCP 	AFP (Apple Filing Protocol)
+554 	TCP 	RTSP (Real-Time Streaming Protocol)
+587 	TCP 	SMTP over TLS/SSL
+631 	TCP 	IPP (Internet Printing Protocol)
+636 	TCP 	LDAP over SSL/TLS
+674 	TCP 	ACAP (Application Configuration Access Protocol)
+989 	TCP/UDP 	FTPS/FTP over TLS/SSL
+990 	TCP/UDP 	FTPS/FTP over TLS/SSL
+993 	TCP 	IMAP over SSL/TLS
+995 	TCP 	POP3 over SSL/TLS
+1025 	TCP 	Microsoft RPC (Remote Procedure Call)
+1099 	TCP 	RMI (Remote Method Invocation)
+1194 	TCP 	OpenVPN
+1433 	TCP 	Microsoft SQL Server
+1494 	TCP 	Citrix ICA Client
+1512 	TCP 	RTSP (Real-Time Streaming Protocol)
+1701 	UDP 	L2TP (Layer 2 Tunneling Protocol)
+1723 	TCP 	PPTP (Point-to-Point Tunneling Protocol)
+1900 	UDP 	SSDP (Simple Service Discovery Protocol)
+2049 	TCP/UDP 	NFS (Network File System)
+2082 	TCP 	CPanel (Control Panel)
+2083 	TCP 	RPC (Remote Procedure Call) over HTTPS/TLS
+2087 	TCP 	Weblogic (BEA Systems)
+2095 	TCP 	CPanel (Control Panel)
+2096 	TCP 	CPanel (Control Panel)
+2301 	TCP 	Compaq Insight Manager
+2483 	TCP/UDP 	Oracle DB
+2484 	TCP/UDP 	Oracle DB
+2967 	TCP 	Cisco DialTone Voice Vxml Browser
+3000 	TCP 	Meteor (JavaScript Web Framework)
+3128 	TCP 	Squid (Proxy Server)
+3268 	TCP 	Microsoft Global Catalog
+3306 	TCP 	MySQL
+3389 	TCP 	Microsoft Remote Desktop
+3689 	TCP/UDP 	iTunes (Digital Media Player)
+4664 	TCP 	Google Desktop Server
+4672 	TCP 	Perl Remote Access
+5000 	TCP 	UPnP (Universal Plug and Play)
+5060 	TCP/UDP 	SIP (Session Initiation Protocol)
+5190 	TCP 	ICQ (I Seek You)
+5222 	TCP 	Jabber/XMPP (Extensible Messaging and Presence Protocol)
+5223 	TCP 	Jabber/XMPP (Extensible Messaging and Presence Protocol)
+5432 	TCP 	PostgreSQL
+5500 	UDP 	VNC (Virtual Network Computing)
+5601 	TCP 	Kibana (Elasticsearch Visualization)
+5631 	TCP 	PCP (PC Anywhere)
+5632 	TCP 	PCP (PC Anywhere)
+5666 	TCP 	NRPE (Nagios Remote Plugin Executor)
+5900 	TCP 	VNC (Virtual Network Computing)
+5938 	TCP 	TeamViewer
+6000 	TCP 	X Window System
+6112 	TCP 	Microsoft DB (Database)
+6667 	TCP 	IRC (Internet Relay Chat)
+6881 	TCP/UDP 	BitTorrent
+8000 	TCP 	HTTP (Alternate)
+8001 	TCP 	HTTP (Alternate)
+8002 	TCP 	HTTP (Alternate)
+8003 	TCP 	HTTP (Alternate)
+8008 	TCP 	HTTP (Alternate)
+8080 	TCP 	HTTP (Alternate)
+8443 	TCP 	HTTPS (Alternate)
+9000 	TCP 	Tor (The Onion Router)
+9090 	TCP 	Webmin (Web-based System Administration)
+9100 	TCP 	HP JetDirect (Printer)
+9200 	TCP 	Elasticsearch
+9300 	TCP 	Elasticsearch
+9418 	TCP 	Git (Version Control System)
+9999 	TCP 	Abyss Web Server
+10000 	TCP 	Webmin (Web-based System Administration)
+10001 	TCP 	Webmin (Web-based System Administration)
+27017 	TCP 	MongoDB
+27018 	TCP 	MongoDB Web Interface
+27019 	TCP 	MongoDB Shard
+28017 	TCP 	MongoDB Web Interface

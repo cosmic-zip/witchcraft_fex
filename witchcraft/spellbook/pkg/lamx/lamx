@@ -1,0 +1,2717 @@
+#!/usr/bin/env bash
+
+# Linux App Manager eXtended
+# A powerful, interactive Bash script for managing Linux applications and system tools across all major package managers (APT, Pacman, DNF, DEB, RPM, Snap, Flatpak, Firmware) and system utilities (NVIDIA drivers, Tuned power profiles) from a unified TUI menu.
+# Run with a single command: lamx. Perfect for users who want a central, easy-to-use app management experience on any Linux distro.
+
+# --- Menu Option Visibility Variables (0=show, 1=hide)
+# Persistent config file for menu visibility: ~/.config/lamx/menu.conf
+LAMX_MENU_CONF="$HOME/.config/lamx/menu.conf"
+HIDE_APT=0
+HIDE_PACMAN=0
+HIDE_DNF=0
+HIDE_ZYPPER=0
+HIDE_DEB=0
+HIDE_RPM=0
+HIDE_SNAP=0
+HIDE_FLATPAK=0
+HIDE_FIRMWARE=0
+HIDE_NVIDIA=0
+HIDE_TUNED=0
+HIDE_UPDATE=0
+HIDE_SYSINFO=0
+HIDE_INTERNET=0
+HIDE_HELP=0
+
+# Load menu config if exists
+load_menu_config() {
+    [ -f "$LAMX_MENU_CONF" ] || return
+    while IFS='=' read -r key val; do
+        case $key in
+        HIDE_*) eval "$key=$val" ;;
+        esac
+    done <"$LAMX_MENU_CONF"
+}
+
+# Save menu config
+save_menu_config() {
+    mkdir -p "$(dirname "$LAMX_MENU_CONF")"
+    cat >"$LAMX_MENU_CONF" <<EOF
+HIDE_APT=$HIDE_APT
+HIDE_PACMAN=$HIDE_PACMAN
+HIDE_DNF=$HIDE_DNF
+HIDE_ZYPPER=$HIDE_ZYPPER
+HIDE_DEB=$HIDE_DEB
+HIDE_RPM=$HIDE_RPM
+HIDE_SNAP=$HIDE_SNAP
+HIDE_FLATPAK=$HIDE_FLATPAK
+HIDE_FIRMWARE=$HIDE_FIRMWARE
+HIDE_NVIDIA=$HIDE_NVIDIA
+HIDE_TUNED=$HIDE_TUNED
+HIDE_UPDATE=$HIDE_UPDATE
+HIDE_SYSINFO=$HIDE_SYSINFO
+HIDE_INTERNET=$HIDE_INTERNET
+HIDE_HELP=$HIDE_HELP
+EOF
+}
+
+# Function to clear the screen and print a centered heading with a border that fits the heading only
+centered_heading() {
+    clear
+    t1="$1"
+    local len=${#t1}
+    local border_len=$((len + 4))
+    local cols
+    cols=$(tput cols)
+    local pad=$(((cols - border_len - 2) / 2))
+    local padstr=""
+    if [ $pad -gt 0 ]; then padstr=$(printf '%*s' $pad); fi
+    local top_line
+    top_line="╔$(printf '%0.s═' $(seq 1 $border_len))╗"
+    local mid_line="║  $t1  ║"
+    local bot_line
+    bot_line="╚$(printf '%0.s═' $(seq 1 $border_len))╝"
+    echo -e "\033[1m$padstr$top_line\033[0m"
+    echo -e "\033[1m$padstr$mid_line\033[0m"
+    echo -e "\033[1m$padstr$bot_line\033[0m"
+    echo ""
+}
+
+# Function to print a bold, highlighted warning message (red background)
+highlighted_warning() {
+    # Usage: highlighted_warning "Your message here"
+    echo -e "\033[1;41m$1\033[0m"
+}
+
+# Function to print a bold, highlighted success/info message
+highlighted_success() {
+    # Usage: highlighted_success "Your message here"
+    echo -e "\033[1;30;102m$1\033[0m"
+}
+
+LAMX_VERSION="2.8"
+
+# Main Menu - Entry point for the app
+main_menu() {
+    load_menu_config
+    centered_heading "Linux App Manager eXtended"
+    echo "Select Your Choice:"
+    local menu_items=()
+    local menu_funcs=()
+    if command -v apt &>/dev/null && [ "$HIDE_APT" = 0 ]; then
+        menu_items+=("APT App Manager")
+        menu_funcs+=("apt_manager")
+    fi
+    if command -v pacman &>/dev/null && [ "$HIDE_PACMAN" = 0 ]; then
+        menu_items+=("Pacman App Manager")
+        menu_funcs+=("pacman_manager")
+    fi
+    if command -v dnf &>/dev/null && [ "$HIDE_DNF" = 0 ]; then
+        menu_items+=("DNF App Manager")
+        menu_funcs+=("dnf_manager")
+    fi
+    if command -v zypper &>/dev/null && [ "$HIDE_ZYPPER" = 0 ]; then
+        menu_items+=("Zypper App Manager")
+        menu_funcs+=("zypper_manager")
+    fi
+    if (command -v dpkg &>/dev/null || command -v apt &>/dev/null) && [ "$HIDE_DEB" = 0 ]; then
+        menu_items+=("DEB App Manager")
+        menu_funcs+=("deb_manager")
+    fi
+    if (command -v rpm &>/dev/null || command -v dnf &>/dev/null) && [ "$HIDE_RPM" = 0 ]; then
+        menu_items+=("RPM App Manager")
+        menu_funcs+=("rpm_manager")
+    fi
+    if [ "$HIDE_SNAP" = 0 ]; then
+        menu_items+=("Snap App Manager")
+        menu_funcs+=("snap_manager")
+    fi
+    if [ "$HIDE_FLATPAK" = 0 ]; then
+        menu_items+=("Flatpak App Manager")
+        menu_funcs+=("flatpak_manager")
+    fi
+    if command -v fwupdmgr &>/dev/null && [ "$HIDE_FIRMWARE" = 0 ]; then
+        menu_items+=("Firmware Manager")
+        menu_funcs+=("firmware_manager")
+    fi
+    if [ "$HIDE_NVIDIA" = 0 ]; then
+        menu_items+=("NVIDIA Driver Manager")
+        menu_funcs+=("nvidia_manager")
+    fi
+    if [ "$HIDE_TUNED" = 0 ]; then
+        menu_items+=("Tuned Power Profile Manager")
+        menu_funcs+=("tuned_manager")
+    fi
+    if [ "$HIDE_UPDATE" = 0 ]; then
+        menu_items+=("Update All Packages In Your System")
+        menu_funcs+=("update_all_packages")
+    fi
+    if [ "$HIDE_SYSINFO" = 0 ]; then
+        menu_items+=("Show System Info")
+        menu_funcs+=("show_system_info")
+    fi
+    if [ "$HIDE_INTERNET" = 0 ]; then
+        menu_items+=("Check for Internet Connection")
+        menu_funcs+=("check_internet")
+    fi
+    if [ "$HIDE_HELP" = 0 ]; then
+        menu_items+=("Help/About")
+        menu_funcs+=("show_help")
+    fi
+    menu_items+=("LAMX System Management")
+    menu_funcs+=("lamx_install_menu")
+    menu_items+=("Exit Program")
+    menu_funcs+=("exit 0")
+    for i in "${!menu_items[@]}"; do
+        printf " %2d. %s\n" $((i + 1)) "${menu_items[$i]}"
+    done
+    echo ""
+    read -p "Enter your choice: " choice
+    if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le ${#menu_items[@]} ]; then
+        func="${menu_funcs[$((choice - 1))]}"
+        if [ "$func" = "exit 0" ]; then
+            exit 0
+        else
+            $func
+        fi
+    else
+        highlighted_warning "Invalid choice. Please try again."
+        sleep 1
+        main_menu
+    fi
+}
+
+lamx_install_menu() {
+    while true; do
+        centered_heading "LAMX System Installer"
+        echo "Select Your Choice:"
+        echo " 1. Install LAMX systemwide"
+        echo " 2. Uninstall LAMX and Remove LAMX Configuration."
+        echo " 3. Update LAMX (download latest from GitHub)"
+        echo " 4. Manage Main Menu Options"
+        echo " 5. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            current_dir="$(dirname "$(realpath "$0")")"
+            sudo cp "$current_dir/lamx" /usr/local/bin/lamx && sudo chmod +x /usr/local/bin/lamx
+            highlighted_success "LAMX installed systemwide! You can now run 'lamx' from anywhere."
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            if [ -f /usr/local/bin/lamx ]; then
+                sudo rm /usr/local/bin/lamx && highlighted_success "LAMX uninstalled from system."
+                # Remove config folder where menu.conf is stored
+                if [ -d "$HOME/.config/lamx" ]; then
+                    rm -rf "$HOME/.config/lamx"
+                    echo ""
+                    highlighted_success "LAMX configuration found and removed."
+                    echo ""
+                fi
+            else
+                # Remove config folder where menu.conf is stored
+                if [ -d "$HOME/.config/lamx" ]; then
+                    rm -rf "$HOME/.config/lamx"
+                    highlighted_success "LAMX configuration found and removed."
+                    echo ""
+                fi
+                highlighted_warning "LAMX is not installed in /usr/local/bin."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Checking for latest version..."
+            tmpfile="/tmp/lamx-latest"
+            tmpver="/tmp/lamx-latest-version"
+            if command -v curl >/dev/null; then
+                curl -fsSL -o "$tmpfile" "https://raw.githubusercontent.com/saitamasahil/Linux-App-Manager-eXtended/refs/heads/main/lamx"
+            elif command -v wget >/dev/null; then
+                wget -O "$tmpfile" "https://raw.githubusercontent.com/saitamasahil/Linux-App-Manager-eXtended/refs/heads/main/lamx"
+            else
+                highlighted_warning "Neither curl nor wget is available to download the update."
+                read -rp "Press Enter to continue..."
+                continue
+            fi
+            # Extract version from downloaded file
+            grep '^LAMX_VERSION=' "$tmpfile" | head -n1 >"$tmpver"
+            remote_version=$(cut -d'=' -f2 "$tmpver" | tr -d '"')
+            if [ "$LAMX_VERSION" = "$remote_version" ]; then
+                highlighted_success "You are already using the latest version $LAMX_VERSION."
+            else
+                if [ -s "$tmpfile" ]; then
+                    sudo cp "$tmpfile" /usr/local/bin/lamx && sudo chmod +x /usr/local/bin/lamx
+                    highlighted_success "LAMX updated successfully to version $remote_version! Please restart the program to apply the changes."
+                else
+                    highlighted_warning "Failed to download the latest LAMX binary."
+                fi
+            fi
+            rm -f "$tmpfile" "$tmpver"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            manage_main_menu_options
+            # After toggling, reload main menu to reflect changes
+            main_menu
+            return
+            ;;
+        5)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# --- Manage Main Menu Options (in-memory, session only) ---
+manage_main_menu_options() {
+    # Only show/toggle options that are available on this system
+    local opts=()
+    local vars=()
+    if command -v apt &>/dev/null; then
+        opts+=("APT App Manager")
+        vars+=(HIDE_APT)
+    fi
+    if command -v pacman &>/dev/null; then
+        opts+=("Pacman App Manager")
+        vars+=(HIDE_PACMAN)
+    fi
+    if command -v dnf &>/dev/null; then
+        opts+=("DNF App Manager")
+        vars+=(HIDE_DNF)
+    fi
+    if command -v zypper &>/dev/null; then
+        opts+=("Zypper App Manager")
+        vars+=(HIDE_ZYPPER)
+    fi
+    if command -v dpkg &>/dev/null || command -v apt &>/dev/null; then
+        opts+=("DEB App Manager")
+        vars+=(HIDE_DEB)
+    fi
+    if command -v rpm &>/dev/null || command -v dnf &>/dev/null; then
+        opts+=("RPM App Manager")
+        vars+=(HIDE_RPM)
+    fi
+    opts+=("Snap App Manager")
+    vars+=(HIDE_SNAP)
+    opts+=("Flatpak App Manager")
+    vars+=(HIDE_FLATPAK)
+    if command -v fwupdmgr &>/dev/null; then
+        opts+=("Firmware Manager")
+        vars+=(HIDE_FIRMWARE)
+    fi
+    opts+=("NVIDIA Driver Manager")
+    vars+=(HIDE_NVIDIA) # Always persistent
+    opts+=("Tuned Power Profile Manager")
+    vars+=(HIDE_TUNED) # Always persistent
+    opts+=("Update All Packages In Your System")
+    vars+=(HIDE_UPDATE)
+    opts+=("Show System Info")
+    vars+=(HIDE_SYSINFO)
+    opts+=("Check for Internet Connection")
+    vars+=(HIDE_INTERNET)
+    opts+=("Help/About")
+    vars+=(HIDE_HELP)
+    while true; do
+        centered_heading "Manage Main Menu Options"
+        echo -e "Toggle menu visibility. Hidden = \033[1;41mRED\033[0m, Visible = \033[1;30;102mGREEN\033[0m."
+        for idx in "${!opts[@]}"; do
+            local var=${vars[$idx]}
+            local val=${!var}
+            if [ "$val" = "1" ]; then
+                color="\033[1;41m"
+                status="Hidden"
+            else
+                color="\033[1;30;102m"
+                status="Visible"
+            fi
+            printf " %2d. %b%s%b [%s]\033[0m\n" $((idx + 1)) "$color" "${opts[$idx]}" "\033[0m" "$status"
+        done
+        echo ""
+        echo " 0. Go Back To Main Menu"
+        read -p "Enter number to toggle, or 0 to go back: " choice
+        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le ${#opts[@]} ]; then
+            local var=${vars[$((choice - 1))]}
+            if [ "${!var}" = "1" ]; then eval "$var=0"; else eval "$var=1"; fi
+            save_menu_config
+        elif [ "$choice" = "0" ]; then
+            return
+        else
+            highlighted_warning "Invalid choice."
+            sleep 1
+        fi
+    done
+}
+
+show_system_info() {
+    centered_heading "System Information"
+    echo "Hostname: $(hostname)"
+    echo "Distro: $(lsb_release -ds 2>/dev/null || cat /etc/*release | grep PRETTY_NAME | cut -d= -f2 | tr -d '"')"
+    echo "Kernel: $(uname -r)"
+    echo "Uptime: $(uptime -p)"
+    echo "CPU: $(lscpu | grep 'Model name' | awk -F: '{print $2}' | xargs)"
+    echo "RAM: $(free -h | awk '/Mem:/ {print $2" total, "$3" used, "$4" free"}')"
+    echo "Disk: $(df -h / | awk 'NR==2{print $2" total, "$3" used, "$4" free"}')"
+    set -- "$(hostname -I)"
+    if [ -n "$1" ]; then
+        echo "IP: $1"
+    else
+        echo "No IP address found"
+    fi
+
+    echo ""
+    read -rp "Press Enter to return to main menu..."
+    main_menu
+}
+
+check_internet() {
+    echo "Checking internet connection..."
+    if ping -c 1 1.1.1.1 &>/dev/null; then
+        highlighted_success "Internet connection is available."
+    else
+        highlighted_warning "No internet connection detected!"
+    fi
+    read -rp "Press Enter to return to main menu..."
+    main_menu
+}
+
+show_help() {
+    centered_heading "Help / About"
+    echo "Version: 2.8"
+    echo "Author: saitamasahil"
+    echo ""
+    echo "Usage:"
+    echo "- Start LAMX with ./lamx."
+    echo "- Type the number of the menu option you want and press Enter."
+    echo "- For installing, uninstalling, or updating LAMX itself, use the LAMX System Management option in the main menu."
+    echo "- After installing systemwide, you can simply type lamx in any terminal to start the app."
+    echo ""
+    echo "Main Menu Options Explained:"
+    echo "- The main menu shows only the package managers and tools available on your system."
+    echo "- For example, on Fedora you will see DNF and RPM, but not APT or Pacman."
+    echo "- Each option lets you manage apps, configuration, cache, repositories, and more for the detected package manager."
+    echo "- Other options include firmware management, NVIDIA drivers, power profiles, system info, internet check, and LAMX management."
+    echo ""
+    echo "Features:"
+    echo "- Dynamic menu: only shows options for package managers and system tools detected on your system."
+    echo "- Manage apps using APT, Pacman, DNF, Zypper, DEB, RPM, Snap, and Flatpak."
+    echo "- Update all packages across supported managers with one command."
+    echo "- Manage firmware updates and NVIDIA drivers."
+    echo "- Configure power profiles with Tuned."
+    echo "- Edit package manager configuration and repository files."
+    echo ""
+    echo "Tips:"
+    echo "- Type the number to select menu options."
+    echo "- You can hide or show main menu options using 'Manage Main Menu Options' in LAMX System Management."
+    echo "- Hidden options will not appear in the main menu until you make them visible again."
+    echo "- For uninstall/cleanup, you'll see a preview and be asked to confirm."
+    echo "- For help, rerun this menu."
+    echo "- Use the LAMX System Management option to install, uninstall, update LAMX, or manage menu options."
+    echo ""
+    read -rp "Press Enter to return to main menu..."
+    main_menu
+}
+
+# APT App Manager
+apt_manager() {
+    while true; do
+        centered_heading "APT App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Apps"
+        echo " 2. List User Installed Apps"
+        echo " 3. Update All Apps"
+        echo " 4. Search & Install App"
+        echo " 5. Uninstall App"
+        echo " 6. Delete APT Cache & Unnecessary Data"
+        echo " 7. Edit apt.conf"
+        echo " 8. Edit Repository Configuration"
+        echo " 9. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing All Apps:"
+            apt list --installed
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            echo "Listing User Installed Apps:"
+            apt-mark showmanual
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Updating All Apps..."
+            sudo apt update
+            sudo apt full-upgrade -y
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the app name to search: " app_name
+            apt search "$app_name"
+            read -rp "Enter the exact app name to install: " app_install
+            sudo apt install "$app_install"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            read -rp "Enter the app name to uninstall: " app_name
+            sudo apt remove "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Deleting APT Cache & Unnecessary Data..."
+            sudo apt autoclean
+            sudo apt autoremove --purge -y
+            sudo rm -rf /var/cache/apt/archives/*
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            edit_apt_conf
+            ;;
+        8)
+            edit_apt_repo_manager
+            ;;
+        9)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Editor for APT repository files
+edit_apt_repo_manager() {
+    local sources_dir="/etc/apt/sources.list.d"
+    local sources_list="/etc/apt/sources.list"
+    while true; do
+        centered_heading "APT Repository Manager"
+        echo "Available repo files:"
+        ls $sources_dir/*.list 2>/dev/null || echo "No .list files found in $sources_dir."
+        echo "$sources_list (main sources list)"
+        echo ""
+        echo "Select an action:"
+        echo " 1. Edit a repo file"
+        echo " 2. Show contents of a repo file"
+        echo " 3. Add a new repository (.list file)"
+        echo " 4. Remove a repo file"
+        echo " 5. Go Back to APT Manager"
+        echo ""
+        read -p "Enter your choice: " repo_choice
+        case $repo_choice in
+        1)
+            read -rp "Enter the full path or name of the repo file to edit (or 'sources.list'): " file
+            if [ "$file" = "sources.list" ]; then
+                sudo nano "$sources_list"
+            elif [ -f "$file" ]; then
+                sudo nano "$file"
+            elif [ -f "$sources_dir/$file" ]; then
+                sudo nano "$sources_dir/$file"
+            else
+                highlighted_warning "File not found."
+            fi
+            ;;
+        2)
+            read -rp "Enter the full path or name of the repo file to view (or 'sources.list'): " file
+            if [ "$file" = "sources.list" ]; then
+                cat "$sources_list"
+            elif [ -f "$file" ]; then
+                cat "$file"
+            elif [ -f "$sources_dir/$file" ]; then
+                cat "$sources_dir/$file"
+            else
+                highlighted_warning "File not found."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter a name for the new .list file (e.g. myrepo.list): " newfile
+            read -rp "Enter the deb line (e.g. deb http://repo.url distro component): " debline
+            echo "$debline" | sudo tee "$sources_dir/$newfile" >/dev/null
+            highlighted_success "Repository added to $sources_dir/$newfile."
+            sleep 1
+            ;;
+        4)
+            read -rp "Enter the name of the .list file to remove: " rmfile
+            if [ -f "$sources_dir/$rmfile" ]; then
+                sudo rm "$sources_dir/$rmfile"
+                highlighted_success "$rmfile removed."
+            else
+                highlighted_warning "File not found."
+            fi
+            sleep 1
+            ;;
+        5)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Pacman App Manager
+pacman_manager() {
+    while true; do
+        centered_heading "Pacman App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Apps"
+        echo " 2. List User Installed Apps"
+        echo " 3. Update All Apps"
+        echo " 4. Search & Install App"
+        echo " 5. Uninstall App"
+        echo " 6. Delete Pacman Cache & Unnecessary Data"
+        echo " 7. Edit pacman.conf"
+        echo " 8. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing All Apps:"
+            pacman -Q
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            echo "Listing User Installed Apps:"
+            pacman -Qe
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Updating All Apps..."
+            sudo pacman -Syu --noconfirm
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the app name to search: " app_name
+            pacman -Ss "$app_name"
+            read -rp "Enter the exact app name to install: " app_install
+            sudo pacman -S "$app_install"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            read -rp "Enter the app name to uninstall: " app_name
+            sudo pacman -R "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Deleting Pacman Cache & Unnecessary Data..."
+            sudo pacman -Sc --noconfirm
+            sudo pacman -Rns --noconfirm "$(pacman -Qtdq 2>/dev/null)"
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            edit_pacman_conf
+            ;;
+        8)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Pacman.conf Editor
+edit_pacman_conf() {
+    local conf_file="/etc/pacman.conf"
+    if [ ! -f "$conf_file" ]; then
+        highlighted_warning "pacman.conf not found at $conf_file."
+        read -rp "Press Enter to continue..."
+        return
+    fi
+    while true; do
+        centered_heading "Edit pacman.conf"
+        echo "Current settings:"
+        grep -E '^(RootDir|DBPath|CacheDir|HookDir|GPGDir|LogFile|HoldPkg|IgnorePkg|IgnoreGroup|Include|Architecture|XferCommand|NoUpgrade|NoExtract|CleanMethod|SigLevel|LocalFileSigLevel|RemoteFileSigLevel|ParallelDownloads|UseSyslog|Color|NoProgressBar|CheckSpace|VerbosePkgLists|DisableDownloadTimeout)' "$conf_file" | grep -v '^#'
+        echo ""
+        echo "Repository sections:"
+        grep -E '^\[.*\]' "$conf_file"
+        echo ""
+        echo "Select what to edit:"
+        echo " 1. Edit a config option (RootDir, DBPath, etc.)"
+        echo " 2. Add/Edit/Remove repository section"
+        echo " 3. View full pacman.conf"
+        echo " 4. Open pacman.conf in nano"
+        echo " 5. Go Back to Pacman Manager"
+        echo ""
+        read -p "Enter your choice: " conf_choice
+        case $conf_choice in
+        1)
+            echo "Available options: RootDir, DBPath, CacheDir, HookDir, GPGDir, LogFile, HoldPkg, IgnorePkg, IgnoreGroup, Include, Architecture, XferCommand, NoUpgrade, NoExtract, CleanMethod, SigLevel, LocalFileSigLevel, RemoteFileSigLevel, ParallelDownloads, UseSyslog, Color, NoProgressBar, CheckSpace, VerbosePkgLists, DisableDownloadTimeout"
+            read -rp "Enter the option name to edit: " opt
+            read -rp "Enter the new value: " val
+            if grep -q "^$opt" "$conf_file"; then
+                sudo sed -i "s|^$opt.*|$opt = $val|" "$conf_file"
+            else
+                echo "$opt = $val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "$opt set to $val."
+            sleep 1
+            ;;
+        2)
+            echo "Repository sections found:"
+            grep -E '^\[.*\]' "$conf_file"
+            echo ""
+            echo "  a. Add new repository section"
+            echo "  b. Edit repository section"
+            echo "  c. Remove repository section"
+            read -rp "Choose action (a/b/c): " repo_action
+            case $repo_action in
+            a)
+                read -rp "Enter new section name (e.g. [custom]): " section
+                echo "$section" | sudo tee -a "$conf_file" >/dev/null
+                read -rp "Enter directives (e.g. Server = file:///home/pkgs): " directives
+                echo "$directives" | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "Repository section $section added."
+                sleep 1
+                ;;
+            b)
+                read -rp "Enter section name to edit (e.g. [custom]): " section
+                line=$(grep -n "^$section" "$conf_file" | cut -d: -f1)
+                if [ -n "$line" ]; then
+                    read -rp "Enter new directives for $section (will replace existing): " directives
+                    end=$(awk "NR>$line && /^\[/ {print NR; exit}" "$conf_file")
+                    if [ -z "$end" ]; then end=$(wc -l <"$conf_file"); fi
+                    sudo sed -i "$((line + 1)),$((end - 1))d" "$conf_file"
+                    echo "$directives" | sudo tee -a "$conf_file" >/dev/null
+                    highlighted_success "$section updated."
+                else
+                    highlighted_warning "Section not found."
+                fi
+                sleep 1
+                ;;
+            c)
+                read -rp "Enter section name to remove (e.g. [custom]): " section
+                line=$(grep -n "^$section" "$conf_file" | cut -d: -f1)
+                if [ -n "$line" ]; then
+                    end=$(awk "NR>$line && /^\[/ {print NR; exit}" "$conf_file")
+                    if [ -z "$end" ]; then end=$(wc -l <"$conf_file"); fi
+                    sudo sed -i "$line,$((end - 1))d" "$conf_file"
+                    highlighted_success "$section removed."
+                else
+                    highlighted_warning "Section not found."
+                fi
+                sleep 1
+                ;;
+            *)
+                highlighted_warning "Invalid choice."
+                sleep 1
+                ;;
+            esac
+            ;;
+        3)
+            cat "$conf_file"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            sudo nano "$conf_file"
+            ;;
+        5)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# DNF App Manager
+dnf_manager() {
+    while true; do
+        centered_heading "DNF App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Apps"
+        echo " 2. List User Installed Apps"
+        echo " 3. Update All Apps"
+        echo " 4. Search & Install App"
+        echo " 5. Uninstall App"
+        echo " 6. Delete DNF Cache & Unnecessary Data"
+        echo " 7. List All Groups"
+        echo " 8. List Installed Groups"
+        echo " 9. Edit dnf.conf"
+        echo "10. Edit Repository Configuration"
+        echo "11. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing All Apps:"
+            dnf list --installed
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            echo "Listing User Installed Apps:"
+            dnf repoquery --userinstalled
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Updating All Apps..."
+            sudo dnf upgrade --refresh
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the app name to search: " app_name
+            dnf search "$app_name"
+            read -rp "Enter the exact app name to install: " app_install
+            sudo dnf install "$app_install"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            read -rp "Enter the app name to uninstall: " app_name
+            sudo dnf remove "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Deleting DNF Cache & Unnecessary Data..."
+            sudo dnf clean all
+            sudo dnf autoremove -y
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            echo "Listing All Groups:"
+            dnf group list --hidden
+            read -rp "Do you want to install any group from the list? (y/n): " choice2
+            if [[ $choice2 == "Y" || $choice2 == "y" ]]; then
+                read -rp "Enter the name of the group you want to install: " group_name
+                sudo dnf group install "$group_name" -y
+                echo "Operation completed successfully."
+                highlighted_success "Group installed successfully."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        8)
+            echo "Listing Installed Groups:"
+            dnf group list --hidden --installed
+            read -rp "Press Enter to continue..."
+            ;;
+        9)
+            edit_dnf_conf
+            ;;
+        10)
+            edit_dnf_repo_manager
+            ;;
+        11)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Editor for dnf.conf
+edit_dnf_conf() {
+    local conf_file="/etc/dnf/dnf.conf"
+    if [ ! -f "$conf_file" ]; then
+        highlighted_warning "dnf.conf not found at $conf_file."
+        read -rp "Do you want to create a new dnf.conf file? (y/n): " create_choice
+        if [[ "$create_choice" =~ ^[Yy]$ ]]; then
+            echo -e "# see man dnf.conf for defaults and possible options\n[main]" | sudo tee "$conf_file" >/dev/null
+            highlighted_success "Created new dnf.conf at $conf_file."
+        else
+            read -rp "Press Enter to continue..."
+            return
+        fi
+    fi
+    # Declare dnf_desc outside the loop so it's always available
+    declare -A dnf_desc=(
+        [max_parallel_downloads]="Max simultaneous downloads."
+        [fastestmirror]="Use fastest mirror for downloads."
+        [allow_vendor_change]="Allow switching package vendor on upgrade/downgrade."
+        [assumeyes]="Auto-confirm all actions (no prompt)."
+        [best]="Always try to install the highest available version."
+        [keepcache]="Keep downloaded packages in cache."
+        [installonly_limit]="Number of installonly packages (like kernels) to keep."
+        [installonlypkgs]="Packages that are only installed, never upgraded."
+        [deltarpm]="Use delta RPMs to save bandwidth."
+        [obsoletes]="Enable obsoletes processing during install/update."
+        [metadata_timer_sync]="Time between metadata syncs (seconds)."
+        [metadata_expire]="How often repo metadata expires (seconds)."
+        [skip_if_unavailable]="Skip repos that can't be reached."
+        [clean_requirements_on_remove]="Remove unused dependencies when uninstalling."
+        [releasever]="OS release version for repo substitution."
+        [bandwidth]="Limit total download bandwidth."
+        [retries]="Number of download retries."
+        [gpgcheck]="Check GPG signatures on packages."
+        [sslverify]="Verify SSL certificates for repos."
+        [timeout]="Connection timeout (seconds)."
+        [proxy]="Proxy server URL."
+        [basearch]="Base architecture for packages."
+        [arch]="Architecture for packages."
+        [diskspacecheck]="Check disk space before installing."
+        [plugins]="Enable DNF plugins."
+        [enablegroups]="Enable package groups."
+        [install_weak_deps]="Install weak dependencies (recommended/supplemental)."
+        [exclude_from_weak]="Exclude packages from weak dependencies."
+        [installroot]="Root directory for package operations."
+        [logdir]="Directory for DNF logs."
+        [log_rotate]="Number of log rotations before removal."
+        [log_size]="Max log file size before rotation."
+        [persistdir]="Directory for persistent DNF data."
+        [protected_packages]="Packages never removed by DNF."
+        [tsflags]="Extra flags for RPM transactions."
+        [color]="Enable colored output (auto/never/always)."
+        [color_list_available_downgrade]="Color for available downgrades."
+        [color_list_available_install]="Color for available installs."
+        [color_list_available_reinstall]="Color for available reinstalls."
+        [color_list_available_upgrade]="Color for available upgrades."
+        [color_list_installed_extra]="Color for installed extras."
+        [color_list_installed_newer]="Color for installed newer packages."
+        [color_list_installed_older]="Color for installed older packages."
+        [color_list_installed_reinstall]="Color for installed reinstalls."
+        [color_search_match]="Color for search matches."
+        [color_update_installed]="Color for removed packages."
+        [color_update_local]="Color for local package installs."
+        [color_update_remote]="Color for remote package installs."
+    )
+    while true; do
+        centered_heading "Edit dnf.conf"
+        echo "Current settings:"
+        # Table header
+        printf "\033[1m%-30s %-3s %-40s\033[0m\n" "Setting" "-" "Description"
+        for key in "${!dnf_desc[@]}"; do
+            val=$(grep -E "^$key=" "$conf_file" | cut -d= -f2)
+            if [ -n "$val" ]; then
+                printf "%-30s %-3s %-40s\n" "$key=$val" "-" "${dnf_desc[$key]}"
+            fi
+        done
+        echo ""
+        echo "Select what to edit:"
+        echo " 1. Set max_parallel_downloads - Max simultaneous downloads."
+        echo " 2. Toggle fastestmirror (True/False) - Use fastest mirror for downloads."
+        echo " 3. Toggle allow_vendor_change (True/False) - Allow switching package vendor on upgrade/downgrade."
+        echo " 4. Toggle assumeyes (True/False) - Auto-confirm all actions (no prompt)."
+        echo " 5. Toggle best (True/False) - Always try to install the highest available version."
+        echo " 6. Toggle keepcache (True/False) - Keep downloaded packages in cache."
+        echo " 7. Set installonly_limit (number) - Number of installonly packages (like kernels) to keep."
+        echo " 8. Set installonlypkgs (comma-separated list) - Packages that are only installed, never upgraded."
+        echo " 9. Toggle deltarpm (True/False) - Use delta RPMs to save bandwidth."
+        echo "10. Toggle obsoletes (True/False) - Enable obsoletes processing during install/update."
+        echo "11. Set metadata_timer_sync (seconds) - Time between metadata syncs (seconds)."
+        echo "12. Set metadata_expire (seconds) - How often repo metadata expires (seconds)."
+        echo "13. Toggle skip_if_unavailable (True/False) - Skip repos that can't be reached."
+        echo "14. Toggle clean_requirements_on_remove (True/False) - Remove unused dependencies when uninstalling."
+        echo "15. Set releasever (string) - OS release version for repo substitution."
+        echo "16. Set bandwidth (integer or string with units) - Limit total download bandwidth."
+        echo "17. Set retries (integer) - Number of download retries."
+        echo "18. Toggle gpgcheck (True/False) - Check GPG signatures on packages."
+        echo "19. Toggle sslverify (True/False) - Verify SSL certificates for repos."
+        echo "20. Set timeout (integer seconds) - Connection timeout (seconds)."
+        echo "21. Set proxy (URL) - Proxy server URL."
+        echo "22. Set basearch (string) - Base architecture for packages."
+        echo "23. Set arch (string) - Architecture for packages."
+        echo "24. Toggle diskspacecheck (True/False) - Check disk space before installing."
+        echo "25. Toggle plugins (True/False) - Enable DNF plugins."
+        echo "26. Toggle enablegroups (True/False) - Enable package groups."
+        echo "27. Toggle install_weak_deps (True/False) - Install weak dependencies (recommended/supplemental)."
+        echo "28. Set exclude_from_weak (comma-separated list) - Exclude packages from weak dependencies."
+        echo "29. Set installroot (path) - Root directory for package operations."
+        echo "30. Set logdir (path) - Directory for DNF logs."
+        echo "31. Set log_rotate (integer) - Number of log rotations before removal."
+        echo "32. Set log_size (string, e.g. 1M) - Max log file size before rotation."
+        echo "33. Set persistdir (path) - Directory for persistent DNF data."
+        echo "34. Set protected_packages (comma-separated list) - Packages never removed by DNF."
+        echo "35. Set tsflags (comma-separated list) - Extra flags for RPM transactions."
+        echo "36. Set color (auto/never/always) - Enable colored output."
+        echo "37. Set color_list_available_downgrade (string) - Color for available downgrades."
+        echo "38. Set color_list_available_install (string) - Color for available installs."
+        echo "39. Set color_list_available_reinstall (string) - Color for available reinstalls."
+        echo "40. Set color_list_available_upgrade (string) - Color for available upgrades."
+        echo "41. Set color_list_installed_extra (string) - Color for installed extras."
+        echo "42. Set color_list_installed_newer (string) - Color for installed newer packages."
+        echo "43. Set color_list_installed_older (string) - Color for installed older packages."
+        echo "44. Set color_list_installed_reinstall (string) - Color for installed reinstalls."
+        echo "45. Set color_search_match (string) - Color for search matches."
+        echo "46. Set color_update_installed (string) - Color for removed packages."
+        echo "47. Set color_update_local (string) - Color for local package installs."
+        echo "48. Set color_update_remote (string) - Color for remote package installs."
+        echo "49. Go Back to DNF Manager"
+        echo ""
+        read -p "Enter your choice: " conf_choice
+        case $conf_choice in
+        1)
+            read -rp "Enter new value for max_parallel_downloads (e.g. 10): " mpd
+            if grep -q '^max_parallel_downloads' "$conf_file"; then
+                sudo sed -i "s/^max_parallel_downloads.*/max_parallel_downloads=$mpd/" "$conf_file"
+            else
+                echo "max_parallel_downloads=$mpd" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "max_parallel_downloads set to $mpd."
+            sleep 1
+            ;;
+        2)
+            current=$(grep '^fastestmirror' "$conf_file" | cut -d= -f2)
+            if [[ "$current" =~ [Tt]rue ]]; then
+                sudo sed -i "s/^fastestmirror=.*/fastestmirror=False/" "$conf_file"
+                highlighted_success "fastestmirror disabled."
+            else
+                if grep -q '^fastestmirror' "$conf_file"; then
+                    sudo sed -i "s/^fastestmirror=.*/fastestmirror=True/" "$conf_file"
+                else
+                    echo "fastestmirror=True" | sudo tee -a "$conf_file" >/dev/null
+                fi
+                highlighted_success "fastestmirror enabled."
+            fi
+            sleep 1
+            ;;
+        3)
+            read -rp "Set allow_vendor_change (True/False): " val
+            if grep -q '^allow_vendor_change' "$conf_file"; then
+                sudo sed -i "s/^allow_vendor_change.*/allow_vendor_change=$val/" "$conf_file"
+            else
+                echo "allow_vendor_change=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "allow_vendor_change set to $val."
+            sleep 1
+            ;;
+        4)
+            read -rp "Set assumeyes (True/False): " val
+            if grep -q '^assumeyes' "$conf_file"; then
+                sudo sed -i "s/^assumeyes.*/assumeyes=$val/" "$conf_file"
+            else
+                echo "assumeyes=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "assumeyes set to $val."
+            sleep 1
+            ;;
+        5)
+            read -rp "Set best (True/False): " val
+            if grep -q '^best' "$conf_file"; then
+                sudo sed -i "s/^best.*/best=$val/" "$conf_file"
+            else
+                echo "best=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "best set to $val."
+            sleep 1
+            ;;
+        6)
+            read -rp "Set keepcache (True/False): " val
+            if grep -q '^keepcache' "$conf_file"; then
+                sudo sed -i "s/^keepcache.*/keepcache=$val/" "$conf_file"
+            else
+                echo "keepcache=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "keepcache set to $val."
+            sleep 1
+            ;;
+        7)
+            read -rp "Set installonly_limit (number): " val
+            if grep -q '^installonly_limit' "$conf_file"; then
+                sudo sed -i "s/^installonly_limit.*/installonly_limit=$val/" "$conf_file"
+            else
+                echo "installonly_limit=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "installonly_limit set to $val."
+            sleep 1
+            ;;
+        8)
+            read -rp "Set installonlypkgs (comma-separated list): " val
+            if grep -q '^installonlypkgs' "$conf_file"; then
+                sudo sed -i "s/^installonlypkgs.*/installonlypkgs=$val/" "$conf_file"
+            else
+                echo "installonlypkgs=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "installonlypkgs set to $val."
+            sleep 1
+            ;;
+        9)
+            current=$(grep '^deltarpm' "$conf_file" | cut -d= -f2)
+            if [[ "$current" =~ [Tt]rue ]]; then
+                sudo sed -i "s/^deltarpm=.*/deltarpm=False/" "$conf_file"
+                highlighted_success "deltarpm disabled."
+            else
+                if grep -q '^deltarpm' "$conf_file"; then
+                    sudo sed -i "s/^deltarpm=.*/deltarpm=True/" "$conf_file"
+                else
+                    echo "deltarpm=True" | sudo tee -a "$conf_file" >/dev/null
+                fi
+                highlighted_success "deltarpm enabled."
+            fi
+            sleep 1
+            ;;
+        10)
+            current=$(grep '^obsoletes' "$conf_file" | cut -d= -f2)
+            if [[ "$current" =~ [Tt]rue ]]; then
+                sudo sed -i "s/^obsoletes=.*/obsoletes=False/" "$conf_file"
+                highlighted_success "obsoletes disabled."
+            else
+                if grep -q '^obsoletes' "$conf_file"; then
+                    sudo sed -i "s/^obsoletes=.*/obsoletes=True/" "$conf_file"
+                else
+                    echo "obsoletes=True" | sudo tee -a "$conf_file" >/dev/null
+                fi
+                highlighted_success "obsoletes enabled."
+            fi
+            sleep 1
+            ;;
+        11)
+            read -rp "Set metadata_timer_sync (seconds): " val
+            if grep -q '^metadata_timer_sync' "$conf_file"; then
+                sudo sed -i "s/^metadata_timer_sync.*/metadata_timer_sync=$val/" "$conf_file"
+            else
+                echo "metadata_timer_sync=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "metadata_timer_sync set to $val."
+            sleep 1
+            ;;
+        12)
+            read -rp "Set metadata_expire (seconds): " val
+            if grep -q '^metadata_expire' "$conf_file"; then
+                sudo sed -i "s/^metadata_expire.*/metadata_expire=$val/" "$conf_file"
+            else
+                echo "metadata_expire=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "metadata_expire set to $val."
+            sleep 1
+            ;;
+        13)
+            read -rp "Set skip_if_unavailable (True/False): " val
+            if grep -q '^skip_if_unavailable' "$conf_file"; then
+                sudo sed -i "s/^skip_if_unavailable.*/skip_if_unavailable=$val/" "$conf_file"
+            else
+                echo "skip_if_unavailable=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "skip_if_unavailable set to $val."
+            sleep 1
+            ;;
+        14)
+            read -rp "Set clean_requirements_on_remove (True/False): " val
+            if grep -q '^clean_requirements_on_remove' "$conf_file"; then
+                sudo sed -i "s/^clean_requirements_on_remove.*/clean_requirements_on_remove=$val/" "$conf_file"
+            else
+                echo "clean_requirements_on_remove=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "clean_requirements_on_remove set to $val."
+            sleep 1
+            ;;
+        15)
+            read -rp "Set releasever (string): " val
+            if grep -q '^releasever' "$conf_file"; then
+                sudo sed -i "s/^releasever.*/releasever=$val/" "$conf_file"
+            else
+                echo "releasever=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "releasever set to $val."
+            sleep 1
+            ;;
+        16)
+            read -rp "Set bandwidth (integer or string with units): " val
+            if grep -q '^bandwidth' "$conf_file"; then
+                sudo sed -i "s/^bandwidth.*/bandwidth=$val/" "$conf_file"
+            else
+                echo "bandwidth=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "bandwidth set to $val."
+            sleep 1
+            ;;
+        17)
+            read -rp "Set retries (integer): " val
+            if grep -q '^retries' "$conf_file"; then
+                sudo sed -i "s/^retries.*/retries=$val/" "$conf_file"
+            else
+                echo "retries=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "retries set to $val."
+            sleep 1
+            ;;
+        18)
+            read -rp "Set gpgcheck (True/False): " val
+            if grep -q '^gpgcheck' "$conf_file"; then
+                sudo sed -i "s/^gpgcheck.*/gpgcheck=$val/" "$conf_file"
+            else
+                echo "gpgcheck=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "gpgcheck set to $val."
+            sleep 1
+            ;;
+        19)
+            read -rp "Set sslverify (True/False): " val
+            if grep -q '^sslverify' "$conf_file"; then
+                sudo sed -i "s/^sslverify.*/sslverify=$val/" "$conf_file"
+            else
+                echo "sslverify=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "sslverify set to $val."
+            sleep 1
+            ;;
+        20)
+            read -rp "Set timeout (integer seconds): " val
+            if grep -q '^timeout' "$conf_file"; then
+                sudo sed -i "s/^timeout.*/timeout=$val/" "$conf_file"
+            else
+                echo "timeout=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "timeout set to $val."
+            sleep 1
+            ;;
+        21)
+            read -rp "Set proxy (URL): " val
+            if grep -q '^proxy' "$conf_file"; then
+                sudo sed -i "s/^proxy.*/proxy=$val/" "$conf_file"
+            else
+                echo "proxy=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "proxy set to $val."
+            sleep 1
+            ;;
+        22)
+            read -rp "Set basearch (string): " val
+            if grep -q '^basearch' "$conf_file"; then
+                sudo sed -i "s/^basearch.*/basearch=$val/" "$conf_file"
+            else
+                echo "basearch=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "basearch set to $val."
+            sleep 1
+            ;;
+        23)
+            read -rp "Set arch (string): " val
+            if grep -q '^arch' "$conf_file"; then
+                sudo sed -i "s/^arch.*/arch=$val/" "$conf_file"
+            else
+                echo "arch=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "arch set to $val."
+            sleep 1
+            ;;
+        24)
+            read -rp "Set diskspacecheck (True/False): " val
+            if grep -q '^diskspacecheck' "$conf_file"; then
+                sudo sed -i "s/^diskspacecheck.*/diskspacecheck=$val/" "$conf_file"
+            else
+                echo "diskspacecheck=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "diskspacecheck set to $val."
+            sleep 1
+            ;;
+        25)
+            read -rp "Set plugins (True/False): " val
+            if grep -q '^plugins' "$conf_file"; then
+                sudo sed -i "s/^plugins.*/plugins=$val/" "$conf_file"
+            else
+                echo "plugins=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "plugins set to $val."
+            sleep 1
+            ;;
+        26)
+            read -rp "Set enablegroups (True/False): " val
+            if grep -q '^enablegroups' "$conf_file"; then
+                sudo sed -i "s/^enablegroups.*/enablegroups=$val/" "$conf_file"
+            else
+                echo "enablegroups=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "enablegroups set to $val."
+            sleep 1
+            ;;
+        27)
+            read -rp "Set install_weak_deps (True/False): " val
+            if grep -q '^install_weak_deps' "$conf_file"; then
+                sudo sed -i "s/^install_weak_deps.*/install_weak_deps=$val/" "$conf_file"
+            else
+                echo "install_weak_deps=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "install_weak_deps set to $val."
+            sleep 1
+            ;;
+        28)
+            read -rp "Set exclude_from_weak (comma-separated list): " val
+            if grep -q '^exclude_from_weak' "$conf_file"; then
+                sudo sed -i "s/^exclude_from_weak.*/exclude_from_weak=$val/" "$conf_file"
+            else
+                echo "exclude_from_weak=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "exclude_from_weak set to $val."
+            sleep 1
+            ;;
+        29)
+            read -rp "Set installroot (path): " val
+            if grep -q '^installroot' "$conf_file"; then
+                sudo sed -i "s/^installroot.*/installroot=$val/" "$conf_file"
+            else
+                echo "installroot=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "installroot set to $val."
+            sleep 1
+            ;;
+        30)
+            read -rp "Set logdir (path): " val
+            if grep -q '^logdir' "$conf_file"; then
+                sudo sed -i "s/^logdir.*/logdir=$val/" "$conf_file"
+            else
+                echo "logdir=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "logdir set to $val."
+            sleep 1
+            ;;
+        31)
+            read -rp "Set log_rotate (integer): " val
+            if grep -q '^log_rotate' "$conf_file"; then
+                sudo sed -i "s/^log_rotate.*/log_rotate=$val/" "$conf_file"
+            else
+                echo "log_rotate=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "log_rotate set to $val."
+            sleep 1
+            ;;
+        32)
+            read -rp "Set log_size (string, e.g. 1M): " val
+            if grep -q '^log_size' "$conf_file"; then
+                sudo sed -i "s/^log_size.*/log_size=$val/" "$conf_file"
+            else
+                echo "log_size=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "log_size set to $val."
+            sleep 1
+            ;;
+        33)
+            read -rp "Set persistdir (path): " val
+            if grep -q '^persistdir' "$conf_file"; then
+                sudo sed -i "s/^persistdir.*/persistdir=$val/" "$conf_file"
+            else
+                echo "persistdir=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "persistdir set to $val."
+            sleep 1
+            ;;
+        34)
+            read -rp "Set protected_packages (comma-separated list): " val
+            if grep -q '^protected_packages' "$conf_file"; then
+                sudo sed -i "s/^protected_packages.*/protected_packages=$val/" "$conf_file"
+            else
+                echo "protected_packages=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "protected_packages set to $val."
+            sleep 1
+            ;;
+        35)
+            read -rp "Set tsflags (comma-separated list): " val
+            if grep -q '^tsflags' "$conf_file"; then
+                sudo sed -i "s/^tsflags.*/tsflags=$val/" "$conf_file"
+            else
+                echo "tsflags=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "tsflags set to $val."
+            sleep 1
+            ;;
+        36)
+            read -rp "Set color (auto/never/always): " val
+            if grep -q '^color' "$conf_file"; then
+                sudo sed -i "s/^color.*/color=$val/" "$conf_file"
+            else
+                echo "color=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color set to $val."
+            sleep 1
+            ;;
+        37)
+            read -rp "Set color_list_available_downgrade (string): " val
+            if grep -q '^color_list_available_downgrade' "$conf_file"; then
+                sudo sed -i "s/^color_list_available_downgrade.*/color_list_available_downgrade=$val/" "$conf_file"
+            else
+                echo "color_list_available_downgrade=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_available_downgrade set to $val."
+            sleep 1
+            ;;
+        38)
+            read -rp "Set color_list_available_install (string): " val
+            if grep -q '^color_list_available_install' "$conf_file"; then
+                sudo sed -i "s/^color_list_available_install.*/color_list_available_install=$val/" "$conf_file"
+            else
+                echo "color_list_available_install=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_available_install set to $val."
+            sleep 1
+            ;;
+        39)
+            read -rp "Set color_list_available_reinstall (string): " val
+            if grep -q '^color_list_available_reinstall' "$conf_file"; then
+                sudo sed -i "s/^color_list_available_reinstall.*/color_list_available_reinstall=$val/" "$conf_file"
+            else
+                echo "color_list_available_reinstall=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_available_reinstall set to $val."
+            sleep 1
+            ;;
+        40)
+            read -rp "Set color_list_available_upgrade (string): " val
+            if grep -q '^color_list_available_upgrade' "$conf_file"; then
+                sudo sed -i "s/^color_list_available_upgrade.*/color_list_available_upgrade=$val/" "$conf_file"
+            else
+                echo "color_list_available_upgrade=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_available_upgrade set to $val."
+            sleep 1
+            ;;
+        41)
+            read -rp "Set color_list_installed_extra (string): " val
+            if grep -q '^color_list_installed_extra' "$conf_file"; then
+                sudo sed -i "s/^color_list_installed_extra.*/color_list_installed_extra=$val/" "$conf_file"
+            else
+                echo "color_list_installed_extra=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_installed_extra set to $val."
+            sleep 1
+            ;;
+        42)
+            read -rp "Set color_list_installed_newer (string): " val
+            if grep -q '^color_list_installed_newer' "$conf_file"; then
+                sudo sed -i "s/^color_list_installed_newer.*/color_list_installed_newer=$val/" "$conf_file"
+            else
+                echo "color_list_installed_newer=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_installed_newer set to $val."
+            sleep 1
+            ;;
+        43)
+            read -rp "Set color_list_installed_older (string): " val
+            if grep -q '^color_list_installed_older' "$conf_file"; then
+                sudo sed -i "s/^color_list_installed_older.*/color_list_installed_older=$val/" "$conf_file"
+            else
+                echo "color_list_installed_older=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_installed_older set to $val."
+            sleep 1
+            ;;
+        44)
+            read -rp "Set color_list_installed_reinstall (string): " val
+            if grep -q '^color_list_installed_reinstall' "$conf_file"; then
+                sudo sed -i "s/^color_list_installed_reinstall.*/color_list_installed_reinstall=$val/" "$conf_file"
+            else
+                echo "color_list_installed_reinstall=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_list_installed_reinstall set to $val."
+            sleep 1
+            ;;
+        45)
+            read -rp "Set color_search_match (string): " val
+            if grep -q '^color_search_match' "$conf_file"; then
+                sudo sed -i "s/^color_search_match.*/color_search_match=$val/" "$conf_file"
+            else
+                echo "color_search_match=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_search_match set to $val."
+            sleep 1
+            ;;
+        46)
+            read -rp "Set color_update_installed (string): " val
+            if grep -q '^color_update_installed' "$conf_file"; then
+                sudo sed -i "s/^color_update_installed.*/color_update_installed=$val/" "$conf_file"
+            else
+                echo "color_update_installed=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_update_installed set to $val."
+            sleep 1
+            ;;
+        47)
+            read -rp "Set color_update_local (string): " val
+            if grep -q '^color_update_local' "$conf_file"; then
+                sudo sed -i "s/^color_update_local.*/color_update_local=$val/" "$conf_file"
+            else
+                echo "color_update_local=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_update_local set to $val."
+            sleep 1
+            ;;
+        48)
+            read -rp "Set color_update_remote (string): " val
+            if grep -q '^color_update_remote' "$conf_file"; then
+                sudo sed -i "s/^color_update_remote.*/color_update_remote=$val/" "$conf_file"
+            else
+                echo "color_update_remote=$val" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "color_update_remote set to $val."
+            sleep 1
+            ;;
+        49)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Editor for DNF repository files
+edit_dnf_repo_manager() {
+    local repo_dir="/etc/yum.repos.d"
+    if [ ! -d "$repo_dir" ]; then
+        highlighted_warning "$repo_dir not found."
+        read -rp "Press Enter to continue..."
+        return
+    fi
+    while true; do
+        centered_heading "DNF Repository Manager"
+        echo "Available repo files:"
+        ls "$repo_dir"/*.repo 2>/dev/null || echo "No .repo files found."
+        echo ""
+        echo "Select an action:"
+        echo " 1. Edit a repo file"
+        echo " 2. Show contents of a repo file"
+        echo " 3. Add a new repository (.repo file)"
+        echo " 4. Remove a repo file"
+        echo " 5. Go Back to DNF Manager"
+        echo ""
+        read -p "Enter your choice: " repo_choice
+        case $repo_choice in
+        1)
+            read -rp "Enter the full path or name of the repo file to edit: " file
+            if [ -f "$file" ]; then
+                sudo nano "$file"
+            elif [ -f "$repo_dir/$file" ]; then
+                sudo nano "$repo_dir/$file"
+            else
+                highlighted_warning "File not found."
+            fi
+            ;;
+        2)
+            read -rp "Enter the full path or name of the repo file to view: " file
+            if [ -f "$file" ]; then
+                cat "$file"
+            elif [ -f "$repo_dir/$file" ]; then
+                cat "$repo_dir/$file"
+            else
+                highlighted_warning "File not found."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter a name for the new .repo file (e.g. myrepo.repo): " newfile
+            read -rp "Enter the repo content (e.g. [myrepo]\nname=My Repo\nbaseurl=http://repo.url\nenabled=1\ngpgcheck=1): " repocontent
+            echo -e "$repocontent" | sudo tee "$repo_dir/$newfile" >/dev/null
+            highlighted_success "Repository added to $repo_dir/$newfile."
+            sleep 1
+            ;;
+        4)
+            read -rp "Enter the name of the .repo file to remove: " rmfile
+            if [ -f "$repo_dir/$rmfile" ]; then
+                sudo rm "$repo_dir/$rmfile"
+                highlighted_success "$rmfile removed."
+            else
+                highlighted_warning "File not found."
+            fi
+            sleep 1
+            ;;
+        5)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Zypper App Manager
+zypper_manager() {
+    while true; do
+        centered_heading "Zypper App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Installed Packages"
+        echo " 2. Search for a Package"
+        echo " 3. Install a Package"
+        echo " 4. Remove a Package"
+        echo " 5. Update All Packages"
+        echo " 6. Clean Cache"
+        echo " 7. List Repositories"
+        echo " 8. Add a Repository"
+        echo " 9. Remove a Repository"
+        echo "10. Edit zypper.conf"
+        echo "11. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing all installed packages:"
+            zypper se --installed-only
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            read -rp "Enter the package name to search: " pkg
+            zypper se -d "$pkg"
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter the package name to install: " pkg
+            sudo zypper install "$pkg"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the package name to remove: " pkg
+            sudo zypper remove "$pkg"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            echo "Updating all packages..."
+            sudo zypper refresh
+            sudo zypper update -y
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Cleaning cache..."
+            sudo zypper clean --all
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            echo "Listing repositories:"
+            zypper repos
+            read -rp "Press Enter to continue..."
+            ;;
+        8)
+            read -rp "Enter the repository URL: " repo_url
+            read -rp "Enter a name for the repository: " repo_name
+            sudo zypper addrepo --refresh "$repo_url" "$repo_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        9)
+            zypper repos
+            read -rp "Enter the repository alias or number to remove: " repo_input
+            # Map number to alias if a number is given
+            if [[ "$repo_input" =~ ^[0-9]+$ ]]; then
+                repo_alias=$(zypper repos | awk -v n="$repo_input" 'NR>2 && $1==n {print $3}')
+                if [ -z "$repo_alias" ]; then
+                    highlighted_warning "No repository found for number $repo_input."
+                    read -rp "Press Enter to continue..."
+                    continue
+                fi
+            else
+                repo_alias="$repo_input"
+            fi
+            sudo zypper removerepo "$repo_alias"
+            read -rp "Press Enter to continue..."
+            ;;
+        10)
+            local conf_file="/etc/zypp/zypp.conf"
+            if [ ! -f "$conf_file" ]; then
+                highlighted_warning "zypp.conf not found at $conf_file."
+                read -rp "Do you want to create a new zypp.conf file? (y/n): " create_choice
+                if [[ "$create_choice" =~ ^[Yy]$ ]]; then
+                    echo -e "## Main Zypper configuration file\n" | sudo tee "$conf_file" >/dev/null
+                    highlighted_success "Created new zypp.conf at $conf_file."
+                else
+                    read -rp "Press Enter to continue..."
+                    continue
+                fi
+            fi
+            sudo nano "$conf_file"
+            ;;
+        11)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# DEB App Manager
+deb_manager() {
+    while true; do
+        centered_heading "DEB App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Apps"
+        echo " 2. Search Installed App"
+        echo " 3. Install DEB Package"
+        echo " 4. Uninstall App"
+        echo " 5. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing All Apps:"
+            dpkg -l
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            read -rp "Enter the app name to search: " app_name
+            dpkg -l | grep "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter the path to the DEB package: " deb_path
+            sudo dpkg -i "$deb_path"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the app name to uninstall: " app_name
+            sudo dpkg --remove "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# RPM App Manager
+rpm_manager() {
+    while true; do
+        centered_heading "RPM App Manager"
+        echo "Select Your Choice:"
+        echo " 1. List All Apps"
+        echo " 2. Search Installed App"
+        echo " 3. Install RPM Package"
+        echo " 4. Uninstall App"
+        echo " 5. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Listing All Apps:"
+            rpm -qa
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            read -rp "Enter the app name to search: " app_name
+            rpm -qa | grep "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter the path to the RPM package: " rpm_path
+            sudo rpm -i "$rpm_path"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            read -rp "Enter the app name to uninstall: " app_name
+            sudo rpm -e "$app_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Snap App Manager
+snap_manager() {
+    while true; do
+        centered_heading "Snap App Manager"
+        echo "Select Your Choice:"
+        echo " 1. Snap Installer/Uninstaller"
+        echo " 2. List All Apps Including Core Components"
+        echo " 3. List Installed Apps Excluding Core Components"
+        echo " 4. Update All Apps"
+        echo " 5. Search & Install App"
+        echo " 6. Uninstall App"
+        echo " 7. Downgrade App"
+        echo " 8. Manage Permissions"
+        echo " 9. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1) setup_snap ;;
+        2)
+            echo "Listing All Apps Including Core Components:"
+            snap list
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Listing Installed Apps Excluding Core Component:"
+            snap list | grep -v "^core"
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            echo "Updating All Apps..."
+            sudo snap refresh
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            read -rp "Enter the app name to search: " app_name
+            snap find "$app_name"
+            read -rp "Enter the exact app name to install: " app_install
+            sudo snap install "$app_install"
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            read -rp "Enter the app name to uninstall: " app_name
+            preview_and_confirm "snap list | grep $app_name" "sudo snap remove --purge $app_name" "$app_name (Snap)"
+            ;;
+        7)
+            read -rp "Enter the app name to downgrade: " app_name
+            snap list "$app_name" --all
+            read -rp "Enter the revision number to downgrade to: " rev_num
+            sudo snap revert "$app_name" --revision "$rev_num"
+            read -rp "Press Enter to continue..."
+            ;;
+        8) manage_snap_permissions ;;
+        9)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+setup_snap() {
+    echo ""
+    if command -v snap >/dev/null; then
+        echo "Snap is already installed."
+        read -rp "Do you want to uninstall snap including all snap packages/apps? (y/n): " choice
+        case $choice in
+        [yY]*)
+            echo "Uninstalling snap..."
+            if command -v apt >/dev/null; then
+                sudo apt remove --purge snapd -y
+            elif command -v dnf >/dev/null; then
+                sudo dnf remove snapd -y
+            elif command -v yum >/dev/null; then
+                sudo yum remove snapd -y
+            elif command -v zypper >/dev/null; then
+                sudo zypper remove snapd
+            elif command -v pacman >/dev/null; then
+                sudo pacman -Rns snapd
+            else
+                highlighted_warning "Sorry, I don't know how to uninstall snap on your system."
+            fi
+            ;;
+        [nN]*)
+            echo "OK, keeping snap."
+            ;;
+        *)
+            highlighted_warning "Invalid input. Please enter y or n."
+            ;;
+        esac
+    else
+        echo "Snap is not installed."
+        read -rp "Do you want to install snap? (y/n): " choice
+        case $choice in
+        [yY]*)
+            echo "Installing snap..."
+            if command -v apt >/dev/null; then
+                sudo apt update && sudo apt install snapd -y
+            elif command -v dnf >/dev/null; then
+                sudo dnf install snapd -y
+            elif command -v yum >/dev/null; then
+                sudo yum install epel-release -y && sudo yum install snapd -y
+            elif command -v zypper >/dev/null; then
+                sudo zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy && sudo zypper --gpg-auto-import-keys refresh && sudo zypper dup --from snappy && sudo zypper install snapd
+                sudo systemctl enable --now snapd
+                sudo systemctl enable --now snapd.apparmor
+            elif command -v pacman >/dev/null; then
+                sudo pacman -S --needed base-devel git
+                git clone https://aur.archlinux.org/snapd.git
+                cd snapd || return
+                makepkg -si
+                sudo systemctl enable --now snapd.socket
+                sudo ln -s /var/lib/snapd/snap /snap
+            else
+                highlighted_warning "Sorry, I don't know how to install snap on your system."
+            fi
+            echo "Activating snap..."
+            sudo snap install core
+            sudo snap install snap-store
+            sudo systemctl enable --now snapd.socket
+            sudo ln -s /var/lib/snapd/snap /snap
+            echo "NOTE: To complete the installation, restart your machine."
+            ;;
+        [nN]*)
+            echo "OK, not installing snap."
+            ;;
+        *)
+            highlighted_warning "Invalid input. Please enter y or n."
+            ;;
+        esac
+    fi
+    read -rp "Press Enter to continue..."
+}
+
+manage_snap_permissions() {
+    echo "Managing Permissions of Snap Apps..."
+    snap list | grep -v "^core"
+    read -rp "Enter the name of the app you want to manage: " app
+    if snap list | grep -q "^$app"; then
+        snap connections "$app"
+        read -rp "Enter the name of the interface you want to manage: " interface
+        if snap connections "$app" | grep -q "$interface"; then
+            read -rp "Choose an action: connect, disconnect, or cancel: " action
+            case $action in
+            connect)
+                snap connect "$app":"$interface"
+                echo "$app is connected to $interface."
+                ;;
+            disconnect)
+                snap disconnect "$app":"$interface"
+                echo "$app is disconnected from $interface."
+                ;;
+            cancel)
+                echo "Operation cancelled!"
+                return
+                ;;
+            *)
+                highlighted_warning "Invalid action, please choose connect, disconnect, or cancel."
+                return
+                ;;
+            esac
+        else
+            highlighted_warning "$interface is not a valid interface for $app."
+            return
+        fi
+    else
+        highlighted_warning "$app is not a valid Snap app."
+        return
+    fi
+    read -rp "Press Enter to continue..."
+}
+
+# Flatpak App Manager
+flatpak_manager() {
+    while true; do
+        centered_heading "Flatpak App Manager"
+        echo "Select Your Choice:"
+        echo " 1. Flatpak Installer/Uninstaller"
+        echo " 2. Manage Repositories"
+        echo " 3. List All Apps Including Runtimes"
+        echo " 4. List User Installed Apps"
+        echo " 5. Update All Apps"
+        echo " 6. Search & Install App"
+        echo " 7. Uninstall App"
+        echo " 8. Downgrade App"
+        echo " 9. Delete Unused Runtime & Flatpak Cache"
+        echo "10. Manage Permissions"
+        echo "11. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            # Install/uninstall prompt for flatpak
+            if command -v flatpak >/dev/null; then
+                # Flatpak is installed, offer uninstall
+                echo "Flatpak is already installed."
+                read -rp "Do you want to uninstall flatpak including all flatpak apps? (y/n): " uninstall_choice
+                case $uninstall_choice in
+                [yY]*)
+                    echo "Uninstalling flatpak..."
+                    flatpak uninstall --unused
+                    flatpak uninstall --all
+                    if command -v apt >/dev/null; then
+                        sudo apt remove --purge flatpak -y
+                    elif command -v dnf >/dev/null; then
+                        sudo dnf remove flatpak -y
+                    elif command -v yum >/dev/null; then
+                        sudo yum remove flatpak -y
+                    elif command -v zypper >/dev/null; then
+                        sudo zypper remove flatpak
+                    elif command -v pacman >/dev/null; then
+                        sudo pacman -R flatpak
+                    else
+                        highlighted_warning "Sorry, I don't know how to uninstall flatpak on your system."
+                    fi
+                    ;;
+                [nN]*)
+                    echo "OK, keeping flatpak."
+                    ;;
+                *)
+                    highlighted_warning "Invalid input. Please enter y or n."
+                    ;;
+                esac
+            else
+                # Flatpak is not installed, offer install
+                highlighted_warning "Flatpak is not available on this system!"
+                read -rp "Do you want to install flatpak? (y/n): " install_choice
+                case $install_choice in
+                [yY]*)
+                    echo "Installing flatpak..."
+                    if command -v apt >/dev/null; then
+                        sudo apt update && sudo apt install flatpak -y
+                    elif command -v dnf >/dev/null; then
+                        sudo dnf install flatpak -y
+                    elif command -v yum >/dev/null; then
+                        sudo yum install epel-release -y && sudo yum install flatpak -y
+                    elif command -v zypper >/dev/null; then
+                        sudo zypper install flatpak
+                    elif command -v pacman >/dev/null; then
+                        sudo pacman -S flatpak
+                    else
+                        highlighted_warning "Sorry, I don't know how to install flatpak on your system."
+                    fi
+                    echo "Adding flathub repo..."
+                    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                    echo "NOTE: To complete the installation, restart your machine."
+                    ;;
+                [nN]*)
+                    echo "OK, not installing flatpak."
+                    ;;
+                *)
+                    highlighted_warning "Invalid input. Please enter y or n."
+                    ;;
+                esac
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            manage_flatpak_repos
+            ;;
+        3)
+            echo "Listing All Apps Including Runtimes:"
+            flatpak list
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            echo "Listing User Installed Apps:"
+            flatpak list --app
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            echo "Updating All Apps..."
+            flatpak update -y
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            read -rp "Enter the app name to search: " app_name
+            flatpak search "$app_name"
+            read -rp "Enter the exact application id to install: " app_install
+            flatpak install "$app_install"
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            read -rp "Enter the Flatpak app ID to uninstall (tip: see option 4 to list user installed apps): " app_name
+            preview_and_confirm "flatpak info $app_name" "flatpak uninstall $app_name" "$app_name (Flatpak)"
+            ;;
+        8)
+            read -rp "Enter the Flatpak app ID to downgrade (tip: see option 4 to list user installed apps): " app_id
+            flatpak remote-info --log flathub "$app_id"
+            read -rp "Enter the commit ID of the version you want: " commit_id
+            sudo flatpak update --commit="$commit_id" "$app_id"
+            read -rp "Press Enter to continue..."
+            ;;
+        9)
+            echo "Deleting Unused Runtime & Flatpak Cache..."
+            flatpak uninstall --unused
+            flatpak repair --user
+            flatpak repair --system
+            rm -rf ~/.var/app/*/.cache
+            read -rp "Press Enter to continue..."
+            ;;
+        10) manage_flatpak_permissions ;;
+        11)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+setup_flatpak() {
+    :
+}
+
+manage_flatpak_repos() {
+    while true; do
+        centered_heading "Flatpak Repository Manager"
+        echo "Available repositories:"
+        flatpak remotes
+        echo ""
+        echo "Select an action:"
+        echo " 1. List repositories"
+        echo " 2. Add Flathub repository"
+        echo " 3. Add custom repository"
+        echo " 4. Remove repository"
+        echo " 5. Enable repository"
+        echo " 6. Disable repository"
+        echo " 7. Go back"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Detailed repository information:"
+            flatpak remotes --show-details
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+            echo "Flathub repo added successfully."
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            read -rp "Enter repository name: " repo_name
+            read -rp "Enter repository URL (.flatpakrepo file): " repo_url
+            if flatpak remote-add --if-not-exists "$repo_name" "$repo_url"; then
+                highlighted_success "Repository $repo_name added successfully."
+            else
+                highlighted_warning "Failed to add repository."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            echo "Available repositories:"
+            flatpak remotes
+            read -rp "Enter repository name to remove: " repo_name
+            if [ "$repo_name" = "flathub" ]; then
+                highlighted_warning "Warning: Are you sure you want to remove the Flathub repository? (y/n): "
+                read -r confirm
+                if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+                    echo "Operation cancelled."
+                    read -rp "Press Enter to continue..."
+                    continue
+                fi
+            fi
+            if flatpak remote-delete "$repo_name"; then
+                highlighted_success "Repository $repo_name removed successfully."
+            else
+                highlighted_warning "Failed to remove repository."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            echo "Available repositories:"
+            flatpak remotes
+            read -rp "Enter repository name to enable: " repo_name
+            if flatpak remote-modify "$repo_name" --enable; then
+                highlighted_success "Repository $repo_name enabled successfully."
+            else
+                highlighted_warning "Failed to enable repository."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Available repositories:"
+            flatpak remotes
+            read -rp "Enter repository name to disable: " repo_name
+            if flatpak remote-modify "$repo_name" --disable; then
+                highlighted_success "Repository $repo_name disabled successfully."
+            else
+                highlighted_warning "Failed to disable repository."
+            fi
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+manage_flatpak_permissions() {
+    echo "Managing Permissions for Flatpak Apps..."
+    if flatpak list --app | grep -q "Flatseal"; then
+        :
+    else
+        highlighted_warning "Flatseal is not installed. Installing it now..."
+        flatpak install com.github.tchx84.Flatseal -y
+    fi
+    echo "Launching Flatseal..."
+    flatpak run com.github.tchx84.Flatseal &
+    sleep 1
+    echo "Waiting for Flatseal to close..."
+    wait
+    echo "Flatseal has closed."
+    read -rp "Press Enter to continue..."
+}
+
+# Firmware Manager
+firmware_manager() {
+    check_fwupdmgr() {
+        if command -v fwupdmgr >/dev/null; then
+            return 0
+        else
+            highlighted_warning "fwupdmgr is not installed."
+            read -rp "Do you want to install fwupdmgr? (y/n): " install_choice
+            case $install_choice in
+            [yY]*)
+                install_fwupdmgr
+                ;;
+            *)
+                main_menu
+                return
+                ;;
+            esac
+        fi
+    }
+    install_fwupdmgr() {
+        echo "Installing fwupdmgr..."
+        if command -v apt >/dev/null; then
+            sudo apt update && sudo apt install fwupd -y
+        elif command -v dnf >/dev/null; then
+            sudo dnf install fwupd -y
+        elif command -v yum >/dev/null; then
+            sudo yum install fwupd -y
+        elif command -v zypper >/dev/null; then
+            sudo zypper install fwupd
+        elif command -v pacman >/dev/null; then
+            sudo pacman -S fwupd
+        else
+            highlighted_warning "Sorry, I don't know how to install fwupdmgr on your system."
+            main_menu
+            return
+        fi
+    }
+    while true; do
+        centered_heading "Firmware Manager"
+        echo "Select Your Choice:"
+        echo " 1. Check for Firmware Updates"
+        echo " 2. Download and Install Firmware Updates"
+        echo " 3. Show More Info about Firmware Updates"
+        echo " 4. Refresh Metadata"
+        echo " 5. Rollback Firmware"
+        echo " 6. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            check_fwupdmgr
+            echo "Checking for Firmware Updates..."
+            fwupdmgr get-devices
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            check_fwupdmgr
+            echo "Downloading and Installing Firmware Updates..."
+            sudo fwupdmgr update
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            check_fwupdmgr
+            echo "Showing More Information about Firmware Updates..."
+            sudo fwupdmgr get-updates
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            check_fwupdmgr
+            echo "Refreshing Firmware Metadata..."
+            sudo fwupdmgr refresh --force
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            check_fwupdmgr
+            echo "Performing Firmware Rollback..."
+            sudo fwupdmgr downgrade
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# NVIDIA Driver Manager
+nvidia_manager() {
+    if ! command -v lspci &>/dev/null; then
+        highlighted_warning "lspci is not available on this system! Cannot detect NVIDIA GPU."
+        read -rp "Press Enter to return to main menu..."
+        main_menu
+        return
+    fi
+    detect_nvidia_gpu() {
+        lspci | grep -i nvidia >/dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            echo "NVIDIA GPU detected."
+            sleep 1
+            return 0
+        else
+            highlighted_warning "No NVIDIA GPU detected."
+            sleep 1
+            return 1
+        fi
+    }
+    install_drivers_debian() {
+        echo "Installing NVIDIA drivers on Debian-based system..."
+        sudo apt update
+        sudo apt install -y dkms build-essential "linux-headers-$(uname -r)"
+        sudo apt install -y nvidia-driver
+        echo "NVIDIA drivers installed on Debian-based system."
+        highlighted_success "NVIDIA drivers installation complete."
+        read -rp "Press Enter to continue..."
+    }
+    install_drivers_redhat() {
+        echo "Installing NVIDIA drivers on Red Hat-based system..."
+        sudo dnf update -y
+        sudo dnf install -y dkms kernel-devel gcc
+        sudo dnf config-manager --add-repo=https://negativo17.org/repos/fedora-nvidia.repo
+        sudo dnf install -y nvidia-driver
+        echo "NVIDIA drivers installed on Red Hat-based system."
+        highlighted_success "NVIDIA drivers installation complete."
+        read -rp "Press Enter to continue..."
+    }
+    install_drivers_arch() {
+        echo "Installing NVIDIA drivers on Arch-based system..."
+        sudo pacman -Syu --noconfirm
+        sudo pacman -S --noconfirm nvidia-dkms nvidia-utils
+        echo "NVIDIA drivers installed on Arch-based system."
+        highlighted_success "NVIDIA drivers installation complete."
+        read -rp "Press Enter to continue..."
+    }
+    install_drivers_suse() {
+        echo "Installing NVIDIA drivers on SUSE-based system..."
+        sudo zypper refresh
+        sudo zypper install -y dkms kernel-default-devel gcc
+        # Detect Leap vs Tumbleweed
+        if grep -qi 'tumbleweed' /etc/os-release; then
+            # Tumbleweed
+            sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
+            sudo zypper install -y x11-video-nvidiaG06
+            echo "NVIDIA drivers installed from Tumbleweed repo."
+        else
+            # Assume Leap
+            releasever=$(lsb_release -rs 2>/dev/null || grep VERSION_ID /etc/os-release | cut -d'"' -f2)
+            sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/leap/"$releasever" NVIDIA
+            sudo zypper install -y x11-video-nvidiaG06
+            echo "NVIDIA drivers installed from Leap repo."
+        fi
+        highlighted_success "NVIDIA drivers installation complete."
+        read -rp "Press Enter to continue..."
+    }
+    while true; do
+        centered_heading "NVIDIA Driver Manager"
+        echo "Select Your Choice:"
+        echo " 1. Detect NVIDIA GPU"
+        echo " 2. Install NVIDIA Drivers"
+        echo " 3. List Installed NVIDIA Packages"
+        echo " 4. Uninstall NVIDIA Drivers"
+        echo " 5. Go Back to Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            detect_nvidia_gpu
+            read -rp "Press Enter to continue..."
+            ;;
+        2) if detect_nvidia_gpu; then
+            if command -v apt &>/dev/null; then
+                install_drivers_debian
+            elif command -v dnf &>/dev/null; then
+                install_drivers_redhat
+            elif command -v pacman &>/dev/null; then
+                install_drivers_arch
+            elif command -v zypper &>/dev/null; then
+                install_drivers_suse
+            else highlighted_warning "Unsupported package manager."; fi
+        else read -rp "Press Enter to continue..."; fi ;;
+        3)
+            echo "Listing installed NVIDIA packages..."
+            if command -v apt &>/dev/null; then dpkg -l | grep -i nvidia; elif command -v dnf &>/dev/null; then rpm -qa | grep -i nvidia; elif command -v pacman &>/dev/null; then pacman -Qs nvidia; elif command -v zypper &>/dev/null; then zypper se --installed-only nvidia; else highlighted_warning "Unsupported package manager."; fi
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            echo "Uninstalling NVIDIA drivers..."
+            if command -v apt &>/dev/null; then sudo apt remove --purge -y nvidia-*; elif command -v dnf &>/dev/null; then sudo dnf remove -y nvidia-driver; elif command -v pacman &>/dev/null; then sudo pacman -Rns --noconfirm nvidia-dkms nvidia-utils; elif command -v zypper &>/dev/null; then sudo zypper rm -y x11-video-nvidiaG05; else highlighted_warning "Unsupported package manager."; fi
+            echo "Task completed."
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Tuned Power Profile Manager
+tuned_manager() {
+    while true; do
+        centered_heading "Tuned Power Profile Manager"
+        echo "Select Your Choice:"
+        echo " 1. Install Tuned"
+        echo " 2. Uninstall Tuned"
+        echo " 3. List Available Profiles"
+        echo " 4. Show Active Profile"
+        echo " 5. Set Active Profile"
+        echo " 6. Enable Tuned Service"
+        echo " 7. Disable Tuned Service"
+        echo " 8. Check Tuned Service Status"
+        echo " 9. Go Back To Main Menu"
+        echo ""
+        read -p "Enter your choice: " choice
+        case $choice in
+        1)
+            echo "Installing Tuned and Tuned PPD..."
+            if command -v apt >/dev/null; then
+                sudo apt update && sudo apt install tuned -y
+                sudo systemctl enable tuned
+                sudo systemctl start tuned
+            elif command -v dnf >/dev/null; then
+                sudo dnf install tuned tuned-ppd -y
+                sudo systemctl enable tuned
+                sudo systemctl start tuned
+            elif command -v yum >/dev/null; then
+                sudo yum install tuned tuned-ppd -y
+                sudo systemctl enable tuned
+                sudo systemctl start tuned
+            elif command -v zypper >/dev/null; then
+                sudo zypper install tuned tuned-ppd -y
+                sudo systemctl enable tuned
+                sudo systemctl start tuned
+            elif command -v pacman >/dev/null; then
+                sudo pacman -S tuned tuned-ppd --noconfirm
+                sudo systemctl enable tuned
+                sudo systemctl start tuned
+            else highlighted_warning "Sorry, I don't know how to install Tuned on your system."; fi
+            read -rp "Press Enter to continue..."
+            ;;
+        2)
+            echo "Uninstalling Tuned..."
+            if command -v apt >/dev/null; then sudo apt remove --purge tuned -y; elif command -v dnf >/dev/null; then sudo dnf remove tuned -y; elif command -v yum >/dev/null; then sudo yum remove tuned -y; elif command -v zypper >/dev/null; then sudo zypper remove tuned; elif command -v pacman >/dev/null; then sudo pacman -R tuned; else highlighted_warning "Sorry, I don't know how to uninstall Tuned on your system."; fi
+            read -rp "Press Enter to continue..."
+            ;;
+        3)
+            echo "Checking Profiles..."
+            tuned-adm list
+            read -rp "Press Enter to continue..."
+            ;;
+        4)
+            echo "Checking Profiles..."
+            tuned-adm active
+            read -rp "Press Enter to continue..."
+            ;;
+        5)
+            read -rp "Enter the name of the profile to activate: " profile_name
+            echo "Setting active profile to $profile_name..."
+            tuned-adm profile "$profile_name"
+            read -rp "Press Enter to continue..."
+            ;;
+        6)
+            echo "Enabling Tuned Service..."
+            sudo systemctl enable tuned
+            sudo systemctl start tuned
+            echo "Tuned Service has been enabled and started."
+            highlighted_success "Tuned Service enabled and started."
+            read -rp "Press Enter to continue..."
+            ;;
+        7)
+            echo "Disabling Tuned Service..."
+            sudo systemctl stop tuned
+            sudo systemctl disable tuned
+            echo "Tuned Service has been disabled."
+            highlighted_success "Tuned Service disabled."
+            read -rp "Press Enter to continue..."
+            ;;
+        8)
+            echo "Checking Tuned Service Status..."
+            systemctl status tuned --no-pager
+            read -rp "Press Enter to continue..."
+            ;;
+        9)
+            main_menu
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Update All Packages
+update_all_packages() {
+    echo ""
+    # Update all supported package managers, with clear feedback for each
+    if command -v apt &>/dev/null; then
+        sudo apt update && sudo apt full-upgrade -y
+    fi
+    if command -v pacman &>/dev/null; then
+        sudo pacman -Syu --noconfirm
+    fi
+    if command -v dnf &>/dev/null; then
+        sudo dnf upgrade --refresh
+    fi
+    if command -v snap &>/dev/null; then
+        sudo snap refresh
+    fi
+    if command -v flatpak &>/dev/null; then
+        flatpak update -y
+    fi
+    highlighted_success "All done!"
+    read -rp "Press Enter to continue..."
+    main_menu
+}
+
+# Dry-run/Preview and Confirmation for Removals
+# Helper for preview and confirm before uninstall
+preview_and_confirm() {
+    local preview_cmd="$1"
+    local action_cmd="$2"
+    local what="$3"
+    echo "Preview of what will be removed for $what:"
+    eval "$preview_cmd"
+    echo ""
+    read -rp "Proceed with removal? (y/n): " confirm
+    case $confirm in
+    [yY]*)
+        eval "$action_cmd"
+        highlighted_success "$what removed."
+        ;;
+    *)
+        echo "Aborted."
+        ;;
+    esac
+    read -rp "Press Enter to continue..."
+}
+
+# Editor for apt.conf
+edit_apt_conf() {
+    local conf_file="/etc/apt/apt.conf"
+    if [ ! -f "$conf_file" ]; then
+        highlighted_warning "apt.conf not found at $conf_file."
+        read -rp "Do you want to create a new apt.conf file? (y/n): " create_choice
+        if [[ "$create_choice" =~ ^[Yy]$ ]]; then
+            echo -e "// Main APT configuration file\n" | sudo tee "$conf_file" >/dev/null
+            highlighted_success "Created new apt.conf at $conf_file."
+        else
+            read -rp "Press Enter to continue..."
+            return
+        fi
+    fi
+    declare -A apt_desc=(
+        ["APT::Get::Assume-Yes"]="Auto-confirm all actions (no prompt)."
+        ["APT::Get::Fix-Broken"]="Try to fix broken dependencies automatically."
+        ["APT::Get::Show-Upgraded"]="Show upgraded packages in output."
+        ["APT::Get::Show-Versions"]="Show package versions in output."
+        ["APT::Install-Recommends"]="Install recommended packages by default."
+        ["APT::Install-Suggests"]="Install suggested packages by default."
+        ["APT::Cache-Limit"]="Maximum memory cache size (bytes)."
+        ["APT::Default-Release"]="Default release to install packages from."
+        ["Acquire::Retries"]="Number of download retries."
+        ["Acquire::http::Timeout"]="HTTP method timeout (seconds)."
+        ["Acquire::http::Dl-Limit"]="Limit HTTP download speed (KB/s)."
+        ["Acquire::Languages"]="Languages for package descriptions."
+        ["Debug::pkgProblemResolver"]="Enable debug output for dependency resolver."
+        ["Debug::NoLocking"]="Disable file locking (advanced/debug)."
+    )
+    while true; do
+        centered_heading "Edit apt.conf"
+        echo "Current settings:"
+        printf "\033[1m%-35s %-3s %-50s\033[0m\n" "Setting" "-" "Description"
+        for key in "${!apt_desc[@]}"; do
+            val=$(grep -E "^$key" "$conf_file" | awk -F'"' '{print $2}')
+            if [ -n "$val" ]; then
+                printf "%-35s %-3s %-50s\n" "$key=\"$val\";" "-" "${apt_desc[$key]}"
+            fi
+        done
+        echo ""
+        echo "Select what to edit:"
+        echo " 1. Toggle APT::Get::Assume-Yes - Auto-confirm all actions."
+        echo " 2. Toggle APT::Get::Fix-Broken - Fix broken dependencies automatically."
+        echo " 3. Toggle APT::Get::Show-Upgraded - Show upgraded packages."
+        echo " 4. Toggle APT::Get::Show-Versions - Show package versions."
+        echo " 5. Toggle APT::Install-Recommends - Install recommended packages."
+        echo " 6. Toggle APT::Install-Suggests - Install suggested packages."
+        echo " 7. Set APT::Cache-Limit (bytes) - Max memory cache size."
+        echo " 8. Set APT::Default-Release (string) - Default release."
+        echo " 9. Set Acquire::Retries (integer) - Download retries."
+        echo "10. Set Acquire::http::Timeout (seconds) - HTTP timeout."
+        echo "11. Set Acquire::http::Dl-Limit (KB/s) - HTTP download speed limit."
+        echo "12. Set Acquire::Languages (comma-separated) - Languages for descriptions."
+        echo "13. Toggle Debug::pkgProblemResolver - Debug dependency resolver."
+        echo "14. Toggle Debug::NoLocking - Disable file locking."
+        echo "15. Go Back to APT Manager"
+        echo ""
+        read -p "Enter your choice: " conf_choice
+        case $conf_choice in
+        1)
+            current=$(grep '^APT::Get::Assume-Yes' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Get::Assume-Yes/d' "$conf_file"
+                highlighted_success "APT::Get::Assume-Yes disabled."
+            else
+                echo 'APT::Get::Assume-Yes "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Get::Assume-Yes enabled."
+            fi
+            sleep 1
+            ;;
+        2)
+            current=$(grep '^APT::Get::Fix-Broken' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Get::Fix-Broken/d' "$conf_file"
+                highlighted_success "APT::Get::Fix-Broken disabled."
+            else
+                echo 'APT::Get::Fix-Broken "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Get::Fix-Broken enabled."
+            fi
+            sleep 1
+            ;;
+        3)
+            current=$(grep '^APT::Get::Show-Upgraded' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Get::Show-Upgraded/d' "$conf_file"
+                highlighted_success "APT::Get::Show-Upgraded disabled."
+            else
+                echo 'APT::Get::Show-Upgraded "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Get::Show-Upgraded enabled."
+            fi
+            sleep 1
+            ;;
+        4)
+            current=$(grep '^APT::Get::Show-Versions' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Get::Show-Versions/d' "$conf_file"
+                highlighted_success "APT::Get::Show-Versions disabled."
+            else
+                echo 'APT::Get::Show-Versions "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Get::Show-Versions enabled."
+            fi
+            sleep 1
+            ;;
+        5)
+            current=$(grep '^APT::Install-Recommends' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Install-Recommends/d' "$conf_file"
+                highlighted_success "APT::Install-Recommends disabled."
+            else
+                echo 'APT::Install-Recommends "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Install-Recommends enabled."
+            fi
+            sleep 1
+            ;;
+        6)
+            current=$(grep '^APT::Install-Suggests' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^APT::Install-Suggests/d' "$conf_file"
+                highlighted_success "APT::Install-Suggests disabled."
+            else
+                echo 'APT::Install-Suggests "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "APT::Install-Suggests enabled."
+            fi
+            sleep 1
+            ;;
+        7)
+            read -rp "Enter new value for APT::Cache-Limit (bytes, e.g. 20971520): " val
+            if grep -q '^APT::Cache-Limit' "$conf_file"; then
+                sudo sed -i "s/^APT::Cache-Limit.*/APT::Cache-Limit \"$val\";/" "$conf_file"
+            else
+                echo "APT::Cache-Limit \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "APT::Cache-Limit set to $val."
+            sleep 1
+            ;;
+        8)
+            read -rp "Enter new value for APT::Default-Release (e.g. stable): " val
+            if grep -q '^APT::Default-Release' "$conf_file"; then
+                sudo sed -i "s/^APT::Default-Release.*/APT::Default-Release \"$val\";/" "$conf_file"
+            else
+                echo "APT::Default-Release \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "APT::Default-Release set to $val."
+            sleep 1
+            ;;
+        9)
+            read -rp "Enter new value for Acquire::Retries (integer): " val
+            if grep -q '^Acquire::Retries' "$conf_file"; then
+                sudo sed -i "s/^Acquire::Retries.*/Acquire::Retries \"$val\";/" "$conf_file"
+            else
+                echo "Acquire::Retries \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "Acquire::Retries set to $val."
+            sleep 1
+            ;;
+        10)
+            read -rp "Enter new value for Acquire::http::Timeout (seconds): " val
+            if grep -q '^Acquire::http::Timeout' "$conf_file"; then
+                sudo sed -i "s/^Acquire::http::Timeout.*/Acquire::http::Timeout \"$val\";/" "$conf_file"
+            else
+                echo "Acquire::http::Timeout \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "Acquire::http::Timeout set to $val."
+            sleep 1
+            ;;
+        11)
+            read -rp "Enter new value for Acquire::http::Dl-Limit (KB/s): " val
+            if grep -q '^Acquire::http::Dl-Limit' "$conf_file"; then
+                sudo sed -i "s/^Acquire::http::Dl-Limit.*/Acquire::http::Dl-Limit \"$val\";/" "$conf_file"
+            else
+                echo "Acquire::http::Dl-Limit \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "Acquire::http::Dl-Limit set to $val."
+            sleep 1
+            ;;
+        12)
+            read -rp "Enter new value for Acquire::Languages (comma-separated, e.g. en,de): " val
+            if grep -q '^Acquire::Languages' "$conf_file"; then
+                sudo sed -i "s/^Acquire::Languages.*/Acquire::Languages \"$val\";/" "$conf_file"
+            else
+                echo "Acquire::Languages \"$val\";" | sudo tee -a "$conf_file" >/dev/null
+            fi
+            highlighted_success "Acquire::Languages set to $val."
+            sleep 1
+            ;;
+        13)
+            current=$(grep '^Debug::pkgProblemResolver' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^Debug::pkgProblemResolver/d' "$conf_file"
+                highlighted_success "Debug::pkgProblemResolver disabled."
+            else
+                echo 'Debug::pkgProblemResolver "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "Debug::pkgProblemResolver enabled."
+            fi
+            sleep 1
+            ;;
+        14)
+            current=$(grep '^Debug::NoLocking' "$conf_file" | awk -F'"' '{print $2}')
+            if [[ "$current" == "true" ]]; then
+                sudo sed -i '/^Debug::NoLocking/d' "$conf_file"
+                highlighted_success "Debug::NoLocking disabled."
+            else
+                echo 'Debug::NoLocking "true";' | sudo tee -a "$conf_file" >/dev/null
+                highlighted_success "Debug::NoLocking enabled."
+            fi
+            sleep 1
+            ;;
+        15)
+            return
+            ;;
+        *)
+            highlighted_warning "Invalid choice. Please try again."
+            sleep 1
+            ;;
+        esac
+    done
+}
+
+# Start the app
+main_menu

@@ -1,51 +1,102 @@
-name: witchcraft
+name: Witchcraft CI/CD
 
-on:
+"on":
   push:
     branches:
-      - "trunk"
       - "main"
-      - "stable"
   pull_request:
     branches:
-      - "*/*"
-      - "trunk"
       - "main"
-      - "stable"
-  schedule:
-    - cron: "0 0 28-31 * *"
+  workflow_dispatch:
+    inputs:
+      build_release:
+        description: "Compilar binário com Nuitka e gerar Release?"
+        required: true
+        type: boolean
+        default: false
 
-env:
-  CARGO_TERM_COLOR: always
+permissions:
+  contents: write
 
 jobs:
-  build:
+  test:
+    name: Run Test Suite
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Depedencies
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install System Dependencies
         run: |
-          echo && echo "Install dependencies"
-          sudo apt update
-          sudo apt install -y nmap whois dirb dnsenum libc-bin iproute2 xxd iptables coreutils wget curl \
-          dnsutils traceroute openssl openssh-server xattr libimage-exiftool-perl tor foremost pkg-config \
-          libssl-dev steghide libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev 7zip \
-          libayatana-appindicator3-dev librsvg2-dev chromium-browser git
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive bash install.sh
 
-          # Install data
-          echo && echo "Install spellbook data"
-          sudo cp -r spellbook/ /var/
-          sudo chown -R $(whoami):$(whoami) /var/spellbook
-          echo 'export WITCH_SPELLS_ROOT_DIR=/var/spellbook/archive/' >> ~/.bash_profile
-          export WITCH_SPELLS_ROOT_DIR=/var/spellbook/archive/
-
-      - name: Build
+      - name: Run Tests
         run: |
-          cargo build --release --manifest-path witchcraft/Cargo.toml
-          sudo chmod +x ./witchcraft/target/release/witchcraft
-          sudo cp -r ./witchcraft/target/release/witchcraft /bin/witchcraft
-          sudo ln -s /bin/witchcraft /bin/witchy
+          python3 witchcraft/witchcraft/tests/test_run.py
 
-      - name: Run tests
-        run: cargo test --verbose --manifest-path witchcraft/Cargo.toml
+  build-release:
+    name: Build Standalone & Release (Nuitka)
+    runs-on: ubuntu-latest
+    needs: test
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.build_release == true)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Build Tools & Nuitka
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y patchelf ccache zip build-essential
+          python -m pip install --upgrade pip
+          pip install nuitka zstandard
+
+      - name: Build Standalone Binary with Nuitka
+        run: |
+          cd witchcraft
+          python -m nuitka \
+            --mode=onefile \
+            --enable-plugin=anti-bloat \
+            --output-dir=build \
+            --output-filename=witchcraftfex \
+            main.py
+
+      - name: Bundle Standalone Binary and Spellbook
+        run: |
+          mkdir -p dist
+          cp witchcraft/build/witchcraftfex dist/
+          cp -r witchcraft/spellbook dist/
+          cd dist
+          zip -r ../witchcraft-standalone.zip witchcraftfex spellbook/
+          cd ..
+          ls -lh witchcraft-standalone.zip
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: witchcraft-standalone
+          path: witchcraft-standalone.zip
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('v0.1.0-build.{0}', github.run_number) }}
+          name: ${{ github.ref_type == 'tag' && format('WitchcraftFEX {0}', github.ref_name) || format('WitchcraftFEX v0.1.0 (Build {0})', github.run_number) }}
+          files: witchcraft-standalone.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true

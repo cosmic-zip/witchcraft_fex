@@ -1,0 +1,18 @@
+[package]
+name = "xcript"
+version = "0.1.0"
+edition = "2021"
+description = "Witchcraft Xcript standalone static script interpreter with Omega dynamic type"
+license = "AGPL-3.0"
+
+[[bin]]
+name = "xcript"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+

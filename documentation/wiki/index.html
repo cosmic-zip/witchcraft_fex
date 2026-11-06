@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>⛩️ WitchcraftFEX — Wiki & Cypherpunk Grimório</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Wiki Oficial e Documentação do Framework WitchcraftFEX">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Docsify Theme Base -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/themes/vue.css">
+
+  <style>
+    /* ==========================================================================
+       ESTILOS GLOBAIS - CYPHERPUNK NETRUNNER THEME
+       ========================================================================== */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    code,
+    pre {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace !important;
+      font-size: 0.9em !important;
+    }
+
+    .markdown-section pre>code {
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+
+    .sidebar {
+      font-size: 14px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .sidebar ul li a {
+      font-weight: 500;
+    }
+
+    .sidebar-nav strong {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .app-name-link {
+      font-weight: 700 !important;
+      font-size: 1.15rem !important;
+      letter-spacing: -0.5px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* BOTÃO FIXO DE TEMA */
+    #theme-toggle-btn {
+      position: fixed;
+      top: 14px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      user-select: none;
+    }
+
+    #theme-toggle-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    }
+
+    /* ==========================================================================
+       MODO ESCURO (DARK MODE / NETRUNNER PURPLE & CYAN)
+       ========================================================================== */
+    body.dark-mode {
+      background: #090d16 !important;
+      color: #e2e8f0 !important;
+    }
+
+    body.dark-mode #theme-toggle-btn {
+      background: rgba(18, 24, 38, 0.9);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    body.dark-mode .sidebar {
+      background: #0d1322 !important;
+      border-right: 1px solid rgba(56, 189, 248, 0.12) !important;
+    }
+
+    body.dark-mode .content,
+    body.dark-mode section.content,
+    body.dark-mode .markdown-section {
+      background: transparent !important;
+    }
+
+    body.dark-mode .sidebar ul li a {
+      color: #94a3b8 !important;
+    }
+
+    body.dark-mode .sidebar ul li.active>a,
+    body.dark-mode .sidebar ul li a:hover {
+      color: #38bdf8 !important;
+      font-weight: 600;
+    }
+
+    body.dark-mode .sidebar-nav strong {
+      color: #c084fc !important;
+    }
+
+    body.dark-mode .app-name-link {
+      color: #38bdf8 !important;
+    }
+
+    body.dark-mode .search input {
+      background-color: #161f36 !important;
+      color: #f8fafc !important;
+      border: 1px solid rgba(56, 189, 248, 0.2) !important;
+      border-radius: 6px;
+    }
+
+    body.dark-mode .search .matching-post {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    body.dark-mode .search .matching-post h2 {
+      color: #38bdf8 !important;
+    }
+
+    body.dark-mode .search .matching-post p {
+      color: #94a3b8 !important;
+    }
+
+    body.dark-mode .markdown-section pre,
+    body.dark-mode .markdown-section code {
+      background-color: #121829 !important;
+      color: #f1f5f9 !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    body.dark-mode .markdown-section table {
+      background-color: #0f172a !important;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .markdown-section table th {
+      background-color: #1e293b !important;
+      color: #38bdf8 !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    body.dark-mode .markdown-section table td {
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: #cbd5e1 !important;
+    }
+
+    body.dark-mode .markdown-section blockquote {
+      background-color: rgba(56, 189, 248, 0.05) !important;
+      border-left-color: #38bdf8 !important;
+      color: #cbd5e1 !important;
+    }
+
+    body.dark-mode .markdown-section h1,
+    body.dark-mode .markdown-section h2,
+    body.dark-mode .markdown-section h3,
+    body.dark-mode .markdown-section h4,
+    body.dark-mode .markdown-section h5,
+    body.dark-mode .markdown-section h6,
+    body.dark-mode .markdown-section .anchor,
+    body.dark-mode .markdown-section .anchor span,
+    body.dark-mode .anchor,
+    body.dark-mode .anchor span {
+      color: #f8fafc !important;
+    }
+
+    body.dark-mode .markdown-section a {
+      color: #38bdf8 !important;
+    }
+
+    body.dark-mode .markdown-section hr {
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    body.dark-mode .app-nav a {
+      color: #cbd5e1 !important;
+    }
+
+    body.dark-mode .app-nav a:hover {
+      color: #c084fc !important;
+    }
+
+    /* ==========================================================================
+       MODO CLARO (LIGHT MODE)
+       ========================================================================== */
+    body.light-mode {
+      background: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    body.light-mode #theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0284c7;
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    body.light-mode .sidebar {
+      background: #ffffff !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+    }
+
+    body.light-mode .content,
+    body.light-mode section.content,
+    body.light-mode .markdown-section {
+      background: transparent !important;
+    }
+
+    body.light-mode .sidebar ul li a {
+      color: #475569 !important;
+    }
+
+    body.light-mode .sidebar ul li.active>a,
+    body.light-mode .sidebar ul li a:hover {
+      color: #0284c7 !important;
+    }
+
+    body.light-mode .sidebar-nav strong {
+      color: #0284c7 !important;
+    }
+
+    body.light-mode .app-name-link {
+      color: #0f172a !important;
+    }
+
+    body.light-mode .search input {
+      background-color: #ffffff !important;
+      color: #1e293b !important;
+      border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    }
+
+    body.light-mode .markdown-section pre,
+    body.light-mode .markdown-section code {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    }
+
+    body.light-mode .markdown-section table {
+      background-color: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode .markdown-section table th {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    }
+
+    body.light-mode .markdown-section table td {
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    }
+
+    body.light-mode .markdown-section blockquote {
+      background-color: rgba(2, 132, 199, 0.05) !important;
+      border-left-color: #0284c7 !important;
+      color: #334155 !important;
+    }
+
+    /* Mermaid Container */
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      background: rgba(128, 128, 128, 0.05);
+      padding: 16px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body class="dark-mode">
+  <!-- BOTÃO FIXO DE ALTERNAR TEMA -->
+  <button id="theme-toggle-btn" onclick="toggleTheme()" title="Alternar entre Modo Escuro e Claro">
+    <span id="theme-toggle-icon">☀️</span>
+    <span id="theme-toggle-text">Modo Claro</span>
+  </button>
+
+  <div id="app">Iniciando WitchcraftFEX Wiki...</div>
+
+  <script>
+    function applyTheme(theme) {
+      var body = document.body;
+      var icon = document.getElementById('theme-toggle-icon');
+      var text = document.getElementById('theme-toggle-text');
+
+      if (theme === 'light') {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        if (icon) icon.textContent = '🌙';
+        if (text) text.textContent = 'Modo Escuro';
+        localStorage.setItem('witchcraft-wiki-theme', 'light');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        if (icon) icon.textContent = '☀️';
+        if (text) text.textContent = 'Modo Claro';
+        localStorage.setItem('witchcraft-wiki-theme', 'dark');
+      }
+    }
+
+    function toggleTheme() {
+      var isDark = document.body.classList.contains('dark-mode');
+      applyTheme(isDark ? 'light' : 'dark');
+    }
+
+    (function () {
+      var savedTheme = localStorage.getItem('witchcraft-wiki-theme') || 'dark';
+      applyTheme(savedTheme);
+    })();
+
+    window.$docsify = {
+      name: '⛩️ WitchcraftFEX',
+      repo: '',
+      loadSidebar: true,
+      loadNavbar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      homepage: 'README.md',
+      notFoundPage: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Pesquisar na Wiki...',
+        noData: 'Nenhum resultado encontrado.',
+        depth: 4,
+        hideOtherSidebarContent: false
+      },
+      pagination: {
+        previousText: 'Anterior',
+        nextText: 'Próximo',
+        crossChapter: true,
+        crossChapterText: true
+      },
+      copyCode: {
+        buttonText: 'Copiar',
+        errorText: 'Erro',
+        successText: 'Copiado!'
+      }
+    };
+  </script>
+
+  <!-- Docsify Core -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+
+  <!-- Plugins do Docsify -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <!-- Suporte a Diagramas Mermaid -->
+  <script type="module">
+    import mermaid from "//cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    window.mermaid = mermaid;
+  </script>
+  <script src="//unpkg.com/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
+
+  <!-- PrismJS Syntax Highlighting -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-go.min.js"></script>
+</body>
+
+</html>
