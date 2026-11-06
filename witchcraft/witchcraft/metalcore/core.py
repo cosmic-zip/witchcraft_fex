@@ -168,6 +168,22 @@ def write_stdout(text: str):
 
 
 def net_logger(text, color="white", style="normal", newline=False):
+    """
+    Color and style reference:
+    # Basic
+    "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"
+
+    # Bright
+    "bright_black", "bright_red", "bright_green", "bright_yellow",
+    "bright_blue", "bright_magenta", "bright_cyan", "bright_white"
+
+    # Background
+    "bg_black", "bg_red", "bg_green", "bg_yellow",
+    "bg_blue", "bg_magenta", "bg_cyan", "bg_white"
+
+    # Styles
+    "bold", "dim", "italic", "underline", "blink", "reverse", "hidden", "strike", "normal"
+    """
     if NT_SETUP_COLORS == "none":
         write_stdout(text)
 
@@ -242,8 +258,8 @@ def read_db():
     return database.get("index")
 
 
-def eyeliner(text, color="cyan", symbol="░"):
-    steps = 128
+def eyeliner(text, color="cyan", symbol="░", length=128):
+    steps = length
     spacer = " " * int(steps // 2 - len(text) // 2)
     data = symbol * steps + "\n" + spacer + text + "\n" + symbol * steps + "\n"
     net_logger(data, color, "bold", True)

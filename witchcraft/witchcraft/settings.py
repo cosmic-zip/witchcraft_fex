@@ -10,6 +10,7 @@ from witchcraft.modules.scanner.ip_score import scanner_ip_score_addr
 from witchcraft.modules.scanner.nmapper import nmapper
 from witchcraft.modules.server.server import *
 from witchcraft.modules.system.nt_stats import nt_stats_wrapper
+from witchcraft.modules.calicrafy.calicrafy import presentation_wrapper, press_creator, press_reader
 
 FN_REGISTRY = {
     "scanner.keyword": keyword_scanner_wrapper,
@@ -30,4 +31,7 @@ FN_REGISTRY = {
     "config.model": net_setup_default_model,
     "nt_stats": nt_stats_wrapper,
     "system.stats": nt_stats_wrapper,
+    "presentation": presentation_wrapper,
+    "press_creator": press_creator,
+    "press_reader": press_reader,
 }
