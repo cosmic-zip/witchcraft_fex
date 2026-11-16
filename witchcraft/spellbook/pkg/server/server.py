@@ -544,63 +544,83 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
 
         arguments = bind.get("arguments") or {}
         args_inputs = []
-        include_ids = []
 
         for arg_name, arg_info in arguments.items():
             input_id = f"arg_{arg_name}"
-            include_ids.append(f"#{input_id}")
             desc = arg_info.get("description", arg_name)
             options = arg_info.get("options")
 
             if options:
                 opts_html = "\n".join(f'<option value="{opt}">{opt}</option>' for opt in options)
                 args_inputs.append(f"""
-                <div class="form-text">
-                    <h3 class="form-title">{desc}</h3>
-                    <select name="{arg_name}" id="{input_id}" class="form-select">
+                <div class="form-group">
+                    <label for="{input_id}" class="form-label">{arg_name.upper()}</label>
+                    <select name="{arg_name}" id="{input_id}" class="form-control">
                         {opts_html}
                     </select>
+                    <small class="form-hint">{desc}</small>
                 </div>
                 """)
             else:
                 args_inputs.append(f"""
-                <div class="form-text">
-                    <h3 class="form-title">{desc}</h3>
-                    <input type="text" class="form-text-input" name="{arg_name}" id="{input_id}" placeholder="{arg_name}">
+                <div class="form-group">
+                    <label for="{input_id}" class="form-label">{arg_name.upper()}</label>
+                    <input type="text" class="form-control" name="{arg_name}" id="{input_id}" placeholder="{desc}">
+                    <small class="form-hint">{desc}</small>
                 </div>
                 """)
 
-        include_str = ", ".join(include_ids)
-        if include_str:
-            include_str += ", "
+        tool_name = bind.get("name", "")
+        tool_desc = bind.get("description", "")
+        fields_html = "".join(args_inputs) if args_inputs else '<div class="form-info-note">Nenhum parâmetro adicional obrigatório.</div>'
 
         html_component = f"""
         <section class="content-sec" style="display: block;">
             <header class="sec-header">
-                <span><em>{bind.get('name')}</em></span>
+                <div>
+                    <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>{tool_name}</em></span>
+                    <span class="tool-title-desc">{tool_desc}</span>
+                </div>
             </header>
-            <div class="outputer">
-                <pre id="tool_output_box"></pre>
-            </div>
-            <div class="hint" id="hint_session">
-                <button onclick="downloadDivAsTxt('tool_output_box', 'output_{bind.get('name')}.txt')" class="btn-downloader">Download</button>
-                {bind.get('description', '')}
-            </div>
-            <form class="form-ctn" method="post">
-                {''.join(args_inputs)}
-                <div class="form-text">
-                    <h3 class="form-title">HACK NOW!</h3>
-                    <input type="hidden" id="ezec_name" name="EZEC{bind.get('name')}" value="{bind.get('name')}">
-                    <button type="submit" class="form-text-submit"
+
+            <div class="tool-workspace-split">
+                <div class="tool-terminal-pane">
+                    <div class="terminal-toolbar">
+                        <span class="term-title">💻 Terminal / Output</span>
+                        <div class="term-actions">
+                            <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_{tool_name}.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                            <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                        </div>
+                    </div>
+                    <div class="outputer">
+                        <pre id="tool_output_box"></pre>
+                    </div>
+                </div>
+
+                <div class="tool-form-pane">
+                    <form class="tool-form" method="post"
                         hx-post="/api/exec"
-                        hx-include="{include_str}#ezec_name, #ztoken"
+                        hx-include="#ztoken"
                         hx-target="#tool_output_box"
                         hx-indicator="#exec-spinner">
-                        Execute
-                    </button>
-                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: cyan;">⚡ Running...</span>
+                        <input type="hidden" name="EZEC_{tool_name}" value="{tool_name}">
+                        
+                        <div class="form-fields">
+                            {fields_html}
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                ▶ Executar
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Limpar
+                            </button>
+                            <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </section>
         """
         self.send_text(200, html_component, "text/html; charset=utf-8")
