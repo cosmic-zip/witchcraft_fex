@@ -11,21 +11,25 @@ base_html = """
         <script>function toggleSection(sectionId) { const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'none'; const sections = document.querySelectorAll('section'); sections.forEach(section => { if (section.id === sectionId) { section.style.display = 'block' } else { section.style.display = 'none' } }) }</script>
         <script>function toggleCategory(catId) { const menu = document.getElementById(catId); if (!menu) return; if (menu.style.display === 'none' || menu.style.display === '') { menu.style.display = 'block'; } else { menu.style.display = 'none'; } }</script>
         <script>function downloadDivAsTxt(divId, filename) { const div = document.getElementById(divId); if (!div) { console.error('Div not found:', divId); return } const text = div.textContent || ''; const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename || 'download.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url) }</script>
+        <script>function toggleOneko() { if (window.toggleOnekoImpl) { window.toggleOnekoImpl(); } else { const neko = document.getElementById('oneko'); const btn = document.getElementById('oneko_toggle_btn'); if (neko) { const isHidden = neko.style.display === 'none'; neko.style.display = isHidden ? 'block' : 'none'; if (btn) btn.innerText = isHidden ? '🐾 Neko: ON' : '🐾 Neko: OFF'; } } }</script>
     </head>
 
     <body>
         <header class="main-header">
             <span><em>いらっしゃい</em></span>
-            <button type="submit" class="chat-w-act" hx-on:click="
-                if (document.getElementById('ia_chatbot_win').style.display === 'none' || document.getElementById('ia_chatbot_win').style.display === '') {
-                document.querySelector('main').style.gridTemplateColumns = '300px 2fr 1fr';
-                document.getElementById('ia_chatbot_win').style.display = 'block';
-                } else {
-                document.querySelector('main').style.gridTemplateColumns = '300px auto';
-                document.getElementById('ia_chatbot_win').style.display = 'none';
-                }">
-                    ✨ AI
-            </button>
+            <div style="display: flex; gap: 8px;">
+                <button type="button" id="oneko_toggle_btn" class="chat-w-act" onclick="toggleOneko()">🐾 Neko: ON</button>
+                <button type="submit" class="chat-w-act" hx-on:click="
+                    if (document.getElementById('ia_chatbot_win').style.display === 'none' || document.getElementById('ia_chatbot_win').style.display === '') {
+                    document.querySelector('main').style.gridTemplateColumns = '300px 2fr 1fr';
+                    document.getElementById('ia_chatbot_win').style.display = 'block';
+                    } else {
+                    document.querySelector('main').style.gridTemplateColumns = '300px auto';
+                    document.getElementById('ia_chatbot_win').style.display = 'none';
+                    }">
+                        ✨ AI
+                </button>
+            </div>
         </header>
         <main>
             <div class="sidebar">

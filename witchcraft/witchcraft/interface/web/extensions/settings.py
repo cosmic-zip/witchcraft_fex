@@ -17,7 +17,7 @@ settings_sec = """
                                 document.documentElement.style.setProperty('--error', 'rgba(34, 34, 34, 0.8)');
                                 document.documentElement.style.setProperty('--ok', 'black');">
                 </button>
-                <h3>Witchcraft</h3>
+                <h3>Witchcraft (Default)</h3>
             </div>
 
             <div class="settings-wallpaper-ctn" style="background-color: #c607fb;">
@@ -27,7 +27,7 @@ settings_sec = """
                                 document.documentElement.style.setProperty('--dk-ancient', '#a40099');
                                 document.documentElement.style.setProperty('--warning', 'rgba(0, 42, 140, 0.8)');">
                 </button>
-                <h3>Default</h3>
+                <h3>Neon Purple</h3>
             </div>
 
 
