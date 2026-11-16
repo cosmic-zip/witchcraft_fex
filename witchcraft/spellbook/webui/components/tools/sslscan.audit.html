@@ -1,0 +1,62 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>sslscan.audit</em></span>
+            <span class="tool-title-desc">Audit SSL/TLS ciphers, certificates, and vulnerabilities</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_sslscan.audit.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_sslscan.audit" value="sslscan.audit">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_target_host" class="form-label">TARGET_HOST</label>
+            <input type="text" class="form-control" name="target_host" id="arg_target_host" placeholder="Target hostname or IP address">
+            <small class="form-hint">Target hostname or IP address</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_port" class="form-label">PORT</label>
+            <select name="port" id="arg_port" class="form-control">
+            <option value="443">443</option>
+            <option value="8443">8443</option>
+            <option value="465">465</option>
+            <option value="993">993</option>
+            <option value="995">995</option>
+            </select>
+            <small class="form-hint">Target SSL/TLS port (e.g. 443, 8443)</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

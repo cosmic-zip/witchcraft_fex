@@ -48,196 +48,196 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_network')">NETWORK</button>
         <div class="sidebar-category-menu" id="cat_network" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mac.spoof"
+    hx-get="components/tools/mac.spoof.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mac.spoof
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mac.reset"
+    hx-get="components/tools/mac.reset.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mac.reset
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mac.define"
+    hx-get="components/tools/mac.define.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mac.define
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=blue.enable"
+    hx-get="components/tools/blue.enable.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     blue.enable
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=blue.list"
+    hx-get="components/tools/blue.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     blue.list
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=capture.all"
+    hx-get="components/tools/capture.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     capture.all
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=capture.all.from_ip"
+    hx-get="components/tools/capture.all.from_ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     capture.all.from_ip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=capture.one"
+    hx-get="components/tools/capture.one.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     capture.one
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=capture.one.from_ip"
+    hx-get="components/tools/capture.one.from_ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     capture.one.from_ip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=ftp.connect"
+    hx-get="components/tools/ftp.connect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     ftp.connect
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=map.dns.dirs"
+    hx-get="components/tools/map.dns.dirs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     map.dns.dirs
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=map.dns.subdomain"
+    hx-get="components/tools/map.dns.subdomain.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     map.dns.subdomain
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=map.local"
+    hx-get="components/tools/map.local.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     map.local
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=map.myip"
+    hx-get="components/tools/map.myip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     map.myip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=scp.copy"
+    hx-get="components/tools/scp.copy.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     scp.copy
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=smbclient.access"
+    hx-get="components/tools/smbclient.access.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     smbclient.access
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=smbclient.list"
+    hx-get="components/tools/smbclient.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     smbclient.list
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=ngrok.startup"
+    hx-get="components/tools/ngrok.startup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     ngrok.startup
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=ngrok.public_url"
+    hx-get="components/tools/ngrok.public_url.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     ngrok.public_url
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.ping"
+    hx-get="components/tools/net.ping.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.ping
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.traceroute"
+    hx-get="components/tools/net.traceroute.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.traceroute
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.nslookup"
+    hx-get="components/tools/net.nslookup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.nslookup
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.dig"
+    hx-get="components/tools/net.dig.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.dig
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.whois"
+    hx-get="components/tools/net.whois.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.whois
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.arp"
+    hx-get="components/tools/net.arp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.arp
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.route"
+    hx-get="components/tools/net.route.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.route
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=net.ifconfig"
+    hx-get="components/tools/net.ifconfig.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     net.ifconfig
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dnsrecon.axfr"
+    hx-get="components/tools/dnsrecon.axfr.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -251,196 +251,196 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_web')">WEB</button>
         <div class="sidebar-category-menu" id="cat_web" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=web.download"
+    hx-get="components/tools/web.download.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     web.download
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.get.simple"
+    hx-get="components/tools/curl.get.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.get.simple
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.get.with_header"
+    hx-get="components/tools/curl.get.with_header.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.get.with_header
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.get.to_file"
+    hx-get="components/tools/curl.get.to_file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.get.to_file
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.post.raw"
+    hx-get="components/tools/curl.post.raw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.post.raw
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.post.content_type"
+    hx-get="components/tools/curl.post.content_type.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.post.content_type
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.post.file"
+    hx-get="components/tools/curl.post.file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.post.file
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.post.multipart"
+    hx-get="components/tools/curl.post.multipart.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.post.multipart
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.put.raw"
+    hx-get="components/tools/curl.put.raw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.put.raw
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.delete.simple"
+    hx-get="components/tools/curl.delete.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.delete.simple
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.patch.json"
+    hx-get="components/tools/curl.patch.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.patch.json
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.auth.basic"
+    hx-get="components/tools/curl.auth.basic.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.auth.basic
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.auth.bearer"
+    hx-get="components/tools/curl.auth.bearer.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.auth.bearer
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.head.simple"
+    hx-get="components/tools/curl.head.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.head.simple
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=chrome.headless.html"
+    hx-get="components/tools/chrome.headless.html.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     chrome.headless.html
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=chrome.headless.pdf"
+    hx-get="components/tools/chrome.headless.pdf.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     chrome.headless.pdf
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=chrome.headless.screenshot"
+    hx-get="components/tools/chrome.headless.screenshot.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     chrome.headless.screenshot
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.put.json"
+    hx-get="components/tools/curl.put.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.put.json
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.delete.with_body"
+    hx-get="components/tools/curl.delete.with_body.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.delete.with_body
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.cookie"
+    hx-get="components/tools/curl.request.cookie.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.cookie
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.follow_redirect"
+    hx-get="components/tools/curl.request.follow_redirect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.follow_redirect
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.timeout"
+    hx-get="components/tools/curl.request.timeout.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.timeout
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.save_headers"
+    hx-get="components/tools/curl.request.save_headers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.save_headers
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.custom_method"
+    hx-get="components/tools/curl.request.custom_method.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.custom_method
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.user_agent"
+    hx-get="components/tools/curl.request.user_agent.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.user_agent
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.insecure"
+    hx-get="components/tools/curl.request.insecure.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.insecure
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=curl.request.include_headers"
+    hx-get="components/tools/curl.request.include_headers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     curl.request.include_headers
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=whatweb.fingerprint"
+    hx-get="components/tools/whatweb.fingerprint.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -454,329 +454,329 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_security')">SECURITY</button>
         <div class="sidebar-category-menu" id="cat_security" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crack.keepass"
+    hx-get="components/tools/crack.keepass.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crack.keepass
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crack.luks1"
+    hx-get="components/tools/crack.luks1.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crack.luks1
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crack.luks2"
+    hx-get="components/tools/crack.luks2.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crack.luks2
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crack.pcap"
+    hx-get="components/tools/crack.pcap.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crack.pcap
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crack.zip"
+    hx-get="components/tools/crack.zip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crack.zip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.longpw"
+    hx-get="components/tools/dos.longpw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.longpw
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.get"
+    hx-get="components/tools/dos.get.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.get
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.post.json"
+    hx-get="components/tools/dos.post.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.post.json
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.header.bearer"
+    hx-get="components/tools/dos.header.bearer.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.header.bearer
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.header.xsession"
+    hx-get="components/tools/dos.header.xsession.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.header.xsession
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.post.bearer.json"
+    hx-get="components/tools/dos.post.bearer.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.post.bearer.json
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=dos.post.xsession.json"
+    hx-get="components/tools/dos.post.xsession.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     dos.post.xsession.json
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=scanner.dns"
+    hx-get="components/tools/scanner.dns.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     scanner.dns
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=scanner.ip"
+    hx-get="components/tools/scanner.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     scanner.ip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=scanner.nmapper"
+    hx-get="components/tools/scanner.nmapper.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     scanner.nmapper
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=scanner.keyword"
+    hx-get="components/tools/scanner.keyword.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     scanner.keyword
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=hydra.ssh"
+    hx-get="components/tools/hydra.ssh.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     hydra.ssh
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=john.crack"
+    hx-get="components/tools/john.crack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     john.crack
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=sqlmap.scan"
+    hx-get="components/tools/sqlmap.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     sqlmap.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nikto.scan"
+    hx-get="components/tools/nikto.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nikto.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nuclei.scan"
+    hx-get="components/tools/nuclei.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nuclei.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=metasploit.module"
+    hx-get="components/tools/metasploit.module.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     metasploit.module
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wpscan.scan"
+    hx-get="components/tools/wpscan.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wpscan.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=gobuster.dir"
+    hx-get="components/tools/gobuster.dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     gobuster.dir
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=ffuf.dir"
+    hx-get="components/tools/ffuf.dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     ffuf.dir
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=ffuf.params"
+    hx-get="components/tools/ffuf.params.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     ffuf.params
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wafw00f.detect"
+    hx-get="components/tools/wafw00f.detect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wafw00f.detect
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=sslscan.audit"
+    hx-get="components/tools/sslscan.audit.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     sslscan.audit
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=katana.crawl"
+    hx-get="components/tools/katana.crawl.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     katana.crawl
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=arjun.scan"
+    hx-get="components/tools/arjun.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     arjun.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=jwt.crack"
+    hx-get="components/tools/jwt.crack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     jwt.crack
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nmap.syn_scan"
+    hx-get="components/tools/nmap.syn_scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nmap.syn_scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nmap.vuln_scripts"
+    hx-get="components/tools/nmap.vuln_scripts.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nmap.vuln_scripts
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=rustscan.fast"
+    hx-get="components/tools/rustscan.fast.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     rustscan.fast
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=sublist3r.enum"
+    hx-get="components/tools/sublist3r.enum.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     sublist3r.enum
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=crackmapexec.smb"
+    hx-get="components/tools/crackmapexec.smb.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     crackmapexec.smb
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=enum4linux.scan"
+    hx-get="components/tools/enum4linux.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     enum4linux.scan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=smbmap.shares"
+    hx-get="components/tools/smbmap.shares.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     smbmap.shares
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=impacket.secretsdump"
+    hx-get="components/tools/impacket.secretsdump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     impacket.secretsdump
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=kerbrute.userenum"
+    hx-get="components/tools/kerbrute.userenum.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     kerbrute.userenum
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=netcat.listener"
+    hx-get="components/tools/netcat.listener.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     netcat.listener
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=socat.tty_listener"
+    hx-get="components/tools/socat.tty_listener.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     socat.tty_listener
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=chisel.server"
+    hx-get="components/tools/chisel.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     chisel.server
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=chisel.client"
+    hx-get="components/tools/chisel.client.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     chisel.client
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=arpspoof.poison"
+    hx-get="components/tools/arpspoof.poison.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     arpspoof.poison
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=bettercap.mitm"
+    hx-get="components/tools/bettercap.mitm.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     bettercap.mitm
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=aircrack.deauth"
+    hx-get="components/tools/aircrack.deauth.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -790,175 +790,175 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_forensics')">FORENSICS</button>
         <div class="sidebar-category-menu" id="cat_forensics" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file"
+    hx-get="components/tools/file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.bin"
+    hx-get="components/tools/file.bin.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.bin
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.by"
+    hx-get="components/tools/file.by.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.by
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.clean.meta"
+    hx-get="components/tools/file.clean.meta.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.clean.meta
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.dec"
+    hx-get="components/tools/file.dec.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.dec
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.dump"
+    hx-get="components/tools/file.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.dump
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.hex"
+    hx-get="components/tools/file.hex.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.hex
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.list"
+    hx-get="components/tools/file.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.list
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.meta"
+    hx-get="components/tools/file.meta.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.meta
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=file.lmao"
+    hx-get="components/tools/file.lmao.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     file.lmao
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.applogs"
+    hx-get="components/tools/view.applogs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.applogs
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.auditlog"
+    hx-get="components/tools/view.auditlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.auditlog
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.authlog"
+    hx-get="components/tools/view.authlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.authlog
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.btmp"
+    hx-get="components/tools/view.btmp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.btmp
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.kernlog"
+    hx-get="components/tools/view.kernlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.kernlog
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.lastlog"
+    hx-get="components/tools/view.lastlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.lastlog
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.messages"
+    hx-get="components/tools/view.messages.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.messages
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.secure"
+    hx-get="components/tools/view.secure.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.secure
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.syslog"
+    hx-get="components/tools/view.syslog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.syslog
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=view.wtmp"
+    hx-get="components/tools/view.wtmp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     view.wtmp
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=binwalk.extract"
+    hx-get="components/tools/binwalk.extract.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     binwalk.extract
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=foremost.carve"
+    hx-get="components/tools/foremost.carve.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     foremost.carve
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=yara.scan_dir"
+    hx-get="components/tools/yara.scan_dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     yara.scan_dir
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=tshark.extract_http"
+    hx-get="components/tools/tshark.extract_http.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     tshark.extract_http
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=volatility.pslist"
+    hx-get="components/tools/volatility.pslist.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -972,126 +972,126 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_system')">SYSTEM</button>
         <div class="sidebar-category-menu" id="cat_system" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=bash"
+    hx-get="components/tools/bash.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     bash
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=disk.dump"
+    hx-get="components/tools/disk.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     disk.dump
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=disk.recover"
+    hx-get="components/tools/disk.recover.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     disk.recover
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=vm.create_disk"
+    hx-get="components/tools/vm.create_disk.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     vm.create_disk
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=vm.run"
+    hx-get="components/tools/vm.run.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     vm.run
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=systemctl.start"
+    hx-get="components/tools/systemctl.start.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     systemctl.start
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=systemctl.stop"
+    hx-get="components/tools/systemctl.stop.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     systemctl.stop
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=systemctl.enable"
+    hx-get="components/tools/systemctl.enable.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     systemctl.enable
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=systemctl.status"
+    hx-get="components/tools/systemctl.status.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     systemctl.status
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=cron.add"
+    hx-get="components/tools/cron.add.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     cron.add
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=cron.list"
+    hx-get="components/tools/cron.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     cron.list
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=disk.usage"
+    hx-get="components/tools/disk.usage.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     disk.usage
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=disk.du"
+    hx-get="components/tools/disk.du.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     disk.du
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=process.list"
+    hx-get="components/tools/process.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     process.list
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=process.kill"
+    hx-get="components/tools/process.kill.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     process.kill
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=memory.usage"
+    hx-get="components/tools/memory.usage.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     memory.usage
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=service.restart"
+    hx-get="components/tools/service.restart.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     service.restart
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=system.stats"
+    hx-get="components/tools/system.stats.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1105,112 +1105,112 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_core')">CORE</button>
         <div class="sidebar-category-menu" id="cat_core" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=native.cosmic.report"
+    hx-get="components/tools/native.cosmic.report.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     native.cosmic.report
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=native.cosmic.requests"
+    hx-get="components/tools/native.cosmic.requests.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     native.cosmic.requests
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=native.cosmic.chrome"
+    hx-get="components/tools/native.cosmic.chrome.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     native.cosmic.chrome
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=native.cosmic.server"
+    hx-get="components/tools/native.cosmic.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     native.cosmic.server
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=server.llama"
+    hx-get="components/tools/server.llama.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     server.llama
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.scanner.keyword"
+    hx-get="components/tools/wfex.scanner.keyword.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.scanner.keyword
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.scanner.dns"
+    hx-get="components/tools/wfex.scanner.dns.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.scanner.dns
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.scanner.ip"
+    hx-get="components/tools/wfex.scanner.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.scanner.ip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.scanner.nmapper"
+    hx-get="components/tools/wfex.scanner.nmapper.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.scanner.nmapper
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.server"
+    hx-get="components/tools/wfex.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.server
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.server.harpia"
+    hx-get="components/tools/wfex.server.harpia.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.server.harpia
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.server.default"
+    hx-get="components/tools/wfex.server.default.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.server.default
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.server.minimal"
+    hx-get="components/tools/wfex.server.minimal.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.server.minimal
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.build.web"
+    hx-get="components/tools/wfex.build.web.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.build.web
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.gen.report"
+    hx-get="components/tools/wfex.gen.report.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     wfex.gen.report
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=wfex.config.model"
+    hx-get="components/tools/wfex.config.model.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1224,105 +1224,105 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_containers')">CONTAINERS</button>
         <div class="sidebar-category-menu" id="cat_containers" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.stop.all"
+    hx-get="components/tools/docker.stop.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.stop.all
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.remove.all.containers"
+    hx-get="components/tools/docker.remove.all.containers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.remove.all.containers
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.remove.all.images"
+    hx-get="components/tools/docker.remove.all.images.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.remove.all.images
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.reset"
+    hx-get="components/tools/docker.reset.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.reset
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.install.script"
+    hx-get="components/tools/docker.install.script.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.install.script
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.user.addgroup"
+    hx-get="components/tools/docker.user.addgroup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.user.addgroup
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.newgrp.refresh"
+    hx-get="components/tools/docker.newgrp.refresh.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.newgrp.refresh
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.compose.up"
+    hx-get="components/tools/docker.compose.up.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.compose.up
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.compose.down"
+    hx-get="components/tools/docker.compose.down.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.compose.down
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.logs"
+    hx-get="components/tools/docker.logs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.logs
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.exec"
+    hx-get="components/tools/docker.exec.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.exec
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.network.create"
+    hx-get="components/tools/docker.network.create.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.network.create
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.volume.create"
+    hx-get="components/tools/docker.volume.create.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.volume.create
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.build"
+    hx-get="components/tools/docker.build.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     docker.build
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=docker.run"
+    hx-get="components/tools/docker.run.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1336,77 +1336,77 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_firewall')">FIREWALL</button>
         <div class="sidebar-category-menu" id="cat_firewall" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.drop.bigger"
+    hx-get="components/tools/firewall.drop.bigger.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.drop.bigger
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.drop.in.all"
+    hx-get="components/tools/firewall.drop.in.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.drop.in.all
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.drop.out.all"
+    hx-get="components/tools/firewall.drop.out.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.drop.out.all
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.flush"
+    hx-get="components/tools/firewall.flush.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.flush
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.allow.port"
+    hx-get="components/tools/firewall.allow.port.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.allow.port
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.deny.ip"
+    hx-get="components/tools/firewall.deny.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.deny.ip
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.allow.interface"
+    hx-get="components/tools/firewall.allow.interface.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.allow.interface
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.save"
+    hx-get="components/tools/firewall.save.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.save
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.restore"
+    hx-get="components/tools/firewall.restore.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.restore
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.list.rules"
+    hx-get="components/tools/firewall.list.rules.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     firewall.list.rules
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=firewall.drop.port.range"
+    hx-get="components/tools/firewall.drop.port.range.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1420,49 +1420,49 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_database')">DATABASE</button>
         <div class="sidebar-category-menu" id="cat_database" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mysql.query"
+    hx-get="components/tools/mysql.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mysql.query
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mysql.dump"
+    hx-get="components/tools/mysql.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mysql.dump
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=psql.query"
+    hx-get="components/tools/psql.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     psql.query
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=psql.dump"
+    hx-get="components/tools/psql.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     psql.dump
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=mongosh.query"
+    hx-get="components/tools/mongosh.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     mongosh.query
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=redis.cli"
+    hx-get="components/tools/redis.cli.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     redis.cli
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=sqlite.query"
+    hx-get="components/tools/sqlite.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1476,49 +1476,49 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_antivirus')">ANTIVIRUS</button>
         <div class="sidebar-category-menu" id="cat_antivirus" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.clamscan"
+    hx-get="components/tools/clamav.clamscan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.clamscan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.clamdscan"
+    hx-get="components/tools/clamav.clamdscan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.clamdscan
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.freshclam"
+    hx-get="components/tools/clamav.freshclam.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.freshclam
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.sigtool.info"
+    hx-get="components/tools/clamav.sigtool.info.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.sigtool.info
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.sigtool.hex"
+    hx-get="components/tools/clamav.sigtool.hex.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.sigtool.hex
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.sigtool.unpack"
+    hx-get="components/tools/clamav.sigtool.unpack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     clamav.sigtool.unpack
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=clamav.clamconf"
+    hx-get="components/tools/clamav.clamconf.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
@@ -1532,42 +1532,42 @@
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_cleanup')">CLEANUP</button>
         <div class="sidebar-category-menu" id="cat_cleanup" style="display: none;">
             <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=fhide.embed"
+    hx-get="components/tools/fhide.embed.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     fhide.embed
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=fhide.extract"
+    hx-get="components/tools/fhide.extract.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     fhide.extract
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=fhide.info"
+    hx-get="components/tools/fhide.info.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     fhide.info
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nuke.file"
+    hx-get="components/tools/nuke.file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nuke.file
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nuke.hd"
+    hx-get="components/tools/nuke.hd.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
     nuke.hd
 </button>
 <button type="button" class="sidebar-submit"
-    hx-get="/api/tool/view?name=nuke.logs"
+    hx-get="components/tools/nuke.logs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
     onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">

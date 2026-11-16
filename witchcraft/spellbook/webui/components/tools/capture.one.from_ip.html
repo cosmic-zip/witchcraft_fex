@@ -1,0 +1,61 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>capture.one.from_ip</em></span>
+            <span class="tool-title-desc">Capture only one packet from/to a specified IP address on a specified network interface.</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_capture.one.from_ip.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_capture.one.from_ip" value="capture.one.from_ip">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_count" class="form-label">COUNT</label>
+            <input type="text" class="form-control" name="count" id="arg_count" placeholder="Setup a limit by packet count">
+            <small class="form-hint">Setup a limit by packet count</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_interface" class="form-label">INTERFACE</label>
+            <input type="text" class="form-control" name="interface" id="arg_interface" placeholder="Physical or virtual network device, e.g., wlan0">
+            <small class="form-hint">Physical or virtual network device, e.g., wlan0</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_ip" class="form-label">IP</label>
+            <input type="text" class="form-control" name="ip" id="arg_ip" placeholder="Refers to an IPv4 or IPv6 address">
+            <small class="form-hint">Refers to an IPv4 or IPv6 address</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

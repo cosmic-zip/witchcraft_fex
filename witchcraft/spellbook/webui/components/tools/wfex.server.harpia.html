@@ -1,0 +1,61 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>wfex.server.harpia</em></span>
+            <span class="tool-title-desc">Launches the Harpia AI server variant with specific settings.</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_wfex.server.harpia.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_wfex.server.harpia" value="wfex.server.harpia">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_host" class="form-label">HOST</label>
+            <input type="text" class="form-control" name="host" id="arg_host" placeholder="The hostname or IP address to bind the Yuri server.">
+            <small class="form-hint">The hostname or IP address to bind the Yuri server.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_model" class="form-label">MODEL</label>
+            <input type="text" class="form-control" name="model" id="arg_model" placeholder="The model or configuration profile for the Harpia server.">
+            <small class="form-hint">The model or configuration profile for the Harpia server.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_port" class="form-label">PORT</label>
+            <input type="text" class="form-control" name="port" id="arg_port" placeholder="The port number on which the Harpia server will listen.">
+            <small class="form-hint">The port number on which the Harpia server will listen.</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
