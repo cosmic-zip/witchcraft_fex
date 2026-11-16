@@ -1,0 +1,60 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>sublist3r.enum</em></span>
+            <span class="tool-title-desc">Enumerate subdomains using search engines and OSINT sources</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_sublist3r.enum.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_sublist3r.enum" value="sublist3r.enum">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_domain" class="form-label">DOMAIN</label>
+            <input type="text" class="form-control" name="domain" id="arg_domain" placeholder="Root domain to enumerate (e.g. example.com)">
+            <small class="form-hint">Root domain to enumerate (e.g. example.com)</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_threads" class="form-label">THREADS</label>
+            <select name="threads" id="arg_threads" class="form-control">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            </select>
+            <small class="form-hint">Number of search threads</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

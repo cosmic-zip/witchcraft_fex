@@ -1,0 +1,64 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>kerbrute.userenum</em></span>
+            <span class="tool-title-desc">Fast Active Directory username enumeration via Kerberos pre-auth</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_kerbrute.userenum.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_kerbrute.userenum" value="kerbrute.userenum">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_dc_ip" class="form-label">DC_IP</label>
+            <input type="text" class="form-control" name="dc_ip" id="arg_dc_ip" placeholder="Domain Controller IP address">
+            <small class="form-hint">Domain Controller IP address</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_domain" class="form-label">DOMAIN</label>
+            <input type="text" class="form-control" name="domain" id="arg_domain" placeholder="Domain FQDN (e.g. target.local)">
+            <small class="form-hint">Domain FQDN (e.g. target.local)</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_userlist" class="form-label">USERLIST</label>
+            <select name="userlist" id="arg_userlist" class="form-control">
+            <option value="/usr/share/seclists/Usernames/xato-net-10-million-usernames.txt">/usr/share/seclists/Usernames/xato-net-10-million-usernames.txt</option>
+            <option value="/usr/share/seclists/Usernames/top-usernames-shortlist.txt">/usr/share/seclists/Usernames/top-usernames-shortlist.txt</option>
+            </select>
+            <small class="form-hint">Path to username wordlist</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,101 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>wfex.gen.report</em></span>
+            <span class="tool-title-desc">Generates a report from the collected data.</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_wfex.gen.report.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_wfex.gen.report" value="wfex.gen.report">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_date" class="form-label">DATE</label>
+            <input type="text" class="form-control" name="date" id="arg_date" placeholder="The date the report is generated or refers to.">
+            <small class="form-hint">The date the report is generated or refers to.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_final_notes" class="form-label">FINAL_NOTES</label>
+            <input type="text" class="form-control" name="final_notes" id="arg_final_notes" placeholder="Any final notes or additional observations for the report.">
+            <small class="form-hint">Any final notes or additional observations for the report.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_fixes" class="form-label">FIXES</label>
+            <input type="text" class="form-control" name="fixes" id="arg_fixes" placeholder="Proposed or applied fixes for the vulnerabilities.">
+            <small class="form-hint">Proposed or applied fixes for the vulnerabilities.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_lang" class="form-label">LANG</label>
+            <input type="text" class="form-control" name="lang" id="arg_lang" placeholder="The language in which the report should be generated.">
+            <small class="form-hint">The language in which the report should be generated.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_sginature" class="form-label">SGINATURE</label>
+            <input type="text" class="form-control" name="sginature" id="arg_sginature" placeholder="The signature or identifier for the report.">
+            <small class="form-hint">The signature or identifier for the report.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_sys_type" class="form-label">SYS_TYPE</label>
+            <input type="text" class="form-control" name="sys_type" id="arg_sys_type" placeholder="The type of system the report is associated with.">
+            <small class="form-hint">The type of system the report is associated with.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_target" class="form-label">TARGET</label>
+            <input type="text" class="form-control" name="target" id="arg_target" placeholder="The target subject or entity of the report.">
+            <small class="form-hint">The target subject or entity of the report.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_tech_stack" class="form-label">TECH_STACK</label>
+            <input type="text" class="form-control" name="tech_stack" id="arg_tech_stack" placeholder="The technology stack involved in the report.">
+            <small class="form-hint">The technology stack involved in the report.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_title" class="form-label">TITLE</label>
+            <input type="text" class="form-control" name="title" id="arg_title" placeholder="The title of the generated report.">
+            <small class="form-hint">The title of the generated report.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_vectors" class="form-label">VECTORS</label>
+            <input type="text" class="form-control" name="vectors" id="arg_vectors" placeholder="Comma-separated list of OWASP attack vector IDs (e.g., '2' or '2,4'). Refer to gen.report.options for the full mapping.">
+            <small class="form-hint">Comma-separated list of OWASP attack vector IDs (e.g., '2' or '2,4'). Refer to gen.report.options for the full mapping.</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_vulnerabilities" class="form-label">VULNERABILITIES</label>
+            <input type="text" class="form-control" name="vulnerabilities" id="arg_vulnerabilities" placeholder="Comma-separated list of OWASP vulnerability IDs (e.g., '1' or '1,3,5'). Refer to gen.report.options for the full mapping.">
+            <small class="form-hint">Comma-separated list of OWASP vulnerability IDs (e.g., '1' or '1,3,5'). Refer to gen.report.options for the full mapping.</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

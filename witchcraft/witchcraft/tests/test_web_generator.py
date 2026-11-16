@@ -9,21 +9,27 @@ if PROJECT_ROOT not in sys.path:
 if "NT_DATAROOT" not in os.environ:
     os.environ["NT_DATAROOT"] = os.path.join(PROJECT_ROOT, "spellbook/")
 
-from witchcraft.interface.web.generator import gen_base, gen_extends
+from spellbook.webui.builder import build_all_components, generate_tool_component
 
 class TestWebGenerator(unittest.TestCase):
 
-    def test_gen_base_contains_page_title(self):
-        base_html = gen_base()
-        self.assertIsInstance(base_html, str)
-        self.assertIn("WitchcraftFEX", base_html)
-        self.assertIn("sidebar", base_html.lower())
+    def test_webui_index_contains_title(self):
+        index_path = os.path.join(PROJECT_ROOT, "spellbook/webui/index.html")
+        self.assertTrue(os.path.exists(index_path))
+        with open(index_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn("WitchcraftFEX", content)
+        self.assertIn("sidebar", content.lower())
 
-    def test_gen_extends_includes_extensions(self):
-        extended_html = gen_extends()
-        self.assertIsInstance(extended_html, str)
-        self.assertNotIn("@@EXTENSIONS", extended_html, "Placeholder @@EXTENSIONS should be replaced.")
-        self.assertNotIn("@@EXTENDS", extended_html, "Placeholder @@EXTENDS should be replaced.")
+    def test_build_components(self):
+        count = build_all_components()
+        self.assertGreater(count, 0)
+        sample_comp = os.path.join(PROJECT_ROOT, "spellbook/webui/components/tools/scanner.dns.html")
+        self.assertTrue(os.path.exists(sample_comp))
+        with open(sample_comp, "r", encoding="utf-8") as f:
+            html = f.read()
+        self.assertIn("scanner.dns", html)
+        self.assertIn("tool-workspace-split", html)
 
 if __name__ == "__main__":
     unittest.main()
