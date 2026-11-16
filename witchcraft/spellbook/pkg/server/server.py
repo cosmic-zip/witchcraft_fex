@@ -313,6 +313,11 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
                 self.send_json(500, {"error": f"Failed to list MCP tools: {str(e)}"})
             return
 
+        # API: HTMX Dynamic Tool View Component (/api/tool/view?name=...)
+        if path == "/api/tool/view":
+            self.handle_tool_view(parsed_url.query)
+            return
+
         # Static file serving
         self.serve_file(path)
 
@@ -493,6 +498,112 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             self.send_json(200, result)
         except Exception as e:
             self.send_json(500, {"error": f"Harpia execution failed: {str(e)}"})
+
+    def handle_tool_view(self, query_string: str):
+        """Render a single tool's execution interface dynamically via HTMX component."""
+        params = urllib.parse.parse_qs(query_string)
+        tool_name = params.get("name", [""])[0].strip()
+        if not tool_name:
+            self.send_text(400, "<div class='hint hint-error'>Missing tool name</div>", "text/html; charset=utf-8")
+            return
+
+        candidates = [
+            os.path.join(os.environ.get("NT_DATAROOT", ""), "database/rocketdb_v2.json"),
+            os.path.join(self.server_folder, "../database/rocketdb_v2.json"),
+            os.path.join(os.path.dirname(__file__), "../../database/rocketdb_v2.json"),
+            "witchcraft/spellbook/database/rocketdb_v2.json",
+            "spellbook/database/rocketdb_v2.json",
+        ]
+        db_path = None
+        for cand in candidates:
+            if cand and os.path.exists(cand):
+                db_path = cand
+                break
+
+        if not db_path:
+            self.send_text(500, "<div class='hint hint-error'>Database file rocketdb_v2.json not found</div>", "text/html; charset=utf-8")
+            return
+
+        try:
+            with open(db_path, "r", encoding="utf-8") as f:
+                db_data = json.load(f)
+                binds = db_data.get("index", [])
+        except Exception as e:
+            self.send_text(500, f"<div class='hint hint-error'>Database load error: {str(e)}</div>", "text/html; charset=utf-8")
+            return
+
+        bind = None
+        for b in binds:
+            if b.get("name") == tool_name:
+                bind = b
+                break
+
+        if not bind:
+            self.send_text(404, f"<div class='hint hint-error'>Tool '{tool_name}' not found</div>", "text/html; charset=utf-8")
+            return
+
+        arguments = bind.get("arguments") or {}
+        args_inputs = []
+        include_ids = []
+
+        for arg_name, arg_info in arguments.items():
+            input_id = f"arg_{arg_name}"
+            include_ids.append(f"#{input_id}")
+            desc = arg_info.get("description", arg_name)
+            options = arg_info.get("options")
+
+            if options:
+                opts_html = "\n".join(f'<option value="{opt}">{opt}</option>' for opt in options)
+                args_inputs.append(f"""
+                <div class="form-text">
+                    <h3 class="form-title">{desc}</h3>
+                    <select name="{arg_name}" id="{input_id}" class="form-select">
+                        {opts_html}
+                    </select>
+                </div>
+                """)
+            else:
+                args_inputs.append(f"""
+                <div class="form-text">
+                    <h3 class="form-title">{desc}</h3>
+                    <input type="text" class="form-text-input" name="{arg_name}" id="{input_id}" placeholder="{arg_name}">
+                </div>
+                """)
+
+        include_str = ", ".join(include_ids)
+        if include_str:
+            include_str += ", "
+
+        html_component = f"""
+        <section class="content-sec" style="display: block;">
+            <header class="sec-header">
+                <span><em>{bind.get('name')}</em></span>
+            </header>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+            <div class="hint" id="hint_session">
+                <button onclick="downloadDivAsTxt('tool_output_box', 'output_{bind.get('name')}.txt')" class="btn-downloader">Download</button>
+                {bind.get('description', '')}
+            </div>
+            <form class="form-ctn" method="post">
+                {''.join(args_inputs)}
+                <div class="form-text">
+                    <h3 class="form-title">HACK NOW!</h3>
+                    <input type="hidden" id="ezec_name" name="EZEC{bind.get('name')}" value="{bind.get('name')}">
+                    <button type="submit" class="form-text-submit"
+                        hx-post="/api/exec"
+                        hx-include="{include_str}#ezec_name, #ztoken"
+                        hx-target="#tool_output_box"
+                        hx-indicator="#exec-spinner">
+                        Execute
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: cyan;">⚡ Running...</span>
+                </div>
+            </form>
+        </section>
+        """
+        self.send_text(200, html_component, "text/html; charset=utf-8")
 
     def handle_exec(self, body: str):
         """Execute WitchcraftFEX command with authentication check."""

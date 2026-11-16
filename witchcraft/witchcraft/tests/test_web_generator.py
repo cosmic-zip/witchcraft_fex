@@ -16,7 +16,7 @@ class TestWebGenerator(unittest.TestCase):
     def test_gen_base_contains_page_title(self):
         base_html = gen_base()
         self.assertIsInstance(base_html, str)
-        self.assertIn("NettravalerEX", base_html)
+        self.assertIn("WitchcraftFEX", base_html)
         self.assertIn("sidebar", base_html.lower())
 
     def test_gen_extends_includes_extensions(self):

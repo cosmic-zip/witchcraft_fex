@@ -8,7 +8,7 @@ base_html = """
         <link rel="stylesheet" href="assets/ui.css">
         <script src="assets/ui.js"></script>
         <title>@@PAGETITLE</title>
-        <script>function toggleSection(sectionId) { const sections = document.querySelectorAll('section'); sections.forEach(section => { if (section.id === sectionId) { section.style.display = 'block' } else { section.style.display = 'none' } }) }</script>
+        <script>function toggleSection(sectionId) { const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'none'; const sections = document.querySelectorAll('section'); sections.forEach(section => { if (section.id === sectionId) { section.style.display = 'block' } else { section.style.display = 'none' } }) }</script>
         <script>function toggleCategory(catId) { const menu = document.getElementById(catId); if (!menu) return; if (menu.style.display === 'none' || menu.style.display === '') { menu.style.display = 'block'; } else { menu.style.display = 'none'; } }</script>
         <script>function downloadDivAsTxt(divId, filename) { const div = document.getElementById(divId); if (!div) { console.error('Div not found:', divId); return } const text = div.textContent || ''; const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename || 'download.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url) }</script>
     </head>
@@ -34,6 +34,7 @@ base_html = """
             <div class="container"><input type="hidden" id="ztoken" name="ztoken" value="@@ZTOKEN">
                 <section class="content-sec" id="default"></section>
                 @@EXTENDS
+                <div id="dynamic_tool_container"></div>
                 @@CONTAINER
             </div>
             <div class="container chat" id="ia_chatbot_win">
@@ -76,7 +77,13 @@ sidebar_category_group = """
     </div>
 """
 
-sidebar_button = """<button type="submit" class="sidebar-submit" onclick="toggleSection('@@IDSECTION')">@@BTNAME</button>"""
+sidebar_button = """<button type="button" class="sidebar-submit"
+    hx-get="/api/tool/view?name=@@BTNAME"
+    hx-target="#dynamic_tool_container"
+    hx-swap="innerHTML"
+    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    @@BTNAME
+</button>"""
 
 
 # SECTION_CONTENT
