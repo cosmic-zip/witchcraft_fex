@@ -94,79 +94,65 @@ sidebar_button = """<button type="button" class="sidebar-submit"
 section = """
     <section class="content-sec" id="@@IDSECTION">
         <header class="sec-header">
-            <span><em>@@TITLE</em></span>
-        </header>
-        <div class="outputer">
-            <pre id="@@IDOUTPUT">
-            </pre>
-        </div>
-        <div class="hint" id="hint_session">
-            <button onclick="downloadDivAsTxt('@@IDOUTPUT', 'terminal_output_@@IDOUTPUT_.termlock')" class="btn-downloader">Download</button>
-            @@HINT 
-        </div>
-        <!-- <div class="hint hint-error" id="error_session">
-            @@ERROR
-        </div> -->
-        <form class="form-ctn" method="post"> 
-            @@FORM_CONTENT 
-            <div class="form-text">
-                <h3 class="form-title">HACK NOW!</h3>
-                <input type="hidden" id="requestid@@REQUESTID" name="requestid@@REQUESTID" value="@@REQUESTID">
-                <input type="hidden" id="EZEC@@MNAME@@REQUESTID" name="EZEC@@MNAME@@REQUESTID" value="@@MNAME">
-                <input type="submit" class="form-text-submit"
-                    hx-post="@@NT_GEN_HOST"
-                    hx-include="@@IDFNAME_LIST #requestid@@REQUESTID, #EZEC@@MNAME@@REQUESTID, #ztoken"
-                    hx-target="@@IDOUTPUTHTX"
-                    hx-trigger="click">
+            <div>
+                <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>@@TITLE</em></span>
+                <span class="tool-title-desc">@@HINT</span>
             </div>
-        </form>
-        
+        </header>
+
+        <div class="tool-workspace-split">
+            <div class="tool-terminal-pane">
+                <div class="terminal-toolbar">
+                    <span class="term-title">💻 Terminal / Output</span>
+                    <div class="term-actions">
+                        <button type="button" onclick="downloadDivAsTxt('@@IDOUTPUT', 'terminal_output_@@IDOUTPUT_.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                        <button type="button" onclick="document.getElementById('@@IDOUTPUT').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                    </div>
+                </div>
+                <div class="outputer">
+                    <pre id="@@IDOUTPUT"></pre>
+                </div>
+            </div>
+
+            <div class="tool-form-pane">
+                <form class="tool-form" method="post"
+                    hx-post="@@NT_GEN_HOST"
+                    hx-include="#ztoken"
+                    hx-target="@@IDOUTPUTHTX"
+                    hx-indicator="#exec-spinner">
+                    <input type="hidden" id="requestid@@REQUESTID" name="requestid@@REQUESTID" value="@@REQUESTID">
+                    <input type="hidden" id="EZEC@@MNAME@@REQUESTID" name="EZEC@@MNAME@@REQUESTID" value="@@MNAME">
+
+                    <div class="form-fields">
+                        @@FORM_CONTENT
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            ▶ Executar
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            Limpar
+                        </button>
+                        <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section>
 """
 
-
-section_header = """
-    
-"""
-section_outputer = """
-    <div class="outputer">
-        <pre id="IDOUTPUT">
-        </pre>
-    </div>
-"""
-
-
-section_outputer_xl = """
-    <div class="outputer outputer-xl"></div>
-"""
-
-section_hint = """
-    <div class="hint" id="hint_session">
-        <button onclick="downloadDivAsTxt('IDOUTPUT', 'terminal_output_IDOUTPUT_.termlock')" class="btn-downloader">Download</button>
-        @@HINT 
-    </div>
-"""
-
-section_error = """
-  <--  <div class="hint hint-error" id="error_session">
-        @@ERROR
-    </div> -->
-"""
-
-section_form = """
-<form class="form-ctn" method="get"> @@FORM_CONTENT </form>
-"""
-
 section_form_text = """
-    <div class="form-text">
-        <h3 class="form-title">@@FTITLE</h3>
-        <input type="text" class="form-text-input" name="@@IDFTITLE" id="@@IDFTITLE">
+    <div class="form-group">
+        <label for="@@IDFTITLE" class="form-label">@@FTITLE</label>
+        <input type="text" class="form-control" name="@@IDFTITLE" id="@@IDFTITLE" placeholder="@@FTITLE">
     </div>
 """
+
 section_form_select = """
-    <div class="form-text">
-        <h3 class="form-title">@@FTITLE</h3>
-        <select name="@@IDFNAME" id="@@IDFNAME" class="form-select">
+    <div class="form-group">
+        <label for="@@IDFNAME" class="form-label">@@FTITLE</label>
+        <select name="@@IDFNAME" id="@@IDFNAME" class="form-control">
             @@FOPTIONS
         </select>
     </div>
