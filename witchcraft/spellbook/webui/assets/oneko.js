@@ -160,5 +160,26 @@
         nekoEl.style.top = `${nekoPosY - 16}px`;
     }
 
+    function toggle() {
+        const btn = document.getElementById("oneko_toggle_btn");
+        if (nekoEl.style.display === "none") {
+            nekoEl.style.display = "block";
+            if (btn) btn.innerText = "🐾 Neko: ON";
+            if (!window.onekoInterval) {
+                window.onekoInterval = setInterval(frame, 100);
+            }
+        } else {
+            nekoEl.style.display = "none";
+            if (btn) btn.innerText = "🐾 Neko: OFF";
+            if (window.onekoInterval) {
+                clearInterval(window.onekoInterval);
+                window.onekoInterval = null;
+            }
+        }
+    }
+
+    window.toggleOnekoImpl = toggle;
+    window.toggleOneko = toggle;
+
     create();
 })();

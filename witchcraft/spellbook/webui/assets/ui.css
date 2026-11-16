@@ -1,12 +1,12 @@
 :root {
   --text-color: aliceblue;
-  --ancient: #c607fb;
+  --ancient: #1fff00;
   --contrast: black;
-  --dk-ancient: #a40099;
-  --warning: rgba(0, 42, 140, 0.8);
+  --dk-ancient: #39512b;
+  --warning: rgba(55, 55, 55, 0.8);
   --bg: #666666;
-  --error: rgba(108, 0, 0, 0.8);
-  --ok: rgb(0, 116, 128);
+  --error: rgba(34, 34, 34, 0.8);
+  --ok: black;
 }
 
 main,
