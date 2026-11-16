@@ -1,0 +1,69 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>rustscan.fast</em></span>
+            <span class="tool-title-desc">Ultra-fast port scanner with automatic pipe to Nmap services</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_rustscan.fast.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_rustscan.fast" value="rustscan.fast">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_target_ip" class="form-label">TARGET_IP</label>
+            <input type="text" class="form-control" name="target_ip" id="arg_target_ip" placeholder="Target IP address or domain">
+            <small class="form-hint">Target IP address or domain</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_ports" class="form-label">PORTS</label>
+            <select name="ports" id="arg_ports" class="form-control">
+            <option value="1-65535">1-65535</option>
+            <option value="1-10000">1-10000</option>
+            <option value="1-1000">1-1000</option>
+            </select>
+            <small class="form-hint">Port range to scan</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_batch_size" class="form-label">BATCH_SIZE</label>
+            <select name="batch_size" id="arg_batch_size" class="form-control">
+            <option value="4500">4500</option>
+            <option value="2000">2000</option>
+            <option value="1000">1000</option>
+            </select>
+            <small class="form-hint">Number of parallel sockets</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,71 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>mysql.dump</em></span>
+            <span class="tool-title-desc">Export a MySQL database to a file.</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_mysql.dump.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_mysql.dump" value="mysql.dump">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_database" class="form-label">DATABASE</label>
+            <input type="text" class="form-control" name="database" id="arg_database" placeholder="Database name">
+            <small class="form-hint">Database name</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_host" class="form-label">HOST</label>
+            <input type="text" class="form-control" name="host" id="arg_host" placeholder="Database host">
+            <small class="form-hint">Database host</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_output" class="form-label">OUTPUT</label>
+            <input type="text" class="form-control" name="output" id="arg_output" placeholder="Output file path">
+            <small class="form-hint">Output file path</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_password" class="form-label">PASSWORD</label>
+            <input type="text" class="form-control" name="password" id="arg_password" placeholder="Database password">
+            <small class="form-hint">Database password</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_user" class="form-label">USER</label>
+            <input type="text" class="form-control" name="user" id="arg_user" placeholder="Database user">
+            <small class="form-hint">Database user</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

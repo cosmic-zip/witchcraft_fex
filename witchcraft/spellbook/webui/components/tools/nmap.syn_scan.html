@@ -1,0 +1,61 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>nmap.syn_scan</em></span>
+            <span class="tool-title-desc">Full TCP SYN stealth scan with service and OS detection</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_nmap.syn_scan.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_nmap.syn_scan" value="nmap.syn_scan">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_target" class="form-label">TARGET</label>
+            <input type="text" class="form-control" name="target" id="arg_target" placeholder="Target IP, range or hostname">
+            <small class="form-hint">Target IP, range or hostname</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_ports" class="form-label">PORTS</label>
+            <select name="ports" id="arg_ports" class="form-control">
+            <option value="1-1000">1-1000</option>
+            <option value="-">-</option>
+            <option value="80,443,8080,8443">80,443,8080,8443</option>
+            <option value="21,22,23,25,80,443,445,3389">21,22,23,25,80,443,445,3389</option>
+            </select>
+            <small class="form-hint">Port specification (e.g. 1-1000, 80,443, -)</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

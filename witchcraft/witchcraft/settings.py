@@ -1,4 +1,11 @@
-from witchcraft.interface.web.generator import gen_wrapper
+try:
+    from spellbook.webui.builder import gen_wrapper
+except ImportError:
+    try:
+        from witchcraft.spellbook.webui.builder import gen_wrapper
+    except ImportError:
+        def gen_wrapper(args_v=None):
+            return 0
 from witchcraft.interface.mcp.mcp_server import mcp_server_wrapper
 from witchcraft.interface.ai.harpia_agent import harpia_ask_wrapper
 from witchcraft.interface.cli.interactive import harpia_cli_wrapper

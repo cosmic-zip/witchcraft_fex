@@ -1,0 +1,66 @@
+<section class="content-sec" style="display: block;">
+    <header class="sec-header">
+        <div>
+            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>web.download</em></span>
+            <span class="tool-title-desc">Downloads a full webpage or open directory recursively, including all necessary resources (images, CSS, JS) for offline viewing. It only downloads content at and below the specified URL, without mirroring the entire site. Supports polite scraping with adjustable wait times, optional rate limits, and retries while preserving existing files.</span>
+        </div>
+    </header>
+
+    <div class="tool-workspace-split">
+        <div class="tool-terminal-pane">
+            <div class="terminal-toolbar">
+                <span class="term-title">💻 Terminal / Output</span>
+                <div class="term-actions">
+                    <button type="button" onclick="downloadDivAsTxt('tool_output_box', 'output_web.download.txt')" class="btn btn-secondary btn-sm">Salvar Log</button>
+                    <button type="button" onclick="document.getElementById('tool_output_box').textContent = ''" class="btn btn-secondary btn-sm">Limpar Tela</button>
+                </div>
+            </div>
+            <div class="outputer">
+                <pre id="tool_output_box"></pre>
+            </div>
+        </div>
+
+        <div class="tool-form-pane">
+            <form class="tool-form" method="post"
+                hx-post="/api/exec"
+                hx-include="#ztoken"
+                hx-target="#tool_output_box"
+                hx-indicator="#exec-spinner">
+                <input type="hidden" name="EZEC_web.download" value="web.download">
+                
+                <div class="form-fields">
+        <div class="form-group">
+            <label for="arg_path" class="form-label">PATH</label>
+            <input type="text" class="form-control" name="path" id="arg_path" placeholder="Set the output path">
+            <small class="form-hint">Set the output path</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_rate" class="form-label">RATE</label>
+            <input type="text" class="form-control" name="rate" id="arg_rate" placeholder="Add a limit rate like: 0 (disabled) or 20 (bytes if no suffix is given) or 20K (~19.5 KiB/s) or 200M (Mib/s)">
+            <small class="form-hint">Add a limit rate like: 0 (disabled) or 20 (bytes if no suffix is given) or 20K (~19.5 KiB/s) or 200M (Mib/s)</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_url" class="form-label">URL</label>
+            <input type="text" class="form-control" name="url" id="arg_url" placeholder="Target complete URL path with http/https">
+            <small class="form-hint">Target complete URL path with http/https</small>
+        </div>
+        <div class="form-group">
+            <label for="arg_wait" class="form-label">WAIT</label>
+            <input type="text" class="form-control" name="wait" id="arg_wait" placeholder="Delay duration in seconds">
+            <small class="form-hint">Delay duration in seconds</small>
+        </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        ▶ Executar
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Limpar
+                    </button>
+                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
