@@ -1,9 +1,76 @@
-:root {
+:root,
+[data-theme="witchcraft"] {
   --text-color: aliceblue;
   --ancient: #1fff00;
   --contrast: black;
   --dk-ancient: #39512b;
   --warning: rgba(55, 55, 55, 0.8);
+  --bg: #666666;
+  --error: rgba(34, 34, 34, 0.8);
+  --ok: black;
+}
+
+[data-theme="neon"] {
+  --text-color: aliceblue;
+  --ancient: #c607fb;
+  --contrast: black;
+  --dk-ancient: #a40099;
+  --warning: rgba(0, 42, 140, 0.8);
+  --bg: #666666;
+  --error: rgba(108, 0, 0, 0.8);
+  --ok: rgb(0, 116, 128);
+}
+
+[data-theme="embers"] {
+  --text-color: aliceblue;
+  --ancient: #d54f03;
+  --contrast: black;
+  --dk-ancient: #5b4f0e;
+  --warning: rgba(0, 0, 0, 0.8);
+  --bg: #666666;
+  --error: rgba(108, 0, 0, 0.8);
+  --ok: rgb(0, 116, 128);
+}
+
+[data-theme="lucy"] {
+  --text-color: aliceblue;
+  --ancient: #8f1eb9;
+  --contrast: black;
+  --dk-ancient: #460e5b;
+  --warning: rgba(58, 0, 74, 0.8);
+  --bg: #666666;
+  --error: rgba(108, 0, 0, 0.8);
+  --ok: rgb(0, 116, 128);
+}
+
+[data-theme="cyberpunk"] {
+  --text-color: aliceblue;
+  --ancient: #626262;
+  --contrast: black;
+  --dk-ancient: #131313;
+  --warning: rgba(0, 0, 0, 0.8);
+  --bg: #666666;
+  --error: rgba(108, 0, 0, 0.8);
+  --ok: black;
+}
+
+[data-theme="neko"] {
+  --text-color: aliceblue;
+  --ancient: #c607fb;
+  --contrast: black;
+  --dk-ancient: #a40099;
+  --warning: rgba(0, 42, 140, 0.8);
+  --bg: #666666;
+  --error: rgba(108, 0, 0, 0.8);
+  --ok: rgb(0, 116, 128);
+}
+
+[data-theme="darkwaves"] {
+  --text-color: aliceblue;
+  --ancient: #FFF;
+  --contrast: black;
+  --dk-ancient: #131313;
+  --warning: rgba(0, 42, 140, 0.8);
   --bg: #666666;
   --error: rgba(34, 34, 34, 0.8);
   --ok: black;
@@ -37,6 +104,14 @@ body {
   margin: 0px;
   padding: 20px;
 }
+
+[data-theme="witchcraft"] body { background-image: url(bg4.jpg); }
+[data-theme="neon"] body { background-image: url(bg0.jpg); }
+[data-theme="embers"] body { background-image: url(bg5.png); }
+[data-theme="lucy"] body { background-image: url(bg1.jpg); }
+[data-theme="cyberpunk"] body { background-image: url(bg2.jpg); }
+[data-theme="neko"] body { background-image: url(bg3.jpg); }
+[data-theme="darkwaves"] body { background-image: url(bg6.jpg); }
 
 textarea:focus,
 input:focus {

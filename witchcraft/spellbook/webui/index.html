@@ -13,6 +13,7 @@
         <script>function toggleCategory(catId) { const menu = document.getElementById(catId); if (!menu) return; if (menu.style.display === 'none' || menu.style.display === '') { menu.style.display = 'block'; } else { menu.style.display = 'none'; } }</script>
         <script>function downloadDivAsTxt(divId, filename) { const div = document.getElementById(divId); if (!div) { console.error('Div not found:', divId); return } const text = div.textContent || ''; const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename || 'download.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url) }</script>
         <script>function toggleOneko() { if (window.toggleOnekoImpl) { window.toggleOnekoImpl(); } else { const neko = document.getElementById('oneko'); const btn = document.getElementById('oneko_toggle_btn'); if (neko) { const isHidden = neko.style.display === 'none'; neko.style.display = isHidden ? 'block' : 'none'; if (btn) btn.innerText = isHidden ? '🐾 Neko: ON' : '🐾 Neko: OFF'; } } }</script>
+        <script>function applyTheme(theme) { document.documentElement.setAttribute('data-theme', theme); try { localStorage.setItem('wfex_theme', theme); } catch (e) {} } (function () { try { const saved = localStorage.getItem('wfex_theme'); if (saved) document.documentElement.setAttribute('data-theme', saved); } catch (e) {} })();</script>
     </head>
 
     <body>
@@ -2192,89 +2193,37 @@
         <div class="settings-wallpaper">
 
             <div class="settings-wallpaper-ctn theme-swatch-witchcraft">
-                <button class="wallpaper-selector bg-4" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg4.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#1fff00');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#39512b');
-                                document.documentElement.style.setProperty('--warning', 'rgba(55, 55, 55, 0.8)');
-                                document.documentElement.style.setProperty('--error', 'rgba(34, 34, 34, 0.8)');
-                                document.documentElement.style.setProperty('--ok', 'black');">
-                </button>
+                <button type="button" class="wallpaper-selector bg-4" onclick="applyTheme('witchcraft')"></button>
                 <h3>Witchcraft (Default)</h3>
             </div>
 
             <div class="settings-wallpaper-ctn theme-swatch-neon">
-                <button class="wallpaper-selector bg-0" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg0.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#c607fb');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#a40099');
-                                document.documentElement.style.setProperty('--warning', 'rgba(0, 42, 140, 0.8)');">
-                </button>
+                <button type="button" class="wallpaper-selector bg-0" onclick="applyTheme('neon')"></button>
                 <h3>Neon Purple</h3>
             </div>
 
-
             <div class="settings-wallpaper-ctn theme-swatch-embers">
-                <button class="wallpaper-selector bg-5" hx-on:click="
-                                document.body.style.backgroundImage = 'url(assets/bg5.png)';
-                                document.documentElement.style.setProperty('--text-color', 'aliceblue');
-                                document.documentElement.style.setProperty('--ancient', '#d54f03');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#5b4f0e');
-                                document.documentElement.style.setProperty('--bg', '#666666');
-                                document.documentElement.style.setProperty('--warning', 'rgba(0, 0, 0, 0.8)');
-                                document.documentElement.style.setProperty('--error', 'rgba(108, 0, 0, 0.8)');
-                                document.documentElement.style.setProperty('--ok', 'rgb(0, 116, 128)');
-                                ">
-                </button>
+                <button type="button" class="wallpaper-selector bg-5" onclick="applyTheme('embers')"></button>
                 <h3>Embers</h3>
             </div>
 
             <div class="settings-wallpaper-ctn theme-swatch-lucy">
-                <button class="wallpaper-selector bg-1" hx-on:click="
-                                document.body.style.backgroundImage = 'url(assets/bg1.jpg)';
-                                document.documentElement.style.setProperty('--text-color', 'aliceblue');
-                                document.documentElement.style.setProperty('--ancient', '#8f1eb9');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#460e5b');
-                                document.documentElement.style.setProperty('--bg', '#666666');
-                                document.documentElement.style.setProperty('--warning', 'rgba(58, 0, 74, 0.8)');
-                                document.documentElement.style.setProperty('--error', 'rgba(108, 0, 0, 0.8)');
-                                document.documentElement.style.setProperty('--ok', 'rgb(0, 116, 128)');
-                                ">
-                </button>
+                <button type="button" class="wallpaper-selector bg-1" onclick="applyTheme('lucy')"></button>
                 <h3>Lucy</h3>
             </div>
 
             <div class="settings-wallpaper-ctn theme-swatch-cyberpunk">
-                <button class="wallpaper-selector bg-2" hx-on:click="
-                                document.body.style.backgroundImage = 'url(assets/bg2.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#626262');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#131313');
-                                document.documentElement.style.setProperty('--warning', 'rgba(0, 0, 0, 0.8)');
-                                ">
-                </button>
+                <button type="button" class="wallpaper-selector bg-2" onclick="applyTheme('cyberpunk')"></button>
                 <h3>Cyberpunk 2077</h3>
             </div>
 
             <div class="settings-wallpaper-ctn theme-swatch-neon">
-                <button class="wallpaper-selector bg-3" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg3.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#c607fb');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#a40099');
-                                document.documentElement.style.setProperty('--warning', 'rgba(0, 42, 140, 0.8)');">
-                </button>
+                <button type="button" class="wallpaper-selector bg-3" onclick="applyTheme('neko')"></button>
                 <h3>Neko girl</h3>
             </div>
 
             <div class="settings-wallpaper-ctn theme-swatch-darkwaves">
-                <button class="wallpaper-selector bg-6" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg6.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#FFF');
-                                document.documentElement.style.setProperty('--contrast', 'black');
-                                document.documentElement.style.setProperty('--dk-ancient', '#131313');
-                                document.documentElement.style.setProperty('--warning', 'rgba(0, 42, 140, 0.8)');">
-                </button>
+                <button type="button" class="wallpaper-selector bg-6" onclick="applyTheme('darkwaves')"></button>
                 <h3>Dark waves</h3>
             </div>
 
