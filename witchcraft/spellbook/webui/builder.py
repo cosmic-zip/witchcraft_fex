@@ -52,10 +52,10 @@ def generate_tool_component(bind: dict) -> str:
 
     fields_html = "\n".join(args_inputs) if args_inputs else '        <div class="form-info-note">Nenhum parâmetro adicional obrigatório.</div>'
 
-    return f"""<section class="content-sec" style="display: block;">
+    return f"""<section class="content-sec content-sec-visible">
     <header class="sec-header">
         <div>
-            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);"><em>{name}</em></span>
+            <span class="tool-title-name"><em>{name}</em></span>
             <span class="tool-title-desc">{desc}</span>
         </div>
     </header>
@@ -93,7 +93,7 @@ def generate_tool_component(bind: dict) -> str:
                     <button type="reset" class="btn btn-secondary">
                         Limpar
                     </button>
-                    <span id="exec-spinner" class="htmx-indicator" style="margin-left: 10px; color: var(--ancient); font-size: 12px;">⚡ Executando...</span>
+                    <span id="exec-spinner" class="htmx-indicator tool-exec-spinner">⚡ Executando...</span>
                 </div>
             </form>
         </div>

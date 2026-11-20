@@ -9,6 +9,7 @@
         <script src="assets/ui.js"></script>
         <title>WitchcraftFEX</title>
         <script>function toggleSection(sectionId) { const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'none'; const sections = document.querySelectorAll('section'); sections.forEach(section => { if (section.id === sectionId) { section.style.display = 'block' } else { section.style.display = 'none' } }) }</script>
+        <script>function openDynamicTool() { document.querySelectorAll('section').forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block'; }</script>
         <script>function toggleCategory(catId) { const menu = document.getElementById(catId); if (!menu) return; if (menu.style.display === 'none' || menu.style.display === '') { menu.style.display = 'block'; } else { menu.style.display = 'none'; } }</script>
         <script>function downloadDivAsTxt(divId, filename) { const div = document.getElementById(divId); if (!div) { console.error('Div not found:', divId); return } const text = div.textContent || ''; const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename || 'download.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url) }</script>
         <script>function toggleOneko() { if (window.toggleOnekoImpl) { window.toggleOnekoImpl(); } else { const neko = document.getElementById('oneko'); const btn = document.getElementById('oneko_toggle_btn'); if (neko) { const isHidden = neko.style.display === 'none'; neko.style.display = isHidden ? 'block' : 'none'; if (btn) btn.innerText = isHidden ? '🐾 Neko: ON' : '🐾 Neko: OFF'; } } }</script>
@@ -17,7 +18,7 @@
     <body>
         <header class="main-header">
             <span><em>いらっしゃい</em></span>
-            <div style="display: flex; gap: 8px;">
+            <div class="header-actions">
                 <button type="button" id="oneko_toggle_btn" class="chat-w-act" onclick="toggleOneko()">🐾 Neko: ON</button>
                 <button type="submit" class="chat-w-act" hx-on:click="
                     if (document.getElementById('ia_chatbot_win').style.display === 'none' || document.getElementById('ia_chatbot_win').style.display === '') {
@@ -46,201 +47,201 @@
         
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_network')">NETWORK</button>
-        <div class="sidebar-category-menu" id="cat_network" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_network">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/mac.spoof.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mac.spoof
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/mac.reset.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mac.reset
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/mac.define.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mac.define
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/blue.enable.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     blue.enable
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/blue.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     blue.list
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/capture.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     capture.all
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/capture.all.from_ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     capture.all.from_ip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/capture.one.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     capture.one
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/capture.one.from_ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     capture.one.from_ip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/ftp.connect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     ftp.connect
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/map.dns.dirs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     map.dns.dirs
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/map.dns.subdomain.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     map.dns.subdomain
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/map.local.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     map.local
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/map.myip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     map.myip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/scp.copy.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     scp.copy
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/smbclient.access.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     smbclient.access
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/smbclient.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     smbclient.list
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/ngrok.startup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     ngrok.startup
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/ngrok.public_url.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     ngrok.public_url
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.ping.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.ping
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.traceroute.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.traceroute
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.nslookup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.nslookup
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.dig.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.dig
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.whois.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.whois
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.arp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.arp
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.route.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.route
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/net.ifconfig.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     net.ifconfig
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dnsrecon.axfr.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dnsrecon.axfr
 </button>
         </div>
@@ -249,201 +250,201 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_web')">WEB</button>
-        <div class="sidebar-category-menu" id="cat_web" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_web">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/web.download.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     web.download
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.get.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.get.simple
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.get.with_header.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.get.with_header
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.get.to_file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.get.to_file
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.post.raw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.post.raw
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.post.content_type.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.post.content_type
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.post.file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.post.file
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.post.multipart.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.post.multipart
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.put.raw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.put.raw
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.delete.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.delete.simple
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.patch.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.patch.json
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.auth.basic.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.auth.basic
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.auth.bearer.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.auth.bearer
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.head.simple.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.head.simple
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/chrome.headless.html.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     chrome.headless.html
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/chrome.headless.pdf.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     chrome.headless.pdf
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/chrome.headless.screenshot.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     chrome.headless.screenshot
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.put.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.put.json
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.delete.with_body.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.delete.with_body
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.cookie.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.cookie
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.follow_redirect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.follow_redirect
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.timeout.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.timeout
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.save_headers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.save_headers
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.custom_method.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.custom_method
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.user_agent.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.user_agent
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.insecure.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.insecure
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/curl.request.include_headers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     curl.request.include_headers
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/whatweb.fingerprint.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     whatweb.fingerprint
 </button>
         </div>
@@ -452,334 +453,334 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_security')">SECURITY</button>
-        <div class="sidebar-category-menu" id="cat_security" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_security">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/crack.keepass.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crack.keepass
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/crack.luks1.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crack.luks1
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/crack.luks2.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crack.luks2
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/crack.pcap.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crack.pcap
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/crack.zip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crack.zip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.longpw.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.longpw
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.get.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.get
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.post.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.post.json
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.header.bearer.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.header.bearer
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.header.xsession.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.header.xsession
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.post.bearer.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.post.bearer.json
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/dos.post.xsession.json.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     dos.post.xsession.json
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/scanner.dns.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     scanner.dns
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/scanner.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     scanner.ip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/scanner.nmapper.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     scanner.nmapper
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/scanner.keyword.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     scanner.keyword
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/hydra.ssh.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     hydra.ssh
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/john.crack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     john.crack
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/sqlmap.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     sqlmap.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nikto.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nikto.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nuclei.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nuclei.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/metasploit.module.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     metasploit.module
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wpscan.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wpscan.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/gobuster.dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     gobuster.dir
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/ffuf.dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     ffuf.dir
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/ffuf.params.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     ffuf.params
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wafw00f.detect.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wafw00f.detect
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/sslscan.audit.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     sslscan.audit
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/katana.crawl.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     katana.crawl
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/arjun.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     arjun.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/jwt.crack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     jwt.crack
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nmap.syn_scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nmap.syn_scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nmap.vuln_scripts.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nmap.vuln_scripts
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/rustscan.fast.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     rustscan.fast
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/sublist3r.enum.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     sublist3r.enum
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/crackmapexec.smb.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     crackmapexec.smb
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/enum4linux.scan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     enum4linux.scan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/smbmap.shares.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     smbmap.shares
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/impacket.secretsdump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     impacket.secretsdump
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/kerbrute.userenum.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     kerbrute.userenum
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/netcat.listener.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     netcat.listener
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/socat.tty_listener.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     socat.tty_listener
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/chisel.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     chisel.server
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/chisel.client.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     chisel.client
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/arpspoof.poison.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     arpspoof.poison
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/bettercap.mitm.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     bettercap.mitm
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/aircrack.deauth.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     aircrack.deauth
 </button>
         </div>
@@ -788,180 +789,180 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_forensics')">FORENSICS</button>
-        <div class="sidebar-category-menu" id="cat_forensics" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_forensics">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.bin.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.bin
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.by.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.by
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.clean.meta.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.clean.meta
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.dec.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.dec
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.dump
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.hex.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.hex
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.list
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.meta.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.meta
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/file.lmao.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     file.lmao
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.applogs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.applogs
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.auditlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.auditlog
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.authlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.authlog
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.btmp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.btmp
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.kernlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.kernlog
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.lastlog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.lastlog
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.messages.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.messages
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.secure.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.secure
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.syslog.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.syslog
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/view.wtmp.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     view.wtmp
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/binwalk.extract.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     binwalk.extract
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/foremost.carve.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     foremost.carve
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/yara.scan_dir.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     yara.scan_dir
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/tshark.extract_http.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     tshark.extract_http
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/volatility.pslist.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     volatility.pslist
 </button>
         </div>
@@ -970,131 +971,131 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_system')">SYSTEM</button>
-        <div class="sidebar-category-menu" id="cat_system" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_system">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/bash.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     bash
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/disk.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     disk.dump
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/disk.recover.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     disk.recover
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/vm.create_disk.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     vm.create_disk
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/vm.run.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     vm.run
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/systemctl.start.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     systemctl.start
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/systemctl.stop.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     systemctl.stop
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/systemctl.enable.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     systemctl.enable
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/systemctl.status.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     systemctl.status
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/cron.add.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     cron.add
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/cron.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     cron.list
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/disk.usage.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     disk.usage
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/disk.du.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     disk.du
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/process.list.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     process.list
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/process.kill.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     process.kill
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/memory.usage.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     memory.usage
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/service.restart.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     service.restart
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/system.stats.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     system.stats
 </button>
         </div>
@@ -1103,117 +1104,117 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_core')">CORE</button>
-        <div class="sidebar-category-menu" id="cat_core" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_core">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/native.cosmic.report.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     native.cosmic.report
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/native.cosmic.requests.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     native.cosmic.requests
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/native.cosmic.chrome.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     native.cosmic.chrome
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/native.cosmic.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     native.cosmic.server
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/server.llama.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     server.llama
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.scanner.keyword.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.scanner.keyword
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.scanner.dns.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.scanner.dns
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.scanner.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.scanner.ip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.scanner.nmapper.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.scanner.nmapper
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.server.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.server
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.server.harpia.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.server.harpia
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.server.default.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.server.default
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.server.minimal.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.server.minimal
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.build.web.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.build.web
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.gen.report.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.gen.report
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/wfex.config.model.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     wfex.config.model
 </button>
         </div>
@@ -1222,110 +1223,110 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_containers')">CONTAINERS</button>
-        <div class="sidebar-category-menu" id="cat_containers" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_containers">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.stop.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.stop.all
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.remove.all.containers.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.remove.all.containers
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.remove.all.images.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.remove.all.images
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.reset.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.reset
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.install.script.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.install.script
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.user.addgroup.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.user.addgroup
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.newgrp.refresh.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.newgrp.refresh
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.compose.up.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.compose.up
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.compose.down.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.compose.down
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.logs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.logs
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.exec.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.exec
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.network.create.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.network.create
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.volume.create.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.volume.create
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.build.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.build
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/docker.run.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     docker.run
 </button>
         </div>
@@ -1334,82 +1335,82 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_firewall')">FIREWALL</button>
-        <div class="sidebar-category-menu" id="cat_firewall" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_firewall">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.drop.bigger.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.drop.bigger
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.drop.in.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.drop.in.all
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.drop.out.all.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.drop.out.all
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.flush.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.flush
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.allow.port.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.allow.port
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.deny.ip.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.deny.ip
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.allow.interface.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.allow.interface
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.save.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.save
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.restore.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.restore
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.list.rules.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.list.rules
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/firewall.drop.port.range.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     firewall.drop.port.range
 </button>
         </div>
@@ -1418,54 +1419,54 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_database')">DATABASE</button>
-        <div class="sidebar-category-menu" id="cat_database" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_database">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/mysql.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mysql.query
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/mysql.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mysql.dump
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/psql.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     psql.query
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/psql.dump.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     psql.dump
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/mongosh.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     mongosh.query
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/redis.cli.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     redis.cli
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/sqlite.query.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     sqlite.query
 </button>
         </div>
@@ -1474,54 +1475,54 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_antivirus')">ANTIVIRUS</button>
-        <div class="sidebar-category-menu" id="cat_antivirus" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_antivirus">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.clamscan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.clamscan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.clamdscan.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.clamdscan
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.freshclam.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.freshclam
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.sigtool.info.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.sigtool.info
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.sigtool.hex.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.sigtool.hex
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.sigtool.unpack.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.sigtool.unpack
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/clamav.clamconf.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     clamav.clamconf
 </button>
         </div>
@@ -1530,47 +1531,47 @@
 
     <div class="category-group">
         <button type="button" class="sidebar-category-btn" onclick="toggleCategory('cat_cleanup')">CLEANUP</button>
-        <div class="sidebar-category-menu" id="cat_cleanup" style="display: none;">
+        <div class="sidebar-category-menu" id="cat_cleanup">
             <button type="button" class="sidebar-submit"
     hx-get="components/tools/fhide.embed.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     fhide.embed
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/fhide.extract.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     fhide.extract
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/fhide.info.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     fhide.info
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nuke.file.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nuke.file
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nuke.hd.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nuke.hd
 </button>
 <button type="button" class="sidebar-submit"
     hx-get="components/tools/nuke.logs.html"
     hx-target="#dynamic_tool_container"
     hx-swap="innerHTML"
-    onclick="const secs = document.querySelectorAll('section'); secs.forEach(s => s.style.display = 'none'); const dc = document.getElementById('dynamic_tool_container'); if (dc) dc.style.display = 'block';">
+    onclick="openDynamicTool()">
     nuke.logs
 </button>
         </div>
@@ -1579,152 +1580,134 @@
 </div>
             </div>
             <div class="container"><input type="hidden" id="ztoken" name="ztoken" value="b7a5f1f46944d5cc438646c547e20b177257608b5dfff41d7c5f063a6ea092fe">
-                <section class="content-sec" id="default"></section>
-                
-<section class="content-sec" id="default" style="display: block;">
+                <section class="content-sec content-sec-visible" id="default">
     <div class="home-dashboard">
-        <!-- Dashboard Top Control Bar -->
-        <header class="sec-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; margin-bottom: 15px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 16px; font-weight: bold; color: var(--ancient);">⛩️ System Monitor Dashboard</span>
-                <span id="home-live-badge" style="background: rgba(0, 200, 80, 0.2); border: 1px solid rgb(0, 200, 80); color: #5f5; font-size: 11px; padding: 2px 8px; border-radius: 12px;">● LIVE</span>
+        <header class="sec-header home-header">
+            <div class="home-header-left">
+                <span class="home-title">⛩️ System Monitor Dashboard</span>
+                <span id="home-live-badge" class="home-live-badge">● LIVE</span>
             </div>
-            <div class="home-refresh-bar" style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
-                <label for="home-interval-select" style="color: var(--text-color); opacity: 0.8;">Auto-Refresh:</label>
-                <select id="home-interval-select" class="home-select" onchange="setHomeRefreshInterval(this.value)" style="background: #000000a0; color: var(--ancient); border: 1px solid var(--ancient); border-radius: 4px; padding: 2px 6px; font-family: monospace;">
+            <div class="home-refresh-bar">
+                <label for="home-interval-select" class="home-refresh-label">Auto-Refresh:</label>
+                <select id="home-interval-select" class="home-select" onchange="setHomeRefreshInterval(this.value)">
                     <option value="0">⏸️ Pause</option>
                     <option value="2">⚡ 2s</option>
                     <option value="5" selected>⏱️ 5s</option>
                     <option value="10">🕰️ 10s</option>
                     <option value="30">⏳ 30s</option>
                 </select>
-                <button type="button" class="btn-downloader" onclick="fetchHomeStats()" style="padding: 2px 10px; font-size: 12px; cursor: pointer;">🔄 Refresh</button>
-                <span id="home-countdown" style="opacity: 0.6; font-size: 11px; min-width: 45px;">(5s)</span>
+                <button type="button" class="btn-downloader home-refresh-btn" onclick="fetchHomeStats()">🔄 Refresh</button>
+                <span id="home-countdown" class="home-countdown">(5s)</span>
             </div>
         </header>
 
-        <!-- Dashboard Grid Layout -->
-        <div class="dashboard-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 20px;">
-            
-            <!-- Widget 1: System Info & Host -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between;">
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <h4 class="dash-card-title">
                     <span>🖥️ Host Overview</span>
-                    <span id="dash-os-arch" style="font-size: 11px; color: var(--text-color); opacity: 0.7;">Linux</span>
+                    <span id="dash-os-arch" class="dash-muted-sm">Linux</span>
                 </h4>
-                <div style="font-size: 12px; line-height: 1.6;">
-                    <div><strong>Hostname:</strong> <span id="dash-hostname" style="color: cyan;">--</span></div>
+                <div class="dash-body">
+                    <div><strong>Hostname:</strong> <span id="dash-hostname" class="dash-accent">--</span></div>
                     <div><strong>Kernel:</strong> <span id="dash-kernel">--</span></div>
-                    <div><strong>Uptime:</strong> <span id="dash-uptime" style="color: #5f5;">--</span></div>
+                    <div><strong>Uptime:</strong> <span id="dash-uptime" class="dash-accent">--</span></div>
                     <div><strong>Load Average:</strong> <span id="dash-loadavg">1m: -- | 5m: -- | 15m: --</span></div>
                 </div>
             </div>
 
-            <!-- Widget 2: CPU Usage -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between;">
+            <div class="dash-card">
+                <h4 class="dash-card-title">
                     <span>⚡ CPU Utilization</span>
-                    <span id="dash-cpu-percent" style="color: #5f5; font-size: 13px;">0%</span>
+                    <span id="dash-cpu-percent" class="dash-metric">0%</span>
                 </h4>
-                <div style="font-size: 12px; margin-bottom: 8px;">
-                    <span id="dash-cpu-model" style="display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">Loading...</span>
-                    <span id="dash-cpu-cores" style="opacity: 0.7;">-- Cores</span>
+                <div class="dash-body-compact">
+                    <span id="dash-cpu-model" class="dash-ellipsis">Loading...</span>
+                    <span id="dash-cpu-cores" class="dash-muted">-- Cores</span>
                 </div>
-                <div class="dash-progress-track" style="background: #222; border-radius: 4px; height: 12px; overflow: hidden; border: 1px solid #444;">
-                    <div id="dash-cpu-bar" style="background: linear-gradient(90deg, #00c850, var(--ancient)); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                <div class="dash-progress-track">
+                    <div id="dash-cpu-bar" class="dash-progress-bar"></div>
                 </div>
             </div>
 
-            <!-- Widget 3: Memory (RAM & Swap) -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between;">
+            <div class="dash-card">
+                <h4 class="dash-card-title">
                     <span>🧠 Memory & Swap</span>
-                    <span id="dash-mem-percent" style="color: cyan; font-size: 13px;">0%</span>
+                    <span id="dash-mem-percent" class="dash-metric">0%</span>
                 </h4>
-                <div style="font-size: 12px; margin-bottom: 6px; display: flex; justify-content: space-between;">
+                <div class="dash-body-row">
                     <span>RAM: <span id="dash-mem-used">0 GB</span> / <span id="dash-mem-total">0 GB</span></span>
-                    <span style="opacity: 0.7;">Avail: <span id="dash-mem-avail">0 GB</span></span>
+                    <span class="dash-muted">Avail: <span id="dash-mem-avail">0 GB</span></span>
                 </div>
-                <div class="dash-progress-track" style="background: #222; border-radius: 4px; height: 10px; overflow: hidden; margin-bottom: 8px; border: 1px solid #444;">
-                    <div id="dash-mem-bar" style="background: cyan; height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                <div class="dash-progress-track">
+                    <div id="dash-mem-bar" class="dash-progress-bar"></div>
                 </div>
-                <div style="font-size: 11px; opacity: 0.8; display: flex; justify-content: space-between;">
+                <div class="dash-swap-row">
                     <span>Swap: <span id="dash-swap-used">0 GB</span> / <span id="dash-swap-total">0 GB</span></span>
                     <span id="dash-swap-percent">0%</span>
                 </div>
             </div>
 
-            <!-- Widget 4: GPU Hardware -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient);">🎮 GPU Hardware</h4>
-                <div id="dash-gpu-content" style="font-size: 12px; line-height: 1.5;">
-                    <span style="opacity: 0.7;">Scanning graphics controllers...</span>
+            <div class="dash-card">
+                <h4 class="dash-card-title">🎮 GPU Hardware</h4>
+                <div id="dash-gpu-content" class="dash-body">
+                    <span class="dash-muted">Scanning graphics controllers...</span>
                 </div>
             </div>
-
         </div>
 
-        <!-- Second Row: Virtualization & Network Grid -->
-        <div class="dashboard-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 20px;">
-            
-            <!-- Virtual Machines (libvirt) -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between;">
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <h4 class="dash-card-title">
                     <span>🖥️ Libvirt VMs</span>
-                    <span id="dash-vms-count" style="font-size: 11px; opacity: 0.8;">0 running</span>
+                    <span id="dash-vms-count" class="dash-count">0 running</span>
                 </h4>
-                <div id="dash-vms-list" style="font-size: 12px; max-height: 140px; overflow-y: auto;">
-                    <span style="opacity: 0.7;">No virtual machines found</span>
+                <div id="dash-vms-list" class="dash-list">
+                    <span class="dash-muted">No virtual machines found</span>
                 </div>
             </div>
 
-            <!-- Containers (Docker) -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between;">
+            <div class="dash-card">
+                <h4 class="dash-card-title">
                     <span>🐳 Docker Containers</span>
-                    <span id="dash-containers-count" style="font-size: 11px; opacity: 0.8;">0 running</span>
+                    <span id="dash-containers-count" class="dash-count">0 running</span>
                 </h4>
-                <div id="dash-containers-list" style="font-size: 12px; max-height: 140px; overflow-y: auto;">
-                    <span style="opacity: 0.7;">No active containers</span>
+                <div id="dash-containers-list" class="dash-list">
+                    <span class="dash-muted">No active containers</span>
                 </div>
             </div>
 
-            <!-- Network Interfaces -->
-            <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px;">
-                <h4 style="margin: 0 0 10px 0; color: var(--ancient);">📡 Network Interfaces</h4>
-                <div id="dash-network-list" style="font-size: 12px; max-height: 140px; overflow-y: auto;">
-                    <span style="opacity: 0.7;">Loading network traffic...</span>
+            <div class="dash-card">
+                <h4 class="dash-card-title">📡 Network Interfaces</h4>
+                <div id="dash-network-list" class="dash-list">
+                    <span class="dash-muted">Loading network traffic...</span>
                 </div>
             </div>
-
         </div>
 
-        <!-- Third Row: Active Processes (Htop view) -->
-        <div class="dash-card" style="background: #00000099; border: 1px solid var(--ancient); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
-            <h4 style="margin: 0 0 10px 0; color: var(--ancient); display: flex; justify-content: space-between; align-items: center;">
+        <div class="dash-card dash-card-full">
+            <h4 class="dash-card-title">
                 <span>🔥 Active Processes (HTOP)</span>
-                <span style="font-size: 11px; opacity: 0.7;">Top CPU & Memory Consumers</span>
+                <span class="dash-muted-sm">Top CPU & Memory Consumers</span>
             </h4>
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
+            <div class="dash-table-wrap">
+                <table class="dash-table">
                     <thead>
-                        <tr style="border-bottom: 1px solid var(--ancient); color: cyan;">
-                            <th style="padding: 6px 8px;">PID</th>
-                            <th style="padding: 6px 8px;">USER</th>
-                            <th style="padding: 6px 8px;">CPU%</th>
-                            <th style="padding: 6px 8px;">MEM%</th>
-                            <th style="padding: 6px 8px;">COMMAND</th>
+                        <tr>
+                            <th>PID</th>
+                            <th>USER</th>
+                            <th>CPU%</th>
+                            <th>MEM%</th>
+                            <th>COMMAND</th>
                         </tr>
                     </thead>
                     <tbody id="dash-process-tbody">
                         <tr>
-                            <td colspan="5" style="padding: 10px; text-align: center; opacity: 0.6;">Loading processes...</td>
+                            <td colspan="5" class="dash-table-empty">Loading processes...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 
     <!-- Dashboard Auto-Refresh & Fetch Logic -->
@@ -1815,77 +1798,72 @@
                 document.getElementById('dash-swap-percent').textContent = `${mem.swap_percent_used || 0}%`;
             }
 
-            // 4. GPU
             const gpuContainer = document.getElementById('dash-gpu-content');
             if (gpuContainer && data.gpu) {
                 if (data.gpu.length === 0) {
-                    gpuContainer.innerHTML = '<span style="opacity: 0.6;">No dedicated GPU detected.</span>';
+                    gpuContainer.innerHTML = '<span class="dash-muted">No dedicated GPU detected.</span>';
                 } else {
                     gpuContainer.innerHTML = data.gpu.map(g => `
-                        <div style="margin-bottom: 6px; padding: 4px 6px; background: #111; border-radius: 4px;">
+                        <div class="dash-gpu-item">
                             <strong>🎮 ${g.name}</strong>
-                            ${g.vram_total_mb ? `<div style="font-size: 11px; opacity: 0.8;">VRAM: ${g.vram_used_mb}MB / ${g.vram_total_mb}MB (${g.utilization_percent || 0}%) | Temp: ${g.temp_c}°C</div>` : ''}
+                            ${g.vram_total_mb ? `<div class="dash-gpu-meta">VRAM: ${g.vram_used_mb}MB / ${g.vram_total_mb}MB (${g.utilization_percent || 0}%) | Temp: ${g.temp_c}°C</div>` : ''}
                         </div>
                     `).join('');
                 }
             }
 
-            // 5. VMs
             const vmContainer = document.getElementById('dash-vms-list');
             if (vmContainer && data.vms) {
                 document.getElementById('dash-vms-count').textContent = `${data.vms.running || 0} running / ${data.vms.total || 0} total`;
                 if (!data.vms.items || data.vms.items.length === 0) {
-                    vmContainer.innerHTML = '<span style="opacity: 0.6;">No libvirt virtual machines.</span>';
+                    vmContainer.innerHTML = '<span class="dash-muted">No libvirt virtual machines.</span>';
                 } else {
                     vmContainer.innerHTML = data.vms.items.map(v => `
-                        <div style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #222;">
+                        <div class="dash-list-row">
                             <span>${v.name}</span>
-                            <span style="color: ${v.running ? '#5f5' : '#888'}; font-size: 11px;">[${v.state}]</span>
+                            <span class="${v.running ? 'dash-status-running' : 'dash-status-stopped'}">[${v.state}]</span>
                         </div>
                     `).join('');
                 }
             }
 
-            // 6. Containers
             const ctContainer = document.getElementById('dash-containers-list');
             if (ctContainer && data.containers) {
                 document.getElementById('dash-containers-count').textContent = `${data.containers.running || 0} running / ${data.containers.total || 0} total`;
                 if (!data.containers.items || data.containers.items.length === 0) {
-                    ctContainer.innerHTML = '<span style="opacity: 0.6;">No Docker containers found.</span>';
+                    ctContainer.innerHTML = '<span class="dash-muted">No Docker containers found.</span>';
                 } else {
                     ctContainer.innerHTML = data.containers.items.map(c => `
-                        <div style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #222;">
+                        <div class="dash-list-row">
                             <span title="${c.image}">${c.name || c.id}</span>
-                            <span style="color: ${c.running ? '#5f5' : '#888'}; font-size: 11px;">[${c.status}]</span>
+                            <span class="${c.running ? 'dash-status-running' : 'dash-status-stopped'}">[${c.status}]</span>
                         </div>
                     `).join('');
                 }
             }
 
-            // 7. Network
             const netContainer = document.getElementById('dash-network-list');
             if (netContainer && data.network) {
                 netContainer.innerHTML = data.network.map(n => `
-                    <div style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #222;">
+                    <div class="dash-list-row">
                         <strong>📡 ${n.interface}</strong>
-                        <span style="font-size: 11px; opacity: 0.8;">RX: ${n.rx_mb} MB | TX: ${n.tx_mb} MB</span>
+                        <span class="dash-gpu-meta">RX: ${n.rx_mb} MB | TX: ${n.tx_mb} MB</span>
                     </div>
                 `).join('');
             }
 
-            // 8. Processes (Htop table)
             const procTbody = document.getElementById('dash-process-tbody');
             if (procTbody && data.processes) {
                 if (data.processes.length === 0) {
-                    procTbody.innerHTML = '<tr><td colspan="5" style="text-align: center; opacity: 0.6;">No active processes reported</td></tr>';
+                    procTbody.innerHTML = '<tr><td colspan="5" class="dash-table-empty">No active processes reported</td></tr>';
                 } else {
                     procTbody.innerHTML = data.processes.map(p => `
-                        <tr style="border-bottom: 1px solid #1a1a1a;">
-                            <td style="padding: 4px 8px; font-family: monospace; color: #888;">${p.pid}</td>
-                            <td style="padding: 4px 8px; color: cyan;">${p.user}</td>
-                            <td style="padding: 4px 8px; font-weight: bold; color: ${parseFloat(p.cpu) > 20 ? 'red' : '#5f5'};">${p.cpu}%</td>
-                            <td style="padding: 4px 8px; color: var(--ancient);">${p.mem}%</td>
-                            <td style="padding: 4px 8px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${p.command}">${p.command}</td>
+                        <tr>
+                            <td class="dash-pid">${p.pid}</td>
+                            <td class="dash-user">${p.user}</td>
+                            <td class="${parseFloat(p.cpu) > 20 ? 'dash-cpu-high' : 'dash-cpu-ok'}">${p.cpu}%</td>
+                            <td class="dash-mem">${p.mem}%</td>
+                            <td class="dash-cmd" title="${p.command}">${p.command}</td>
                         </tr>
                     `).join('');
                 }
@@ -1960,56 +1938,56 @@
 
 
 <section class="content-sec" id="harpia_ai">
-    <header class="sec-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 16px; font-weight: bold; color: var(--ancient);">Harpia AI - MCP Agent</span>
-            <span id="harpia-status-badge" style="background: rgba(0, 200, 80, 0.2); border: 1px solid rgb(0, 200, 80); color: #5f5; font-size: 11px; padding: 2px 8px; border-radius: 12px;">● MCP READY</span>
+    <header class="sec-header harpia-header">
+        <div class="harpia-header-left">
+            <span class="harpia-title">Harpia AI - MCP Agent</span>
+            <span id="harpia-status-badge" class="harpia-status-badge">● MCP READY</span>
         </div>
-        <div style="display: flex; gap: 8px;">
-            <button type="button" class="btn-downloader" onclick="switchHarpiaView('chat')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Agent Chat</button>
-            <button type="button" class="btn-downloader" onclick="switchHarpiaView('llama')" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Llama UI</button>
-            <button type="button" class="btn-downloader" onclick="clearHarpiaChat()" style="padding: 4px 10px; font-size: 12px; cursor: pointer;">Clear</button>
+        <div class="harpia-header-actions">
+            <button type="button" class="btn-downloader harpia-header-btn" onclick="switchHarpiaView('chat')">Agent Chat</button>
+            <button type="button" class="btn-downloader harpia-header-btn" onclick="switchHarpiaView('llama')">Llama UI</button>
+            <button type="button" class="btn-downloader harpia-header-btn" onclick="clearHarpiaChat()">Clear</button>
         </div>
     </header>
 
-    <!-- Harpia Native MCP Chat View -->
-    <div id="harpia-chat-view" style="display: flex; flex-direction: column; height: 72vh; background: #000000a8; border: 1px solid var(--ancient); border-radius: 8px; overflow: hidden;">
-        <div id="harpia-messages" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; font-family: monospace; font-size: 13px;">
-            <div style="background: #111111cc; border-left: 3px solid var(--ancient); padding: 10px 12px; border-radius: 4px;">
-                <strong style="color: var(--ancient);">Harpia:</strong>
-                <div style="margin-top: 4px; line-height: 1.5;">
+    <div id="harpia-chat-view" class="harpia-chat-view">
+        <div id="harpia-messages" class="harpia-messages">
+            <div class="harpia-bubble">
+                <strong class="harpia-role-assistant">Harpia:</strong>
+                <div class="harpia-bubble-text">
                     Harpia MCP Agent online. Ask me to run scans, inspect system stats, or execute Xcript automation.<br>
-                    <span style="opacity: 0.75; font-size: 11px;">Shortcuts: <code>/mcp witchcraft_search_binds {"cmd_backend":"nmap"}</code> | <code>/xcript declare x = "hello"; echo x</code></span>
+                    <span class="harpia-shortcuts-hint">Shortcuts: <code>/mcp witchcraft_search_binds {"cmd_backend":"nmap"}</code> | <code>/xcript declare x = "hello"; echo x</code> | <code>/shell &lt;cmd&gt;</code></span>
                 </div>
             </div>
         </div>
 
-        <form id="harpia-chat-form" onsubmit="sendHarpiaMessage(event)" style="display: flex; gap: 8px; padding: 12px; background: #0a0a0ae0; border-top: 1px solid var(--ancient);">
+        <form id="harpia-chat-form" class="harpia-chat-form" onsubmit="sendHarpiaMessage(event)">
             <input
                 type="text"
                 id="harpia-input"
-                placeholder="Ask Harpia AI or run /mcp <tool> <json> or /xcript <code>..."
+                class="harpia-input"
+                placeholder="Ask Harpia AI or run /mcp <tool> <json>, /xcript <code>, or /shell <cmd>..."
                 autocomplete="off"
-                style="flex: 1; background: #141414; color: var(--text-color, #fff); border: 1px solid var(--ancient); border-radius: 6px; padding: 10px 12px; font-family: monospace; font-size: 13px;"
             />
-            <button
-                type="submit"
-                id="harpia-send-btn"
-                class="form-text-submit"
-                style="width: auto; padding: 0 20px; margin: 0; cursor: pointer;"
-            >
+            <button type="submit" id="harpia-send-btn" class="form-text-submit harpia-send-btn">
                 Send
             </button>
         </form>
     </div>
 
-    <!-- Raw Llama-Server Iframe View (Toggleable) -->
-    <div id="harpia-llama-view" style="display: none;">
-        <iframe src="http://127.0.0.1:5599" class="outputer outputer-xl" frameborder="0"></iframe>
+    <div id="harpia-llama-view" class="harpia-llama-view">
+        <iframe src="http://localhost:5599" class="outputer outputer-xl" frameborder="0"></iframe>
     </div>
 
     <script>
         let harpiaHistory = [];
+
+        function setHarpiaBadge(text, stateClass) {
+            const badge = document.getElementById('harpia-status-badge');
+            if (!badge) return;
+            badge.textContent = text;
+            badge.className = 'harpia-status-badge' + (stateClass ? ' ' + stateClass : '');
+        }
 
         function switchHarpiaView(mode) {
             const chatView = document.getElementById('harpia-chat-view');
@@ -2036,10 +2014,7 @@
 
             const isUser = role === 'user';
             const wrapper = document.createElement('div');
-            wrapper.style.background = isUser ? '#1b1b2fcc' : '#111111cc';
-            wrapper.style.borderLeft = isUser ? '3px solid cyan' : '3px solid var(--ancient)';
-            wrapper.style.padding = '10px 12px';
-            wrapper.style.borderRadius = '4px';
+            wrapper.className = isUser ? 'harpia-bubble harpia-bubble-user' : 'harpia-bubble';
 
             let toolsHtml = '';
             if (Array.isArray(toolCalls) && toolCalls.length > 0) {
@@ -2057,13 +2032,13 @@
                     } catch (e) {}
 
                     const renderedBody = isHtml
-                        ? `<div style="margin: 0; color: #ddd; max-height: 400px; overflow-y: auto; font-family: monospace; white-space: pre-wrap; word-break: break-word;">${displayContent}</div>`
-                        : `<pre style="margin: 0; white-space: pre-wrap; word-break: break-word; color: #ddd; max-height: 400px; overflow-y: auto;">${escapeHarpiaHtml(displayContent)}</pre>`;
+                        ? `<div class="harpia-tool-output">${displayContent}</div>`
+                        : `<pre class="harpia-tool-output">${escapeHarpiaHtml(displayContent)}</pre>`;
 
                     return `
-                        <div style="margin: 8px 0; padding: 10px; background: #050505; border: 1px solid var(--ancient, #444); border-radius: 4px; font-size: 12px;">
-                            <div style="color: cyan; font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #222; padding-bottom: 4px;">
-                                MCP Tool: ${escapeHarpiaHtml(tc.name)} <span style="opacity:0.7; font-weight: normal;">${escapeHarpiaHtml(JSON.stringify(tc.arguments || {}))}</span>
+                        <div class="harpia-tool-card">
+                            <div class="harpia-tool-header">
+                                MCP Tool: ${escapeHarpiaHtml(tc.name)} <span class="harpia-tool-args">${escapeHarpiaHtml(JSON.stringify(tc.arguments || {}))}</span>
                             </div>
                             ${renderedBody}
                         </div>
@@ -2072,13 +2047,13 @@
             }
 
             const title = isUser
-                ? '<strong style="color: cyan;">Operator:</strong>'
-                : '<strong style="color: var(--ancient);">Harpia:</strong>';
+                ? '<strong class="harpia-role-user">Operator:</strong>'
+                : '<strong class="harpia-role-assistant">Harpia:</strong>';
 
             wrapper.innerHTML = `
                 ${title}
                 ${toolsHtml}
-                <div style="margin-top: 4px; white-space: pre-wrap; line-height: 1.5;">${escapeHarpiaHtml(text)}</div>
+                <div class="harpia-bubble-text">${escapeHarpiaHtml(text)}</div>
             `;
             container.appendChild(wrapper);
             container.scrollTop = container.scrollHeight;
@@ -2090,20 +2065,16 @@
 
             const card = document.createElement('div');
             card.id = 'approval-' + sessionId;
-            card.style.background = '#1a1400e6';
-            card.style.border = '1px solid #ffcc00';
-            card.style.borderRadius = '6px';
-            card.style.padding = '12px';
-            card.style.margin = '8px 0';
+            card.className = 'harpia-approval-card';
 
             const cmdVal = escapeHarpiaHtml(pendingAction.command || '');
             const reasonVal = escapeHarpiaHtml(pendingAction.reason || 'Pure shell command proposed by Harpia.');
 
             card.innerHTML = `
-                <div style="color: #ffcc00; font-weight: bold; margin-bottom: 6px;">[SHELL PROPOSTO] Aprovação necessária</div>
-                <div style="font-size: 12px; color: #ccc; margin-bottom: 8px;">Motivo: ${reasonVal}</div>
-                <input type="text" id="approval-cmd-${sessionId}" class="form-control" value="${cmdVal}" style="margin-bottom: 10px; font-family: monospace;">
-                <div style="display: flex; gap: 8px;">
+                <div class="harpia-approval-title">[SHELL PROPOSTO] Aprovação necessária</div>
+                <div class="harpia-approval-reason">Motivo: ${reasonVal}</div>
+                <input type="text" id="approval-cmd-${sessionId}" class="form-control harpia-approval-input" value="${cmdVal}">
+                <div class="harpia-approval-actions">
                     <button type="button" class="btn btn-primary btn-sm" onclick="resolveShellApproval('${sessionId}', true)">Executar</button>
                     <button type="button" class="btn btn-secondary btn-sm" onclick="resolveShellApproval('${sessionId}', false)">Recusar</button>
                 </div>
@@ -2113,7 +2084,6 @@
         }
 
         function handleHarpiaResponse(data, promptForHistory) {
-            const badge = document.getElementById('harpia-status-badge');
             const reply = data.reply || data.error || 'No response';
             const calls = data.tool_calls || [];
 
@@ -2122,10 +2092,7 @@
                     appendHarpiaBubble('assistant', '', calls);
                 }
                 appendShellApprovalCard(data.session_id, data.pending_action);
-                if (badge) {
-                    badge.textContent = '● AWAITING SHELL APPROVAL';
-                    badge.style.color = '#ffcc00';
-                }
+                setHarpiaBadge('● AWAITING SHELL APPROVAL', 'is-approval');
                 return;
             }
 
@@ -2134,9 +2101,10 @@
                 harpiaHistory.push({ role: 'user', content: promptForHistory });
             }
             harpiaHistory.push({ role: 'assistant', content: reply });
-            if (badge) {
-                badge.textContent = data.status === 'offline' ? '● LLM OFFLINE (MCP DIRECT)' : '● MCP READY';
-                badge.style.color = data.status === 'offline' ? 'orange' : '#5f5';
+            if (data.status === 'offline') {
+                setHarpiaBadge('● LLM OFFLINE (MCP DIRECT)', 'is-offline');
+            } else {
+                setHarpiaBadge('● MCP READY', '');
             }
         }
 
@@ -2146,11 +2114,7 @@
             const editedCmd = cmdInput ? cmdInput.value.trim() : null;
             if (card) card.remove();
 
-            const badge = document.getElementById('harpia-status-badge');
-            if (badge) {
-                badge.textContent = approved ? '● EXECUTING SHELL...' : '● REPLANNING...';
-                badge.style.color = 'yellow';
-            }
+            setHarpiaBadge(approved ? '● EXECUTING SHELL...' : '● REPLANNING...', 'is-thinking');
 
             const ztoken = (document.getElementById('ztoken') || {}).value || '';
             fetch('/api/harpia/approve', {
@@ -2182,7 +2146,6 @@
             e.preventDefault();
             const input = document.getElementById('harpia-input');
             const btn = document.getElementById('harpia-send-btn');
-            const badge = document.getElementById('harpia-status-badge');
             if (!input || !input.value.trim()) return;
 
             const prompt = input.value.trim();
@@ -2190,10 +2153,7 @@
             appendHarpiaBubble('user', prompt, []);
 
             if (btn) btn.disabled = true;
-            if (badge) {
-                badge.textContent = '● THINKING...';
-                badge.style.color = 'yellow';
-            }
+            setHarpiaBadge('● THINKING...', 'is-thinking');
 
             const ztoken = (document.getElementById('ztoken') || {}).value || '';
 
@@ -2231,7 +2191,7 @@
 
         <div class="settings-wallpaper">
 
-            <div class="settings-wallpaper-ctn" style="background-color: #1fff00;">
+            <div class="settings-wallpaper-ctn theme-swatch-witchcraft">
                 <button class="wallpaper-selector bg-4" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg4.jpg)';
                                 document.documentElement.style.setProperty('--ancient', '#1fff00');
                                 document.documentElement.style.setProperty('--contrast', 'black');
@@ -2243,7 +2203,7 @@
                 <h3>Witchcraft (Default)</h3>
             </div>
 
-            <div class="settings-wallpaper-ctn" style="background-color: #c607fb;">
+            <div class="settings-wallpaper-ctn theme-swatch-neon">
                 <button class="wallpaper-selector bg-0" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg0.jpg)';
                                 document.documentElement.style.setProperty('--ancient', '#c607fb');
                                 document.documentElement.style.setProperty('--contrast', 'black');
@@ -2254,7 +2214,7 @@
             </div>
 
 
-            <div class="settings-wallpaper-ctn" style="background-color: #b9921e;">
+            <div class="settings-wallpaper-ctn theme-swatch-embers">
                 <button class="wallpaper-selector bg-5" hx-on:click="
                                 document.body.style.backgroundImage = 'url(assets/bg5.png)';
                                 document.documentElement.style.setProperty('--text-color', 'aliceblue');
@@ -2270,7 +2230,7 @@
                 <h3>Embers</h3>
             </div>
 
-            <div class="settings-wallpaper-ctn" style="background-color: #8f1eb9;">
+            <div class="settings-wallpaper-ctn theme-swatch-lucy">
                 <button class="wallpaper-selector bg-1" hx-on:click="
                                 document.body.style.backgroundImage = 'url(assets/bg1.jpg)';
                                 document.documentElement.style.setProperty('--text-color', 'aliceblue');
@@ -2286,7 +2246,7 @@
                 <h3>Lucy</h3>
             </div>
 
-            <div class="settings-wallpaper-ctn" style="background-color: #626262;">
+            <div class="settings-wallpaper-ctn theme-swatch-cyberpunk">
                 <button class="wallpaper-selector bg-2" hx-on:click="
                                 document.body.style.backgroundImage = 'url(assets/bg2.jpg)';
                                 document.documentElement.style.setProperty('--ancient', '#626262');
@@ -2298,7 +2258,7 @@
                 <h3>Cyberpunk 2077</h3>
             </div>
 
-            <div class="settings-wallpaper-ctn" style="background-color: #c607fb;">
+            <div class="settings-wallpaper-ctn theme-swatch-neon">
                 <button class="wallpaper-selector bg-3" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg3.jpg)';
                                 document.documentElement.style.setProperty('--ancient', '#c607fb');
                                 document.documentElement.style.setProperty('--contrast', 'black');
@@ -2308,9 +2268,9 @@
                 <h3>Neko girl</h3>
             </div>
 
-            <div class="settings-wallpaper-ctn" style="background-color: #202020;">
+            <div class="settings-wallpaper-ctn theme-swatch-darkwaves">
                 <button class="wallpaper-selector bg-6" hx-on:click="document.body.style.backgroundImage = 'url(assets/bg6.jpg)';
-                                document.documentElement.style.setProperty('--ancient', '#202020');
+                                document.documentElement.style.setProperty('--ancient', '#FFF');
                                 document.documentElement.style.setProperty('--contrast', 'black');
                                 document.documentElement.style.setProperty('--dk-ancient', '#131313');
                                 document.documentElement.style.setProperty('--warning', 'rgba(0, 42, 140, 0.8)');">
@@ -2340,7 +2300,7 @@
                         }
                     ">X</button>
                 </div>
-                <iframe src="http://127.0.0.1:5599" frameborder="0" class="outputer chat-iframe"></iframe>
+                <iframe src="http://localhost:5599" frameborder="0" class="outputer chat-iframe"></iframe>
             </div>
         </main>
     </body>
