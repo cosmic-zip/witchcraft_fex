@@ -129,12 +129,16 @@ def harpia_cli_wrapper(args_v=None):
 
         history.append({"role": "user", "content": user_input})
         if result.get("tool_calls"):
+            calls_log = "\n".join(
+                f"<tool_call>{json.dumps({'name': tc['name'], 'arguments': tc.get('arguments') or {}})}</tool_call>"
+                for tc in result["tool_calls"]
+            )
             compact_obs = "\n".join(
                 f"[{tc['name']}]: {_format_output_for_llm(tc['output'], head=300, tail=300)}"
                 for tc in result["tool_calls"]
             )
-            history.append({"role": "assistant", "content": f"{compact_obs}\n\n{reply}"})
-        else:
-            history.append({"role": "assistant", "content": reply})
+            history.append({"role": "assistant", "content": calls_log})
+            history.append({"role": "user", "content": f"[Previous Observation]:\n{compact_obs}"})
+        history.append({"role": "assistant", "content": reply})
 
     return 0

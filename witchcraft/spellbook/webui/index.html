@@ -2101,6 +2101,11 @@
             if (promptForHistory) {
                 harpiaHistory.push({ role: 'user', content: promptForHistory });
             }
+            if (calls.length > 0) {
+                const callsLog = calls.map(tc => `<tool_call>${JSON.stringify({ name: tc.name, arguments: tc.arguments || {} })}</tool_call>`).join('\n');
+                harpiaHistory.push({ role: 'assistant', content: callsLog });
+                harpiaHistory.push({ role: 'user', content: '[Previous tool output already displayed to operator]' });
+            }
             harpiaHistory.push({ role: 'assistant', content: reply });
             if (data.status === 'offline') {
                 setHarpiaBadge('● LLM OFFLINE (MCP DIRECT)', 'is-offline');

@@ -52,7 +52,7 @@ class WitchcraftMCPServer:
             },
             {
                 "name": "witchcraft_search_binds",
-                "description": "Search WitchcraftFEX rocketdb binds by keyword, category, or cmd_backend.",
+                "description": "Search WitchcraftFEX binds by keyword or category.",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -63,10 +63,6 @@ class WitchcraftMCPServer:
                         "category": {
                             "type": "string",
                             "description": "Filter by category (e.g., network, security, system, web, forensics, firewall, database).",
-                        },
-                        "cmd_backend": {
-                            "type": "string",
-                            "description": "Filter by underlying command backend (e.g., nmap, curl, hashcat, iptables, witchcraft).",
                         },
                     },
                 },
@@ -119,9 +115,8 @@ class WitchcraftMCPServer:
             seen.add(mcp_name)
 
             category = bind.get("category", "general")
-            backend = bind.get("cmd_backend", "shell")
             desc = bind.get("description", "WitchcraftFEX bind")
-            full_desc = f"[{category} | backend: {backend}] ({raw_name}) {desc}"
+            full_desc = f"[{category}] ({raw_name}) {desc}"
 
             properties = {}
             required = []
@@ -168,32 +163,32 @@ class WitchcraftMCPServer:
             }
 
         if name == "witchcraft_search_binds":
-            query = str(arguments.get("query", "")).lower().strip()
+            raw_query = str(arguments.get("query", "")).lower().strip()
             category = str(arguments.get("category", "")).lower().strip()
-            cmd_backend = str(arguments.get("cmd_backend", "")).lower().strip()
+
+            cleaned_query = re.sub(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", " ", raw_query)
+            cleaned_query = re.sub(r"\b[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.(?:[a-z]{2,})\b", " ", cleaned_query)
+            query_tokens = [w for w in re.findall(r"[a-z0-9]+", cleaned_query) if len(w) >= 2]
 
             matches = []
             for bind in self.db:
                 b_name = str(bind.get("name", ""))
                 b_desc = str(bind.get("description", ""))
                 b_cat = str(bind.get("category", ""))
-                b_back = str(bind.get("cmd_backend", ""))
 
-                if query and query not in b_name.lower() and query not in b_desc.lower():
-                    continue
                 if category and category != b_cat.lower():
                     continue
-                if cmd_backend and cmd_backend != b_back.lower():
-                    continue
+                if query_tokens:
+                    haystack = f"{b_name} {b_desc} {b_cat}".lower()
+                    if not any(tok in haystack for tok in query_tokens):
+                        continue
 
                 matches.append(
                     {
                         "name": b_name,
                         "mcp_tool": _sanitize_tool_name(b_name),
                         "category": b_cat,
-                        "cmd_backend": b_back,
                         "description": b_desc,
-                        "command": bind.get("command"),
                         "arguments": list((bind.get("arguments") or {}).keys()),
                     }
                 )
@@ -254,8 +249,6 @@ class WitchcraftMCPServer:
         result = net_exec(cmd)
         payload = {
             "bind": bind.get("name"),
-            "cmd_backend": bind.get("cmd_backend"),
-            "executed_command": cmd,
             "status": result.get("status"),
             "stdout": result.get("stdout", ""),
             "stderr": result.get("stderr", ""),
@@ -288,7 +281,6 @@ class WitchcraftMCPServer:
         )
         payload = {
             "bind": bind.get("name"),
-            "cmd_backend": "witchcraft",
             "status": proc.returncode,
             "stdout": proc.stdout.strip(),
             "stderr": proc.stderr.strip(),
@@ -330,8 +322,6 @@ class WitchcraftMCPServer:
         result = net_exec(command)
         payload = {
             "bind": "witchcraft_shell_exec",
-            "cmd_backend": "shell",
-            "executed_command": command,
             "reason": str(arguments.get("reason", "")),
             "status": result.get("status"),
             "stdout": result.get("stdout", ""),
@@ -357,7 +347,7 @@ class WitchcraftMCPServer:
                 "content": [
                     {
                         "type": "text",
-                        "text": f"Xcript static binary not found at '{xcript_bin}'. Build it with 'cargo build --release' in xcript/.",
+                        "text": "Xcript runtime binary is not available.",
                     }
                 ],
                 "isError": True,
@@ -388,7 +378,7 @@ class WitchcraftMCPServer:
             text=True,
         )
         payload = {
-            "cmd_backend": "xcript",
+            "bind": "witchcraft_xcript_eval",
             "status": proc.returncode,
             "stdout": proc.stdout.strip(),
             "stderr": proc.stderr.strip(),
@@ -407,8 +397,8 @@ class WitchcraftMCPServer:
         return [
             {
                 "uri": "witchcraft://database/rocketdb",
-                "name": "WitchcraftFEX RocketDB v2",
-                "description": "Complete catalog of WitchcraftFEX binds, arguments, categories, and cmd_backend.",
+                "name": "WitchcraftFEX Binds Catalog",
+                "description": "Catalog of WitchcraftFEX binds, arguments, and categories.",
                 "mimeType": "application/json",
             },
             {
@@ -427,12 +417,21 @@ class WitchcraftMCPServer:
 
     def read_resource(self, uri: str) -> dict:
         if uri == "witchcraft://database/rocketdb":
+            sanitized = [
+                {
+                    "name": b.get("name"),
+                    "category": b.get("category"),
+                    "description": b.get("description"),
+                    "arguments": b.get("arguments") or {},
+                }
+                for b in self.db
+            ]
             return {
                 "contents": [
                     {
                         "uri": uri,
                         "mimeType": "application/json",
-                        "text": json.dumps({"index": self.db}, indent=2),
+                        "text": json.dumps({"index": sanitized}, indent=2),
                     }
                 ]
             }

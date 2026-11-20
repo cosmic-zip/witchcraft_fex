@@ -16,18 +16,39 @@ LLM_SUMMARY_TRUNCATE_TAIL = 1000
 SHELL_TOOL_NAMES = {"witchcraft_shell_exec", "bash"}
 
 HARPIA_SYSTEM_PROMPT = (
-    "You are Harpia, an autonomous cybersecurity and OPSEC AI agent embedded in WitchcraftFEX.\n"
-    "OPERATING RULES:\n"
-    "1. NEVER invent, fake, simulate, or hallucinate command execution, scan results, or terminal output.\n"
-    "2. If a required argument (domain, IP, file, interface) is missing and cannot be discovered via tools, ask the user.\n"
-    "3. You operate in a multi-step loop. You may chain multiple MCP tools across steps until the goal is complete.\n"
-    "4. If the right bind is not in your current tool list, call witchcraft_search_binds first to discover it.\n"
-    "5. If no MCP bind covers the task (e.g. pipes, grep/awk, custom shell commands), call witchcraft_shell_exec "
-    "with 'command' and 'reason'. In propose mode the operator will approve it before execution.\n"
-    "6. Emit tool calls using native tool_calls or the exact block:\n"
-    "<tool_call>{\"name\": \"<tool_name>\", \"arguments\": {<key>: <value>}}</tool_call>\n"
-    "7. When all needed steps are done, provide a concise final summary based strictly on the real tool outputs."
+    "You are Harpia, an autonomous cybersecurity AI agent inside WitchcraftFEX.\n"
+    "RULES:\n"
+    "1. NEVER invent or simulate command output.\n"
+    "2. If the user asks a conceptual question or explanation, answer directly in plain text.\n"
+    "3. If the user asks to run, scan, check, or inspect a target, DO NOT explain how to run it and DO NOT write pseudo-syntax like (scanner.dns \"...\"). IMMEDIATELY execute it by outputting ONLY a <tool_call> block:\n"
+    "<tool_call>{\"name\": \"scanner_dns\", \"arguments\": {\"domain\": \"example.com\"}}</tool_call>\n"
+    "4. Use scanner_dns for domain names (e.g. example.com) and scanner_ip ONLY for numeric IP addresses (e.g. 1.1.1.1).\n"
+    "5. You can chain multiple steps: after each tool output, emit another <tool_call> if more steps are needed (or witchcraft_search_binds to discover other tools, or witchcraft_shell_exec for raw shell).\n"
+    "6. If the user asks to run or scan a target again, ALWAYS emit a fresh <tool_call>. NEVER copy or repeat an old summary from previous turns.\n"
+    "7. Once all tool outputs are collected, explain and summarize the real results clearly."
 )
+
+_STOPWORDS = {
+    "a", "o", "as", "os", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das",
+    "em", "no", "na", "nos", "nas", "com", "sem", "por", "para", "pra", "que", "como",
+    "faca", "faça", "faz", "fazer", "esse", "esta", "este", "isso", "aqui", "ali",
+    "completo", "completa", "endereco", "endereço", "the", "and", "for", "with",
+    "from", "run", "use", "all", "on", "in", "to", "of", "at", "is", "an", "or",
+    "me", "my", "please", "address", "full", "complete",
+}
+
+_INTENT_BOOSTS = {
+    "domain": ["scanner_dns", "scanner_nmapper", "net_dig", "net_whois", "native_cosmic_requests", "scanner_keyword"],
+    "ip": ["scanner_ip", "scanner_nmapper", "net_ping", "net_traceroute"],
+    "scan": ["scanner_dns", "scanner_nmapper", "scanner_ip", "scanner_keyword"],
+    "port": ["scanner_nmapper"],
+    "web": ["native_cosmic_requests", "native_cosmic_chrome", "scanner_keyword", "scanner_dns"],
+    "dns": ["scanner_dns", "net_dig", "net_nslookup"],
+    "docker": ["docker_ps", "docker_logs", "docker_images"],
+    "process": ["process_list", "process_kill"],
+    "disk": ["disk_usage", "disk_du"],
+    "log": ["view_syslog", "view_authlog", "view_kernlog"],
+}
 
 _PENDING_SESSIONS = {}
 
@@ -42,23 +63,73 @@ def select_relevant_tools(mcp: WitchcraftMCPServer, prompt: str, limit: int = 10
     if shell_mode != "off":
         core_names.add("witchcraft_shell_exec")
 
-    selected = [t for t in all_tools if t["name"] in core_names]
+    core_tools = [t for t in all_tools if t["name"] in core_names]
 
-    words = [w.lower() for w in re.findall(r"[a-zA-Z0-9_.-]+", prompt) if len(w) >= 2]
+    lower_prompt = (prompt or "").lower()
+    has_ip = bool(re.search(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", lower_prompt))
+    has_domain = bool(re.search(r"\b[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.(?:[a-z]{2,})\b", lower_prompt)) and not has_ip
+
+    raw_tokens = re.findall(r"[a-z0-9]+", lower_prompt)
+    words = [w for w in raw_tokens if len(w) >= 2 and w not in _STOPWORDS]
+
+    boost_scores = {}
+    if has_domain:
+        for idx, name in enumerate(_INTENT_BOOSTS["domain"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (12 - idx)
+    if has_ip:
+        for idx, name in enumerate(_INTENT_BOOSTS["ip"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (12 - idx)
+
+    if any(k in lower_prompt for k in ("scan", "varredura", "escanear", "recon")):
+        for idx, name in enumerate(_INTENT_BOOSTS["scan"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (8 - idx)
+    if any(k in lower_prompt for k in ("porta", "port")):
+        for idx, name in enumerate(_INTENT_BOOSTS["port"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (8 - idx)
+    if any(k in lower_prompt for k in ("web", "http", "site", "url", "ssl")):
+        for idx, name in enumerate(_INTENT_BOOSTS["web"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (7 - idx)
+    if "dns" in lower_prompt or "subdom" in lower_prompt:
+        for idx, name in enumerate(_INTENT_BOOSTS["dns"]):
+            boost_scores[name] = boost_scores.get(name, 0) + (10 - idx)
+    if "docker" in lower_prompt or "container" in lower_prompt:
+        for name in _INTENT_BOOSTS["docker"]:
+            boost_scores[name] = boost_scores.get(name, 0) + 6
+    if "process" in lower_prompt:
+        for name in _INTENT_BOOSTS["process"]:
+            boost_scores[name] = boost_scores.get(name, 0) + 6
+    if "disco" in lower_prompt or "disk" in lower_prompt:
+        for name in _INTENT_BOOSTS["disk"]:
+            boost_scores[name] = boost_scores.get(name, 0) + 6
+    if "log" in lower_prompt:
+        for name in _INTENT_BOOSTS["log"]:
+            boost_scores[name] = boost_scores.get(name, 0) + 6
+
     scored = []
     for tool in all_tools:
-        if tool["name"] in core_names:
+        t_name = tool["name"]
+        if t_name in core_names:
             continue
-        if shell_mode == "off" and tool["name"] in SHELL_TOOL_NAMES:
+        if shell_mode == "off" and t_name in SHELL_TOOL_NAMES:
             continue
-        haystack = f"{tool['name']} {tool.get('description', '')}".lower()
-        score = sum(2 if w in tool["name"].lower() else 1 for w in words if w in haystack)
+        if t_name.startswith("wfex_"):
+            continue
+
+        name_tokens = set(re.findall(r"[a-z0-9]+", t_name.lower()))
+        desc_tokens = set(re.findall(r"[a-z0-9]+", tool.get("description", "").lower()))
+
+        score = boost_scores.get(t_name, 0)
+        for w in words:
+            if w in name_tokens:
+                score += 4
+            elif w in desc_tokens:
+                score += 2
         if score > 0:
             scored.append((score, tool))
 
     scored.sort(key=lambda x: x[0], reverse=True)
-    for _, tool in scored[:limit]:
-        selected.append(tool)
+    selected = [tool for _, tool in scored[:limit]]
+    selected.extend(core_tools)
 
     return selected
 
@@ -195,8 +266,8 @@ def _format_output_for_llm(raw_output: str, head: int = LLM_SUMMARY_TRUNCATE_HEA
         parsed = json.loads(clean)
         if isinstance(parsed, dict) and ("stdout" in parsed or "stderr" in parsed):
             parts = []
-            if parsed.get("executed_command"):
-                parts.append(f"command: {parsed['executed_command']}")
+            if parsed.get("bind"):
+                parts.append(f"bind: {parsed['bind']}")
             if parsed.get("status") is not None:
                 parts.append(f"status: {parsed['status']}")
             stdout = re.sub(r"<[^>]+>", "", str(parsed.get("stdout", "")))
@@ -264,6 +335,19 @@ def _extract_shell_mode_from_system(sys_msg: dict) -> str:
     return m.group(1) if m else DEFAULT_SHELL_MODE
 
 
+def _detect_unformatted_tool_mention(content: str, active_tools: list) -> str | None:
+    if not content:
+        return None
+    for t in active_tools:
+        name = t["name"]
+        dot_name = name.replace("_", ".")
+        if re.search(rf"\(\s*(?:{re.escape(name)}|{re.escape(dot_name)})\b", content):
+            return name
+        if re.search(rf"(?:{re.escape(name)}|{re.escape(dot_name)})\s+[\"'][^\"']+[\"']", content):
+            return name
+    return None
+
+
 def _run_agent_loop(
     mcp: WitchcraftMCPServer,
     messages: list,
@@ -280,6 +364,7 @@ def _run_agent_loop(
 ) -> dict:
     final_content = ""
     queue = list(pending_calls or [])
+    format_retries = 0
 
     try:
         while step < max_steps:
@@ -309,6 +394,20 @@ def _run_agent_loop(
                     parsed_calls = _extract_inline_tool_calls(content)
 
                 if not parsed_calls:
+                    mentioned = _detect_unformatted_tool_mention(content, active_tools)
+                    if mentioned and format_retries < 1:
+                        format_retries += 1
+                        messages.append({"role": "assistant", "content": content})
+                        messages.append(
+                            {
+                                "role": "user",
+                                "content": (
+                                    f"Do not write pseudo-commands in text. Execute '{mentioned}' now by replying ONLY with:\n"
+                                    f"<tool_call>{{\"name\": \"{mentioned}\", \"arguments\": {{...}}}}</tool_call>"
+                                ),
+                            }
+                        )
+                        continue
                     final_content = content
                     break
 

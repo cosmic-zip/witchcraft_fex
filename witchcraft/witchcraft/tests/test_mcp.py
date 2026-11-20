@@ -17,6 +17,7 @@ from witchcraft.interface.mcp.mcp_server import WitchcraftMCPServer
 from witchcraft.interface.ai.harpia_agent import (
     harpia_chat,
     harpia_resume_approval,
+    select_relevant_tools,
     _extract_inline_tool_calls,
 )
 
@@ -39,7 +40,7 @@ class TestWitchcraftMCP(unittest.TestCase):
         self.assertIn("capabilities", resp["result"])
         self.assertEqual(resp["result"]["serverInfo"]["name"], "witchcraft-fex-mcp")
 
-    def test_tools_list_contains_binds_and_cmd_backend(self):
+    def test_tools_list_does_not_leak_backend(self):
         resp = self.mcp.handle_request(
             {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}
         )
@@ -49,9 +50,11 @@ class TestWitchcraftMCP(unittest.TestCase):
         self.assertIn("witchcraft_system_stats", names)
         self.assertIn("witchcraft_search_binds", names)
         self.assertIn("witchcraft_xcript_eval", names)
-        self.assertIn("nmap_syn_scan", names)
+        self.assertIn("scanner_dns", names)
+        for t in tools:
+            self.assertNotIn("backend:", t.get("description", ""))
 
-    def test_search_binds_by_cmd_backend(self):
+    def test_search_binds_tokenized_without_backend_leak(self):
         resp = self.mcp.handle_request(
             {
                 "jsonrpc": "2.0",
@@ -59,15 +62,18 @@ class TestWitchcraftMCP(unittest.TestCase):
                 "method": "tools/call",
                 "params": {
                     "name": "witchcraft_search_binds",
-                    "arguments": {"cmd_backend": "nmap"},
+                    "arguments": {"query": "example.com scan"},
                 },
             }
         )
         self.assertFalse(resp["result"]["isError"])
         data = json.loads(resp["result"]["content"][0]["text"])
         self.assertGreaterEqual(data["total"], 2)
+        names = {item["name"] for item in data["results"]}
+        self.assertIn("scanner.dns", names)
         for item in data["results"]:
-            self.assertEqual(item["cmd_backend"], "nmap")
+            self.assertNotIn("cmd_backend", item)
+            self.assertNotIn("command", item)
 
     def test_xcript_eval_tool(self):
         resp = self.mcp.handle_request(
@@ -105,7 +111,8 @@ class TestWitchcraftMCP(unittest.TestCase):
         )
         db_content = json.loads(res_read["result"]["contents"][0]["text"])
         self.assertIn("index", db_content)
-        self.assertIn("cmd_backend", db_content["index"][0])
+        self.assertNotIn("cmd_backend", db_content["index"][0])
+        self.assertNotIn("command", db_content["index"][0])
 
         prompt_get = self.mcp.handle_request(
             {
@@ -270,6 +277,54 @@ class TestWitchcraftMCP(unittest.TestCase):
             self.assertEqual(len(resumed["tool_calls"]), 1)
             self.assertIn("proposed_ok", resumed["tool_calls"][0]["output"])
             self.assertIn("proposed_ok", resumed["reply"])
+
+    def test_select_relevant_tools_portuguese_domain_prompt(self):
+        tools = select_relevant_tools(self.mcp, "Faça um scanner completo no endereço example.com")
+        names = [t["name"] for t in tools]
+        self.assertIn("scanner_dns", names[:6])
+        self.assertNotIn("file_dump", names)
+        self.assertNotIn("disk_dump", names)
+
+    def test_auto_retry_on_unformatted_pseudo_tool_call(self):
+        responses = [
+            {
+                "choices": [
+                    {
+                        "message": {
+                            "content": 'Para executar use:\n(witchcraft_system_stats "")'
+                        }
+                    }
+                ]
+            },
+            {
+                "choices": [
+                    {
+                        "message": {
+                            "content": '<tool_call>{"name": "witchcraft_system_stats", "arguments": {}}</tool_call>'
+                        }
+                    }
+                ]
+            },
+            {
+                "choices": [
+                    {
+                        "message": {
+                            "content": "Telemetria coletada com sucesso."
+                        }
+                    }
+                ]
+            },
+        ]
+
+        def fake_llm(messages, tools=None, llm_url=None):
+            return responses.pop(0)
+
+        with patch("witchcraft.interface.ai.harpia_agent._call_llama_completion", side_effect=fake_llm):
+            res = harpia_chat("verifique stats do sistema")
+
+        self.assertEqual(res["status"], "ok")
+        self.assertEqual(len(res["tool_calls"]), 1)
+        self.assertEqual(res["tool_calls"][0]["name"], "witchcraft_system_stats")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,5 @@
+import html
+import witchcraft.metalcore.core as core
 from witchcraft.metalcore.core import *
 
 def scanner_dns(args_v):
@@ -24,7 +26,10 @@ def scanner_dns(args_v):
         cmd = entry[1].replace("@@domain", domain)
         text = net_exec(cmd).get('stdout')
         net_logger("Running a extra scanning :: " + name, "cyan", "bold", True)
-        net_logger(text, "white")
+        if name in ("robots", "sitemap") and core.NT_SETUP_COLORS == "html":
+            net_logger(f"<pre>{html.escape(text or '')}</pre>", "white")
+        else:
+            net_logger(text, "white")
 
     databases = [
         ["fakenews", NT_DATAROOT + "osint/dns/fakenews.hosts"],
