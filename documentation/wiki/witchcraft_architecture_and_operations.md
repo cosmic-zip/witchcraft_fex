@@ -193,18 +193,19 @@ Implementa o protocolo **Model Context Protocol (JSON-RPC 2.0)** sobre `stdin`/`
   - `witchcraft_system_stats`: Coleta telemetria completa do host via `get_system_metrics()`.
   - `witchcraft_search_binds`: Pesquisa no `rocketdb_v2.json` filtrando por `query`, `category` ou `cmd_backend`.
   - `witchcraft_xcript_eval`: Executa código inline ou arquivo `.xcript` invocando o binário estático `xcript/target/release/xcript`.
+  - `witchcraft_shell_exec`: Executa comandos em modo shell puro (pipes, filtros, redirecionamentos) via `net_exec()`, respeitando `NT_ENABLE_ARBITRARY_SHELL`.
 - **Isolamento de `stdout`**: Quando executado via pipe por um cliente MCP (`not sys.stdin.isatty()`), redireciona o banner `SPIDER` para `sys.stderr` e captura qualquer saída espúria durante `tools/call` com `redirect_stdout`, garantindo que o canal `stdout` trafegue exclusivamente mensagens JSON-RPC válidas.
 
-#### 2. `interface/ai/harpia_agent.py` (Agente Harpia)
-Faz a ponte entre o servidor de inferência local (`llama-server` na porta `5599`) e o servidor MCP:
-- **Seleção Inteligente de Contexto (`select_relevant_tools`)**: Em vez de enviar todos os 211 schemas de uma vez (o que estouraria a janela de contexto de modelos locais de 3B/7B parâmetros), pontua lexicalmente os binds mais relevantes para o prompt do usuário e envia apenas o top 12 + as 3 ferramentas core (`witchcraft_system_stats`, `witchcraft_search_binds`, `witchcraft_xcript_eval`).
-- **Dual Tool-Calling**: Suporta tanto o formato nativo `tool_calls` da API OpenAI (`llama-server --jinja`) quanto blocos `<tool_call>{"name": "...", "arguments": {...}}</tool_call>` no corpo da resposta.
-- **Atalhos Diretos (Offline-First)**: Mesmo com o `llama-server` desligado, o chat do Harpia (na WebUI e na CLI) aceita comandos diretos:
-  - `/mcp <nome_da_tool> {"arg": "valor"}`
-  - `/xcript <codigo_xcript>`
+#### 2. `interface/ai/harpia_agent.py` (Agente Harpia — Loop ReAct Multi-Step)
+Faz a ponte entre o servidor de inferência local (`llama-server` na porta `5599`) e o servidor MCP em um **loop agêntico multi-step** (ver guia dedicado em [harpia_agentic_loop.md](harpia_agentic_loop.md)):
+- **Encadeamento MCP & Injeção Dinâmica**: Inicia com as 4 ferramentas core + top 10 relevantes e injeta dinamicamente os schemas retornados por `witchcraft_search_binds` no loop (`active_tools`), permitindo encadear múltiplas binds em sequência até `max_steps` (padrão `8`).
+- **Output Integral vs Sumário Truncado**: O output completo de cada comando é sempre entregue sem truncamento à CLI (`on_tool_output`) e à WebUI (`tool_calls[].output`); apenas a cópia devolvida ao contexto do LLM passa por limpeza de tags HTML e truncamento Head+Tail.
+- **Modo Shell Puro & Aprovação (`shell_mode`)**: Suporta `propose` (pausa o loop pedindo confirmação `[y/N/e]` na CLI ou `awaiting_approval` + `POST /api/harpia/approve` na WebUI), `auto` e `off`.
+- **Dual Tool-Calling & Anti-Loop**: Suporta `tool_calls` nativos OpenAI e múltiplos blocos `<tool_call>` via `JSONDecoder.raw_decode()`, com detecção de chamadas repetidas idênticas.
+- **Atalhos Diretos (Offline-First)**: Mesmo com o `llama-server` desligado, aceita `/mcp <tool> <json>`, `/xcript <code>`, `/shell <cmd>` e `!<cmd>`.
 
 #### 3. `interface/cli/interactive.py` (`harpia.cli`)
-Fornece um loop REPL no terminal (`harpia> `) mantendo o histórico da conversa em memória (`history`), exibindo os blocos de ferramentas MCP acionadas e suportando `/mcp`, `/xcript`, `/clear` e `exit`.
+Fornece um loop REPL no terminal (`harpia[propose]> `) imprimindo a saída integral de cada ferramenta executada em tempo real, suportando aprovação interativa de shell proposto (`[y/N/e]`) e comandos `/mode <agent|auto|off|shell>`, `/steps <N>`, `/shell`, `!`, `/mcp`, `/xcript`, `/clear` e `exit`.
 
 #### 4. `interface/web/extensions/harpia.py` (`㊊ Harpia` na WebUI)
 Substitui a antiga aba estática por uma interface de chat reativa que consome `POST /api/harpia/chat`:

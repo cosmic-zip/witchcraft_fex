@@ -344,6 +344,10 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             self.handle_harpia_chat(body)
             return
 
+        if path == "/api/harpia/approve":
+            self.handle_harpia_approve(body)
+            return
+
         # Route: MCP JSON-RPC Server Endpoint (/api/mcp or /mcp)
         if path in ("/api/mcp", "/mcp"):
             self.handle_mcp_jsonrpc(body)
@@ -480,6 +484,8 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
         prompt = str(data.get("prompt", "")).strip()
         history = data.get("history") or []
         direct_tool = data.get("tool")
+        shell_mode = data.get("shell_mode")
+        max_steps = data.get("max_steps")
 
         if not prompt and not direct_tool:
             self.send_json(400, {"error": "Prompt or tool is required"})
@@ -489,10 +495,50 @@ class WitchcraftRequestHandler(BaseHTTPRequestHandler):
             if self.project_root not in sys.path:
                 sys.path.insert(0, self.project_root)
             from witchcraft.interface.ai.harpia_agent import harpia_chat
-            result = harpia_chat(prompt=prompt, history=history, direct_tool=direct_tool)
+            result = harpia_chat(
+                prompt=prompt,
+                history=history,
+                direct_tool=direct_tool,
+                shell_mode=shell_mode,
+                max_steps=max_steps,
+            )
             self.send_json(200, result)
         except Exception as e:
             self.send_json(500, {"error": f"Harpia execution failed: {str(e)}"})
+
+    def handle_harpia_approve(self, body: str):
+        try:
+            data = json.loads(body) if body else {}
+        except Exception:
+            self.send_json(400, {"error": "Invalid JSON payload"})
+            return
+
+        body_ztoken = data.get("ztoken")
+        is_auth, _ = self.is_authenticated(body_token=body_ztoken)
+        if not is_auth:
+            self.send_json(401, {"error": "Unauthorized: valid session or ztoken required"})
+            return
+
+        session_id = str(data.get("session_id", "")).strip()
+        if not session_id:
+            self.send_json(400, {"error": "session_id is required"})
+            return
+
+        approved = bool(data.get("approved", False))
+        edited_command = data.get("edited_command")
+
+        try:
+            if self.project_root not in sys.path:
+                sys.path.insert(0, self.project_root)
+            from witchcraft.interface.ai.harpia_agent import harpia_resume_approval
+            result = harpia_resume_approval(
+                session_id=session_id,
+                approved=approved,
+                edited_command=edited_command,
+            )
+            self.send_json(200, result)
+        except Exception as e:
+            self.send_json(500, {"error": f"Harpia approval failed: {str(e)}"})
 
     def handle_exec(self, body: str):
         """Execute WitchcraftFEX command with authentication check."""

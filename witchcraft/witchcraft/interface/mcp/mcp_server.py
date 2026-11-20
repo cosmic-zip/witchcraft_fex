@@ -88,6 +88,24 @@ class WitchcraftMCPServer:
                     },
                 },
             },
+            {
+                "name": "witchcraft_shell_exec",
+                "description": "Execute a raw shell command (pipes, grep, awk, redirections) when no rocketdb bind covers the task.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "string",
+                            "description": "Raw shell command line to execute.",
+                        },
+                        "reason": {
+                            "type": "string",
+                            "description": "Why raw shell is needed instead of an existing bind.",
+                        },
+                    },
+                    "required": ["command"],
+                },
+            },
         ]
 
         seen = {t["name"] for t in tools}
@@ -196,6 +214,9 @@ class WitchcraftMCPServer:
         if name == "witchcraft_xcript_eval":
             return self._run_xcript(arguments)
 
+        if name == "witchcraft_shell_exec":
+            return self._run_shell(arguments)
+
         bind = self._tool_map.get(name)
         if not bind:
             return {
@@ -280,6 +301,50 @@ class WitchcraftMCPServer:
                 }
             ],
             "isError": proc.returncode != 0,
+        }
+
+    def _run_shell(self, arguments: dict) -> dict:
+        if os.getenv("NT_ENABLE_ARBITRARY_SHELL", "True") != "True":
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "Arbitrary shell execution is disabled (NT_ENABLE_ARBITRARY_SHELL=False).",
+                    }
+                ],
+                "isError": True,
+            }
+
+        command = str(arguments.get("command", "")).strip()
+        if not command:
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "Missing required argument 'command' for witchcraft_shell_exec.",
+                    }
+                ],
+                "isError": True,
+            }
+
+        result = net_exec(command)
+        payload = {
+            "bind": "witchcraft_shell_exec",
+            "cmd_backend": "shell",
+            "executed_command": command,
+            "reason": str(arguments.get("reason", "")),
+            "status": result.get("status"),
+            "stdout": result.get("stdout", ""),
+            "stderr": result.get("stderr", ""),
+        }
+        return {
+            "content": [
+                {
+                    "type": "text",
+                    "text": json.dumps(payload, indent=2),
+                }
+            ],
+            "isError": result.get("status", 0) != 0,
         }
 
     def _run_xcript(self, arguments: dict) -> dict:

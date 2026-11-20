@@ -99,10 +99,12 @@ witchcraft/interface/
 └── web/                    # Backend gerador e extensões WebUI (generator.py, extensions/)
 ```
 
-### 4.1. Harpia: Agente de IA Ofensiva (`interface/ai/harpia_agent.py`)
+### 4.1. Harpia: Agente de IA Ofensiva em Loop ReAct (`interface/ai/harpia_agent.py`)
 - Conecta-se diretamente à API local do `llama-server` (`http://localhost:5599/v1/chat/completions`).
-- Possui system prompt estrito com regras **anti-alucinação**: nunca finge execuções nem inventa saídas; quando faltam argumentos, solicita-os ao operador; quando possui os argumentos, emite blocos formais `<tool_call>`.
-- Orquestra o ciclo completo: captura o prompt -> seleciona ferramentas do MCP mais relevantes -> envia ao LLM -> intercepta a chamada de tool -> executa o bind nativo via MCP -> sanitiza e devolve a resposta final sintetizada.
+- Executa um **loop ReAct multi-step** (`max_steps=8`) capaz de encadear múltiplas ferramentas MCP e injetar dinamicamente binds descobertas via `witchcraft_search_binds`.
+- **Output Integral vs Sumário Truncado**: toda saída de comando é exibida integralmente (sem truncamento) na CLI e na WebUI; apenas a cópia enviada ao contexto do LLM para raciocínio/sumário é truncada (Head + Tail).
+- **Modo Shell Puro (`shell_mode`)**: suporta `propose` (padrão, com aprovação humana via `[y/N/e]` na CLI ou `/api/harpia/approve` na WebUI), `auto` e `off`.
+- Documentação completa em [Harpia AI: Loop Agentic, MCP & Shell Puro](harpia_agentic_loop.md).
 
 ### 4.2. Servidor MCP (`interface/mcp/mcp_server.py`)
 - Implementa o padrão da especificação **Model Context Protocol (JSON-RPC 2.0)**.
@@ -110,13 +112,14 @@ witchcraft/interface/
   - Todas as ferramentas do `rocketdb_v2.json` como MCP Tools (`witchcraft_search_binds`, `scanner_dns`, `nmap`, etc.).
   - Telemetria de sistema ao vivo via `witchcraft_system_stats`.
   - Execução estática de automações na linguagem própria via `witchcraft_xcript_eval`.
+  - Execução controlada de shell puro via `witchcraft_shell_exec` (respeitando `NT_ENABLE_ARBITRARY_SHELL`).
 - **Modos de operação**:
   - `stdio`: Para integração com ferramentas como Claude Desktop, IDEs ou scripts CLI (`./main.py server.mcp`).
   - `HTTP JSON-RPC 2.0`: Exposto no endpoint `/api/mcp` pelo servidor web na porta `5500`.
 
 ### 4.3. Interface CLI Interativa (`interface/cli/interactive.py`)
 - REPL dedicado acionado via `./main.py harpia.cli`.
-- Suporta atalhos diretos sem depender de IA: `/mcp <tool> {"arg": "val"}` ou `/xcript <code>`.
+- Suporta troca de modos (`/mode agent|auto|off|shell`), ajuste de passos (`/steps <N>`), aprovação interativa de shell proposto (`[y/N/e]`) e atalhos diretos sem depender de IA: `/shell <cmd>`, `!<cmd>`, `/mcp <tool> {"arg": "val"}` ou `/xcript <code>`.
 
 ### 4.4. WebUI & Gerador Estático (`interface/web/`)
 - `generator.py`: Motor em Python que compila o arquivo estático `spellbook/webui/index.html` gerando formulários HTML para todos os binds do `rocketdb_v2.json`, registrando as extensões ativas (`Haki`, `Handbook`, `Harpia AI`).
@@ -139,7 +142,7 @@ docker build -t witchcraftfex:latest -f witchcraft/dockerfile witchcraft/
 ```
 
 ### 5.2. Orquestração com Docker Compose
-O arquivo [`witchcraft/docker-compose.yml`](file:///home/cosmic/workspace/witchcraft_fex/witchcraft/docker-compose.yml) provê o ecossistema completo:
+O arquivo `witchcraft/docker-compose.yml` provê o ecossistema completo:
 - Servidor Witchcraft principal (portas `5500` e `5599`)
 - Portainer (porta `9443`) para monitoramento de containers
 - Prometheus (porta `9000`) coletando métricas do toolkit
@@ -173,7 +176,7 @@ newgrp lxd
 ```
 
 ### 6.2. Compilando o Pacote Snap
-Na raiz do monorepo onde reside [`snapcraft.yaml`](file:///home/cosmic/workspace/witchcraft_fex/snapcraft.yaml):
+Na raiz do monorepo onde reside `snapcraft.yaml`:
 
 ```bash
 # Build em ambiente limpo e isolado
@@ -203,4 +206,4 @@ sudo snap connect witchcraftfex:removable-media
 > [!IMPORTANT]
 > A camada de interface WebUI (`spellbook/webui/`) passará por uma refatoração arquitetural completa para migrar de templates monolíticos em strings para uma arquitetura moderna orientada a componentes.  
 > Toda a especificação técnica e plano de migração do frontend está documentado em:  
-> 🔗 [Manifesto de Refatoração do Frontend (documentation/manifest/manifest_frontend_refactor.md)](file:///home/cosmic/workspace/witchcraft_fex/documentation/manifest/manifest_frontend_refactor.md)
+> 🔗 [Manifesto de Refatoração do Frontend](../manifest/manifest_frontend_refactor.md)

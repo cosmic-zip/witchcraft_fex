@@ -363,7 +363,7 @@ O atributo `name` estabelece o identificador universal da rotina, empregado pelo
 
 ### 6.2. Motor CLI Procedural: Compilação de Super-Strings e SCLF
 
-O núcleo do mecanismo de linha de comando encontra-se implementado em [metalcore/core.py](file:///home/cosmic/workspace/witchcraft-mono/witchcraft/metalcore/core.py), atuando como um despachante dinâmico e flexível:
+O núcleo do mecanismo de linha de comando encontra-se implementado em `witchcraft/witchcraft/metalcore/core.py`, atuando como um despachante dinâmico e flexível:
 
 ```
 [CLI User Input] ──> net_shell_router()
@@ -388,7 +388,7 @@ O sistema adapta sua emissão de dados de acordo com o contexto operacional. O m
 
 ### 6.3. Motor WebUI Procedural: SPA Reativa com HTMX
 
-O compilador web do framework, localizado em [interface/web/generator.py](file:///home/cosmic/workspace/witchcraft-mono/witchcraft/interface/web/generator.py), é acionado pelo comando `main.py build.web`:
+O compilador web do framework, localizado em `witchcraft/spellbook/webui/builder.py`, é acionado pelo comando `main.py build.web`:
 
 ```mermaid
 flowchart TD
